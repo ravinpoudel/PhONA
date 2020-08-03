@@ -1,0 +1,55 @@
+---
+title: "PhONA"
+author: "Ravin Poudel"
+date: "`r Sys.Date()`"
+#output: rmarkdown::html_vignette
+fig_caption: yes
+#output: pdf_document
+#output: beamer_presentation
+output: tufte::tufte_html
+vignette: >
+  %\VignetteIndexEntry{PhONA}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+
+```{r setup, include = FALSE}
+devtools::document()
+library(tufte)
+library(PhONA)
+```
+
+
+```{r}
+###### Load the data
+phyobj <- readRDS(system.file("extdata", "physeqobject.rds", package = "PhONA"))
+sparcc.cor <- read.delim(system.file("extdata", "cor_sparcc.out", package = "PhONA"), sep = "\t", header = T, row.names = 1)
+sparcc.pval <- read.delim(system.file("extdata", "pvals.txt", package = "PhONA"), sep = "\t", header = T, row.names = 1)
+```
+
+
+
+```{r}
+library(PhONA)
+PhONA(
+  physeqobj = phyobj,
+  cordata = sparcc.cor,
+  pdata = sparcc.pval,
+  model = "lm",
+  OTU_OTU_pvalue = 0.001,
+  OTU_OTU_rvalue = 0.6,
+  OTU_Phenotype_pvalue = 0.6,
+  definePhenotype = "Marketable",
+  defineTreatment = "Maxifort",
+  coloredby = "Phylum",
+  PhenoNodecolor = "yellow",
+  PhenoNodesize = 20,
+  PhenoNodelabel = "Yield",
+  nodesize = 10,
+  Pheno2OTUedgecolor = "black",
+  netlayout = layout.fruchterman.reingold
+)
+
+```
+
