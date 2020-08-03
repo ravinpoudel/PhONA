@@ -1,5 +1,5 @@
 Package: PhONA
-Title:  PhONA provides a framework to select a testable and manageable number of OTUs to support microbiome-based agriculture
+Title: PhONA provides a framework to select a testable and manageable number of OTUs to support microbiome-based agriculture
 Version: 0.0.0.9000
 Authors@R: 
     person(given = "Ravin",
@@ -13,7 +13,7 @@ License: `use_mit_license()`, `use_gpl3_license()` or friends to
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.0
+RoxygenNote: 7.1.1
 VignetteBuilder: knitr
 Depends:
   phyloseq,

@@ -1,5 +1,5 @@
 ---
-title: "PhONA"
+title: "PhONA: Phenotype-OTU based Network Analyses"
 author: "Ravin Poudel"
 date: "`r Sys.Date()`"
 #output: rmarkdown::html_vignette
@@ -7,12 +7,17 @@ fig_caption: yes
 #output: pdf_document
 #output: beamer_presentation
 output: tufte::tufte_html
+#output:
+# rmarkdown::html_document:
+#    theme: lumen
 vignette: >
   %\VignetteIndexEntry{PhONA}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
+#### Introduction
 
+PhONA provides a framework to select a testable and manageable number of OTUs to support microbiome-based agriculture
 
 ```{r setup, include = FALSE}
 devtools::document()
