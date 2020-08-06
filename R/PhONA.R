@@ -6,8 +6,8 @@
 #'
 #'
 #' @param physeqobj A phyloseq object which combined OTU count, taxonomy and metadata
-#' @param cordata A phyloseq object which combined OTU count, taxonomy and metadata
-#' @param pdata A phyloseq object which combined OTU count, taxonomy and metadata
+#' @param cordata A pairwise square matrix defining OTU-OTU association
+#' @param pdata A pairwise square matrix defining p-value for OTU-OTU association
 #' @param model A phyloseq object which combined OTU count, taxonomy and metadata
 #' @param OTU_OTU_pvalue A phyloseq object which combined OTU count, taxonomy and metadata
 #' @param OTU_OTU_rvalue A phyloseq object which combined OTU count, taxonomy and metadata
