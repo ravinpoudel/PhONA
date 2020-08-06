@@ -26,9 +26,9 @@ PhONA(
 \arguments{
 \item{physeqobj}{A phyloseq object which combined OTU count, taxonomy and metadata}
 
-\item{cordata}{A phyloseq object which combined OTU count, taxonomy and metadata}
+\item{cordata}{A pairwise square matrix defining OTU-OTU association}
 
-\item{pdata}{A phyloseq object which combined OTU count, taxonomy and metadata}
+\item{pdata}{A pairwise square matrix defining p-value for OTU-OTU association}
 
 \item{model}{A phyloseq object which combined OTU count, taxonomy and metadata}
 
