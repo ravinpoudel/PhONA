@@ -89,7 +89,6 @@ OTUs to support microbiome-based agriculture
 
     ## Waiting for profiling to be done...
 
-
 ![](https://github.com/ravinpoudel/PhONA/blob/master/vignettes/PhONA_files/figure-markdown_strict/unnamed-chunk-3-1.png)
 
     ## IGRAPH 1f41e22 UN-- 61 182 -- 
