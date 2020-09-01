@@ -28,7 +28,7 @@ OTUs to support microbiome-based agriculture
       netlayout = layout.fruchterman.reingold
     )
 
-![](PhONA/vignettes/PhONA_files/figure-markdown_strict/unnamed-chunk-2-1.png)
+![](https://github.com/ravinpoudel/PhONA/blob/master/vignettes/PhONA_files/figure-markdown_strict/unnamed-chunk-2-1.png)
 
     ## IGRAPH e3b2317 UN-- 97 299 -- 
     ## + attr: Kingdom (v/c), Phylum (v/c), Class (v/c), Order (v/c), Family (v/c), Genus (v/c), Species (v/c), color (v/c), name
@@ -89,7 +89,8 @@ OTUs to support microbiome-based agriculture
 
     ## Waiting for profiling to be done...
 
-![](PhONA/vignettes/PhONA_files/figure-markdown_strict/unnamed-chunk-3-1.png)
+
+![](https://github.com/ravinpoudel/PhONA/blob/master/vignettes/PhONA_files/figure-markdown_strict/unnamed-chunk-3-1.png)
 
     ## IGRAPH 1f41e22 UN-- 61 182 -- 
     ## + attr: Kingdom (v/c), Phylum (v/c), Class (v/c), Order (v/c), Family (v/c), Genus (v/c), Species (v/c), color (v/c), name
