@@ -8,7 +8,7 @@ PhONA(
   physeqobj = physeq,
   cordata = sparcc.cor,
   pdata = sparcc.pval,
-  model = "lm",
+  model = c("lm", "lasso"),
   OTU_OTU_pvalue = 0.001,
   OTU_OTU_rvalue = 0.6,
   OTU_Phenotype_pvalue = 0.6,
@@ -30,35 +30,78 @@ PhONA(
 
 \item{pdata}{A pairwise square matrix defining p-value for OTU-OTU association}
 
-\item{model}{A phyloseq object which combined OTU count, taxonomy and metadata}
+\item{model}{Model to define association between OTUs and Phenotype. Option available are "lm", "lasso".
+In lasso option, we are using lasso model to reduce the number of features/OTUs. OTUs important to phenotype prediction
+were ranked using \code{varImp}. Selected OTUs were then for reduced GLM model.}
 
-\item{OTU_OTU_pvalue}{A phyloseq object which combined OTU count, taxonomy and metadata}
+\item{OTU_OTU_pvalue}{Pvalue for OTU-OTU association}
 
-\item{OTU_OTU_rvalue}{A phyloseq object which combined OTU count, taxonomy and metadata}
+\item{OTU_OTU_rvalue}{Level of OTU-OTU association}
 
-\item{OTU_Phenotype_pvalue}{A phyloseq object which combined OTU count, taxonomy and metadata}
+\item{OTU_Phenotype_pvalue}{Pvalue for OTU-Phenotype association}
 
-\item{definePhenotype}{A phyloseq object which combined OTU count, taxonomy and metadata}
+\item{definePhenotype}{Phenotype to be used. It is a column header from phenotype data}
 
-\item{defineTreatment}{A phyloseq object which combined OTU count, taxonomy and metadata}
+\item{defineTreatment}{Select the treatment. It is same as the treatment name that the phyloseq object represents}
 
-\item{coloredby}{A phyloseq object which combined OTU count, taxonomy and metadata}
+\item{coloredby}{Select taxonomic group to be used for coloring node. Options: Kingdom,Phylum, Class, Order, Family, Genus, Species}
 
-\item{PhenoNodecolor}{A phyloseq object which combined OTU count, taxonomy and metadata}
+\item{PhenoNodecolor}{Select color for phenotype node}
 
-\item{PhenoNodesize}{A phyloseq object which combined OTU count, taxonomy and metadata}
+\item{PhenoNodesize}{Select node size for phenotype node}
 
-\item{nodesize}{A phyloseq object which combined OTU count, taxonomy and metadata}
+\item{nodesize}{Select size for nodes other than phenotype node}
 
-\item{Pheno2OTUedgecolor}{A phyloseq object which combined OTU count, taxonomy and metadata}
+\item{Pheno2OTUedgecolor}{Select color of edge from OTU to phenotype node}
 
-\item{netlayout}{A phyloseq object which combined OTU count, taxonomy and metadata}
+\item{netlayout}{Select layout for the network graph. All the layout options from igraph can be used}
 }
 \value{
-A matrix of the infile
+A PhONA representing OTU-OTU association as well as OTU-Phenotype association
 }
 \description{
 This function takes in phyloseq object, association matix, p value matrix
 and create a combined OTU-OTU and OTU-Phenotype network. User can select model to
 define OTU-Phontype assocaition.
+}
+\examples{
+\strong{Running linear model based PhONA,where OTU-Phenotype association is defined using linear model}
+PhONA(
+physeqobj = phyobj,
+cordata = sparcc.cor,
+pdata = sparcc.pval,
+model = "lm",
+OTU_OTU_pvalue = 0.001,
+OTU_OTU_rvalue = 0.6,
+OTU_Phenotype_pvalue = 0.6,
+definePhenotype = "Marketable",
+defineTreatment = "Maxifort",
+coloredby = "Phylum",
+PhenoNodecolor = "yellow",
+PhenoNodesize = 20,
+PhenoNodelabel = "Yield",
+nodesize = 10,
+Pheno2OTUedgecolor = "black",
+netlayout = layout.fruchterman.reingold)
+
+
+\strong{Running lasso model based PhONA,where OTU-Phenotypeassociation is defined using lasso model and GLM}
+
+PhONA(
+physeqobj = phyobj,
+cordata = sparcc.cor,
+pdata = sparcc.pval,
+model = "lasso",
+OTU_OTU_pvalue = 0.001,
+OTU_OTU_rvalue = 0.6,
+OTU_Phenotype_pvalue = 0.6,
+definePhenotype = "Marketable",
+defineTreatment = "Maxifort",
+coloredby = "Phylum",
+PhenoNodecolor = "yellow",
+PhenoNodesize = 20,
+PhenoNodelabel = "Yield",
+nodesize = 10,
+Pheno2OTUedgecolor = "black",
+netlayout = layout.fruchterman.reingold)
 }

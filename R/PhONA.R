@@ -8,25 +8,67 @@
 #' @param physeqobj A phyloseq object which combined OTU count, taxonomy and metadata
 #' @param cordata A pairwise square matrix defining OTU-OTU association
 #' @param pdata A pairwise square matrix defining p-value for OTU-OTU association
-#' @param model A phyloseq object which combined OTU count, taxonomy and metadata
-#' @param OTU_OTU_pvalue A phyloseq object which combined OTU count, taxonomy and metadata
-#' @param OTU_OTU_rvalue A phyloseq object which combined OTU count, taxonomy and metadata
-#' @param OTU_Phenotype_pvalue A phyloseq object which combined OTU count, taxonomy and metadata
-#' @param definePhenotype A phyloseq object which combined OTU count, taxonomy and metadata
-#' @param defineTreatment A phyloseq object which combined OTU count, taxonomy and metadata
-#' @param coloredby A phyloseq object which combined OTU count, taxonomy and metadata
-#' @param PhenoNodecolor A phyloseq object which combined OTU count, taxonomy and metadata
-#' @param PhenoNodesize A phyloseq object which combined OTU count, taxonomy and metadata
-#' @param nodesize A phyloseq object which combined OTU count, taxonomy and metadata
-#' @param Pheno2OTUedgecolor A phyloseq object which combined OTU count, taxonomy and metadata
-#' @param netlayout A phyloseq object which combined OTU count, taxonomy and metadata
-#' @return A matrix of the infile
+#' @param model Model to define association between OTUs and Phenotype. Option available are "lm", "lasso".
+#' In lasso option, we are using lasso model to reduce the number of features/OTUs. OTUs important to phenotype prediction
+#'  were ranked using `varImp`. Selected OTUs were then for reduced GLM model.
+#' @param OTU_OTU_pvalue Pvalue for OTU-OTU association
+#' @param OTU_OTU_rvalue Level of OTU-OTU association
+#' @param OTU_Phenotype_pvalue Pvalue for OTU-Phenotype association
+#' @param definePhenotype Phenotype to be used. It is a column header from phenotype data
+#' @param defineTreatment Select the treatment. It is same as the treatment name that the phyloseq object represents
+#' @param coloredby Select taxonomic group to be used for coloring node. Options: Kingdom,Phylum, Class, Order, Family, Genus, Species
+#' @param PhenoNodecolor Select color for phenotype node
+#' @param PhenoNodesize Select node size for phenotype node
+#' @param nodesize Select size for nodes other than phenotype node
+#' @param Pheno2OTUedgecolor Select color of edge from OTU to phenotype node
+#' @param netlayout Select layout for the network graph. All the layout options from igraph can be used
+#' @return A PhONA representing OTU-OTU association as well as OTU-Phenotype association
 #' @export
+#' @examples
+#'\strong{Running linear model based PhONA,where OTU-Phenotype association is defined using linear model}
+#'PhONA(
+#'physeqobj = phyobj,
+#'cordata = sparcc.cor,
+#'pdata = sparcc.pval,
+#'model = "lm",
+#'OTU_OTU_pvalue = 0.001,
+#'OTU_OTU_rvalue = 0.6,
+#'OTU_Phenotype_pvalue = 0.6,
+#'definePhenotype = "Marketable",
+#'defineTreatment = "Maxifort",
+#'coloredby = "Phylum",
+#'PhenoNodecolor = "yellow",
+#'PhenoNodesize = 20,
+#'PhenoNodelabel = "Yield",
+#'nodesize = 10,
+#'Pheno2OTUedgecolor = "black",
+#'netlayout = layout.fruchterman.reingold)
+#'
+#'
+#'\strong{Running lasso model based PhONA,where OTU-Phenotypeassociation is defined using lasso model and GLM}
+#'
+#'PhONA(
+#'physeqobj = phyobj,
+#'cordata = sparcc.cor,
+#'pdata = sparcc.pval,
+#'model = "lasso",
+#'OTU_OTU_pvalue = 0.001,
+#'OTU_OTU_rvalue = 0.6,
+#'OTU_Phenotype_pvalue = 0.6,
+#'definePhenotype = "Marketable",
+#'defineTreatment = "Maxifort",
+#'coloredby = "Phylum",
+#'PhenoNodecolor = "yellow",
+#'PhenoNodesize = 20,
+#'PhenoNodelabel = "Yield",
+#'nodesize = 10,
+#'Pheno2OTUedgecolor = "black",
+#'netlayout = layout.fruchterman.reingold)
 
 PhONA <- function(physeqobj = physeq,
                   cordata = sparcc.cor,
                   pdata = sparcc.pval,
-                  model = "lm",
+                  model = c("lm","lasso"),
                   OTU_OTU_pvalue = 0.001,
                   OTU_OTU_rvalue = 0.6,
                   OTU_Phenotype_pvalue = 0.6,
@@ -103,9 +145,11 @@ PhONA <- function(physeqobj = physeq,
   V(net.grph)$Species <- as.character(sel.tax$Species)
   V(net.grph)$color <- tdata$color
 
-
+##########
 
   x = mdata %>% pull(definePhenotype)  ## generalize to metadata
+
+##########
 
   if (model == "lm"){
    #source("R/model.linear.R")
@@ -113,7 +157,18 @@ PhONA <- function(physeqobj = physeq,
    bb["Treatment"] <- defineTreatment
   }
 
-  bb$relation <- rnorm(dim(bb)[1], mean = 0.2, sd = 0.2)
+############
+  if (model == "lasso"){
+    #source("R/model.linear.R")
+    bb = model.lasso(x, odata)
+    bb["Treatment"] <- defineTreatment
+  }
+
+  #bb$relation <- rnorm(dim(bb)[1], mean = 0.2, sd = 0.2)
+
+
+
+#################
 
   from <- rep(defineTreatment,dim(bb)[1])  ### how to get sel.rootstock
 
@@ -186,4 +241,5 @@ PhONA <- function(physeqobj = physeq,
 
   net.two
 }
+
 
