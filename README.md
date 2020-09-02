@@ -9,6 +9,14 @@ library(devtools)
 devtools::install_github("ravinpoudel/PhONA", build_vignettes = TRUE, force = TRUE, auth = "5c5decd148f0378dcb762e7b14c3d1508ef49ba2")
 
 ```
+Browse Vignettes to see the output as below. 
+
+```R
+
+browseVignettes("PhONA")
+
+```
+
 
     ###### Load the data
     phyobj <- readRDS(system.file("extdata", "physeqobject.rds", package = "PhONA"))
