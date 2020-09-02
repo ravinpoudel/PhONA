@@ -17,10 +17,17 @@ vignette: >
 ---
 #### Introduction
 
-PhONA provides a framework to select a testable and manageable number of OTUs to support microbiome-based agriculture
+PhONA provides a framework to select a testable and manageable number of OTUs to support microbiome-based agriculture.
+
+```{r}
+# Installation of package
+
+# library(devtools)
+# devtools::install_github("ravinpoudel/PhONA", build_vignettes = TRUE, force = TRUE, auth = "5c5decd148f0378dcb762e7b14c3d1508ef49ba2")
+
+```
 
 ```{r setup, include = FALSE}
-devtools::document()
 library(tufte)
 library(PhONA)
 ```
@@ -35,7 +42,7 @@ sparcc.pval <- read.delim(system.file("extdata", "pvals.txt", package = "PhONA")
 
 
 
-```{r}
+```{r,out.width = "400px"}
 library(PhONA)
 PhONA(
   physeqobj = phyobj,
@@ -59,7 +66,7 @@ PhONA(
 ```
 
 
-```{r}
+```{r,out.width = "400px"}
 library(PhONA)
 PhONA(
   physeqobj = phyobj,

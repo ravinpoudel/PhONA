@@ -19,15 +19,16 @@ netlayout=layout.fruchterman.reingold
 PhONA(physeqobj, model="lm")
 PhONA(physeqobj, model="lasso")
 
-
+# https://rmarkdown.rstudio.com/docs/reference/md_document.html
 # Convert to a markdown document
+library(rmarkdown)
 md_document(
   variant = "markdown_strict",
   preserve_yaml = FALSE,
   toc = FALSE,
   toc_depth = 3,
-  fig_width = 7,
-  fig_height = 5,
+  #fig_width = 7,
+  #fig_height = 5,
   fig_retina = NULL,
   dev = "png",
   df_print = "default",
@@ -38,6 +39,5 @@ md_document(
 )
 
 
-library(rmarkdown)
 render("vignettes/PhONA.Rmd", md_document())
 
