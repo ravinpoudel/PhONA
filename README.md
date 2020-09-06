@@ -16,7 +16,6 @@ browseVignettes("PhONA")
 
 
 
-![](https://github.com/ravinpoudel/PhONA/blob/master/vignettes/PhONA_files/figure-markdown_strict/unnamed-chunk-2-1.png)
+![](https://github.com/ravinpoudel/PhONA/blob/master/figures/PhONA.png)
 
  
-![](https://github.com/ravinpoudel/PhONA/blob/master/vignettes/PhONA_files/figure-markdown_strict/unnamed-chunk-3-1.png)
