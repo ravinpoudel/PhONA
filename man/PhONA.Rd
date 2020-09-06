@@ -9,6 +9,7 @@ PhONA(
   cordata = sparcc.cor,
   pdata = sparcc.pval,
   model = c("lm", "lasso"),
+  iters = 1,
   OTU_OTU_pvalue = 0.001,
   OTU_OTU_rvalue = 0.6,
   OTU_Phenotype_pvalue = 0.6,
@@ -32,7 +33,8 @@ PhONA(
 
 \item{model}{Model to define association between OTUs and Phenotype. Option available are "lm", "lasso".
 In lasso option, we are using lasso model to reduce the number of features/OTUs. OTUs important to phenotype prediction
-were ranked using \code{varImp}. Selected OTUs were then for reduced GLM model.}
+were ranked using \code{varImp}. Selected OTUs were then for reduced GLM model.
+@iters Number of times a pheotype-otu model to run. Default is 1}
 
 \item{OTU_OTU_pvalue}{Pvalue for OTU-OTU association}
 
@@ -71,6 +73,7 @@ physeqobj = phyobj,
 cordata = sparcc.cor,
 pdata = sparcc.pval,
 model = "lm",
+iters = 1,
 OTU_OTU_pvalue = 0.001,
 OTU_OTU_rvalue = 0.6,
 OTU_Phenotype_pvalue = 0.6,
@@ -92,6 +95,7 @@ physeqobj = phyobj,
 cordata = sparcc.cor,
 pdata = sparcc.pval,
 model = "lasso",
+iters = 1,
 OTU_OTU_pvalue = 0.001,
 OTU_OTU_rvalue = 0.6,
 OTU_Phenotype_pvalue = 0.6,

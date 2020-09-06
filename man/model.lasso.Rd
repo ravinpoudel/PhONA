@@ -4,7 +4,7 @@
 \alias{model.lasso}
 \title{Run Lasso Models}
 \usage{
-model.lasso(x, odata)
+model.lasso(n, x, odata)
 }
 \arguments{
 \item{x}{A phyloseq object which combined OTU count, taxonomy and metadata}

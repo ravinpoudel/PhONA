@@ -2,5 +2,6 @@
 
 export(PhONA)
 export(getMean)
+export(lasso)
 export(model.lasso)
 export(model.linear)

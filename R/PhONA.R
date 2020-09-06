@@ -11,6 +11,7 @@
 #' @param model Model to define association between OTUs and Phenotype. Option available are "lm", "lasso".
 #' In lasso option, we are using lasso model to reduce the number of features/OTUs. OTUs important to phenotype prediction
 #'  were ranked using `varImp`. Selected OTUs were then for reduced GLM model.
+#'  @iters Number of times a pheotype-otu model to run. Default is 1
 #' @param OTU_OTU_pvalue Pvalue for OTU-OTU association
 #' @param OTU_OTU_rvalue Level of OTU-OTU association
 #' @param OTU_Phenotype_pvalue Pvalue for OTU-Phenotype association
@@ -31,6 +32,7 @@
 #'cordata = sparcc.cor,
 #'pdata = sparcc.pval,
 #'model = "lm",
+#'iters = 1,
 #'OTU_OTU_pvalue = 0.001,
 #'OTU_OTU_rvalue = 0.6,
 #'OTU_Phenotype_pvalue = 0.6,
@@ -52,6 +54,7 @@
 #'cordata = sparcc.cor,
 #'pdata = sparcc.pval,
 #'model = "lasso",
+#'iters = 1,
 #'OTU_OTU_pvalue = 0.001,
 #'OTU_OTU_rvalue = 0.6,
 #'OTU_Phenotype_pvalue = 0.6,
@@ -69,6 +72,7 @@ PhONA <- function(physeqobj = physeq,
                   cordata = sparcc.cor,
                   pdata = sparcc.pval,
                   model = c("lm","lasso"),
+                  iters = 1,
                   OTU_OTU_pvalue = 0.001,
                   OTU_OTU_rvalue = 0.6,
                   OTU_Phenotype_pvalue = 0.6,
@@ -82,11 +86,20 @@ PhONA <- function(physeqobj = physeq,
                   Pheno2OTUedgecolor = "black",
                   netlayout=layout.fruchterman.reingold){
 
+tic()
+  message ("Parsing Phyloseq Object")
+
+
   ###
   odata = t(otu_table(physeqobj))
   mdata = sample_data(physeqobj)
  # tdata = taxdata
-  tdata = data.frame(tax_table(physeqobj)) # is too slow
+  tdata = data.frame(as(tax_table(physeqobj), "matrix"))
+
+  message ("Done Parsing Phyloseq Object !!!!!")
+
+
+
 
   ###
   ####### check the validity of parater, flag if not
@@ -113,6 +126,7 @@ PhONA <- function(physeqobj = physeq,
   }
 
   ######
+  message("Creating network using association matrix")
 
   p.yes <- pdata < OTU_OTU_pvalue
 
@@ -145,30 +159,39 @@ PhONA <- function(physeqobj = physeq,
   V(net.grph)$Species <- as.character(sel.tax$Species)
   V(net.grph)$color <- tdata$color
 
+  message("Association network created-- Done!!!")
+
 ##########
 
   x = mdata %>% pull(definePhenotype)  ## generalize to metadata
 
+message("Creating assocication model")
 ##########
 
   if (model == "lm"){
    #source("R/model.linear.R")
-   bb = model.linear(x, odata)
+   bb = model.linear(n=iters, x, odata)
    bb["Treatment"] <- defineTreatment
+   message("OTUs selected from linear regression")
   }
 
 ############
-  if (model == "lasso"){
-    #source("R/model.linear.R")
-    bb = model.lasso(x, odata)
-    bb["Treatment"] <- defineTreatment
+
+
+if (model == "lasso"){
+  bb = model.lasso(n = iters, x, odata)
+  bb["Treatment"] <- defineTreatment
+  message("Unique OTUs selected from lasso regression")
   }
 
-  #bb$relation <- rnorm(dim(bb)[1], mean = 0.2, sd = 0.2)
+
+#bb$relation <- rnorm(dim(bb)[1], mean = 0.2, sd = 0.2)
 
 
 
 #################
+
+  message("Creating PhONA")
 
   from <- rep(defineTreatment,dim(bb)[1])  ### how to get sel.rootstock
 
@@ -240,6 +263,10 @@ PhONA <- function(physeqobj = physeq,
   #legend("bottom",legend_nodes, pch=21, pt.bg=unique( V(net.two)$color), pt.cex=2, cex=.8, bty="n", ncol=4)
 
   net.two
+
+  message("PhONA created -- Done !!!")
+  message("Total time to run PhONA")
+toc()
 }
 
 

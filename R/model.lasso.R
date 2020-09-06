@@ -7,53 +7,20 @@
 #' @return A matrix of the infile
 #' @export
 
-model.lasso <- function(x, odata) {
-
-  odata_with_pheno <- as.data.frame(odata)
-
-  odata_with_pheno["Phenotype"] <- x
-
-  myGrid <- expand.grid(
-    alpha = 1, ## lasso
-    lambda = seq(0.0001, 1, length = 100)
-  )
-
-  trControl = trainControl(
-    method = "cv",
-    number = 10,
-    verboseIter = TRUE)
-
-
-
-  model <- train(Phenotype ~., data = odata_with_pheno, method = "glmnet",
-                 tuneGrid = myGrid, trControl = trControl)
-
-
-
-  aa = data.frame(varImp(model,scale=F)$importance)
-  aa["otu"] <- rownames(aa)
-  bb = aa[aa$Overall > 0, ]
-
-
-
-  cdata = odata_with_pheno[, !colnames(odata_with_pheno) %in% "Phenotype"]
-
-  sel_cdata = cdata[, colnames(cdata) %in% bb$otu]
-  sel_cdata["Phenotype"] <- odata_with_pheno$Phenotype
-
-  sub_model <- glm(Phenotype ~ ., data = sel_cdata)
-  summary.lm(sub_model)
-  confint(sub_model)
-  coff_df = data.frame(summary(sub_model)$coefficient)[-c(1), ] # also remove row with intercept
-  #coff_df_sig = coff_df[coff_df$Pr...t.. <=0.05, ]
-  #coff_df[trt] <- trt
-  coff_df["otus"] <- rownames(coff_df)
-  coff_df["relation"] <- coff_df$Estimate
-  coff_df["pvalue"] <- coff_df$Pr...t..
-
-  if (dim(coff_df)[1] > 0){
-    coff_df
-  } else {
-    data.frame()
+model.lasso <- function(n, x, odata){
+  print(n)
+  df_list <- list()
+  for (i in 1:n){
+    message ("Running Iteration Number::", i)
+    x1 =x
+    odata1 = odata
+    tryCatch({df_list[[i]] = lasso(x1, odata1)}, error=function(e){cat("ERROR :",conditionMessage(e), "\n")})
   }
+  # flat list to df
+  df <- do.call(rbind,df_list)
+  # # filter combined df based on unique otus
+  df_uniq = df %>% distinct(otus, .keep_all = TRUE)
+  df_uniq
 }
+
+

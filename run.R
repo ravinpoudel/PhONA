@@ -2,6 +2,7 @@ physeqobj = phyobj
 cordata = sparcc.cor
 pdata = sparcc.pval
 model = c("lm","lasso")
+iters = 2
 OTU_OTU_pvalue = 0.001
 OTU_OTU_rvalue = 0.6
 OTU_Phenotype_pvalue = 0.6
@@ -17,7 +18,7 @@ netlayout=layout.fruchterman.reingold
 
 
 PhONA(physeqobj, model="lm")
-PhONA(physeqobj, model="lasso")
+PhONA(physeqobj, model="lasso", iters = 2)
 
 # https://rmarkdown.rstudio.com/docs/reference/md_document.html
 # Convert to a markdown document
@@ -40,4 +41,34 @@ md_document(
 
 
 render("vignettes/PhONA.Rmd", md_document())
+
+
+
+if (model == "lasso"){
+  df_list <- list()
+  for (i in 1:iters){
+    message ("Running Iteration Number::", i)
+    tryCatch({df_list[[i]] = model.lasso(x, odata)}, error=function(e){cat("ERROR :",conditionMessage(e), "\n")})
+  }
+  # flat list to df
+  df <- do.call(rbind,df_list)
+  # filter combined df based on unique otus
+  df_uniq = df %>%
+    distinct(otus, .keep_all = TRUE)
+  df_uniq
+  }
+
+install.packages("tictoc")
+require(tictoc)
+tic()
+rnorm(1000,0,1)
+toc()
+
+
+
+
+
+
+
+
 
