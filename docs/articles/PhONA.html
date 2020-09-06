@@ -16,12 +16,12 @@
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-<![endif]--><!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=UA-000000-01"></script><script>
+<![endif]--><!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=UA-99029062-1"></script><script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
 
-  gtag('config', 'UA-000000-01');
+  gtag('config', 'UA-99029062-1');
 </script>
 </head>
 <body data-spy="scroll" data-target="#toc">
@@ -97,37 +97,43 @@
 <h4 class="hasAnchor">
 <a href="#introduction" class="anchor"></a>Introduction</h4>
 <p>PhONA provides a framework to select a testable and manageable number of OTUs to support microbiome-based agriculture.</p>
-<div class="sourceCode" id="cb1"><html><body><pre class="r"># installation 
-# library(devtools)
-# devtools::install_github("ravinpoudel/PhONA", build_vignettes = TRUE, force = TRUE, auth = "5c5decd148f0378dcb762e7b14c3d1508ef49ba2")
+<div class="sourceCode" id="cb1"><pre class="downlit">
+<span class="co"># installation </span>
+<span class="co"># library(devtools)</span>
+<span class="co"># devtools::install_github("ravinpoudel/PhONA", build_vignettes = TRUE, force = TRUE, auth = "5c5decd148f0378dcb762e7b14c3d1508ef49ba2")</span>
 
-# Browse Vignettes to see the output as below. 
+<span class="co"># Browse Vignettes to see the output as below. </span>
 
-# browseVignettes("PhONA")</pre></body></html></div>
-<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="co">###### Load the data</span>
-<span class="no">phyobj</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"extdata"</span>, <span class="st">"physeqobject.rds"</span>, <span class="kw">package</span> <span class="kw">=</span> <span class="st">"PhONA"</span>))
-<span class="no">sparcc.cor</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.delim</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"extdata"</span>, <span class="st">"cor_sparcc.out"</span>, <span class="kw">package</span> <span class="kw">=</span> <span class="st">"PhONA"</span>), <span class="kw">sep</span> <span class="kw">=</span> <span class="st">"\t"</span>, <span class="kw">header</span> <span class="kw">=</span> <span class="no">T</span>, <span class="kw">row.names</span> <span class="kw">=</span> <span class="fl">1</span>)
-<span class="no">sparcc.pval</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.delim</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"extdata"</span>, <span class="st">"pvals.txt"</span>, <span class="kw">package</span> <span class="kw">=</span> <span class="st">"PhONA"</span>), <span class="kw">sep</span> <span class="kw">=</span> <span class="st">"\t"</span>, <span class="kw">header</span> <span class="kw">=</span> <span class="no">T</span>, <span class="kw">row.names</span> <span class="kw">=</span> <span class="fl">1</span>)</pre></body></html></div>
-<div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">PhONA</span>)
-<span class="fu"><a href="../reference/PhONA.html">PhONA</a></span>(
-  <span class="kw">physeqobj</span> <span class="kw">=</span> <span class="no">phyobj</span>,
-  <span class="kw">cordata</span> <span class="kw">=</span> <span class="no">sparcc.cor</span>,
-  <span class="kw">pdata</span> <span class="kw">=</span> <span class="no">sparcc.pval</span>,
-  <span class="kw">model</span> <span class="kw">=</span> <span class="st">"lm"</span>,
-  <span class="kw">iters</span><span class="kw">=</span><span class="fl">1</span>,
-  <span class="kw">OTU_OTU_pvalue</span> <span class="kw">=</span> <span class="fl">0.001</span>,
-  <span class="kw">OTU_OTU_rvalue</span> <span class="kw">=</span> <span class="fl">0.6</span>,
-  <span class="kw">OTU_Phenotype_pvalue</span> <span class="kw">=</span> <span class="fl">0.6</span>,
-  <span class="kw">definePhenotype</span> <span class="kw">=</span> <span class="st">"Marketable"</span>,
-  <span class="kw">defineTreatment</span> <span class="kw">=</span> <span class="st">"Maxifort"</span>,
-  <span class="kw">coloredby</span> <span class="kw">=</span> <span class="st">"Phylum"</span>,
-  <span class="kw">PhenoNodecolor</span> <span class="kw">=</span> <span class="st">"yellow"</span>,
-  <span class="kw">PhenoNodesize</span> <span class="kw">=</span> <span class="fl">20</span>,
-  <span class="kw">PhenoNodelabel</span> <span class="kw">=</span> <span class="st">"Yield"</span>,
-  <span class="kw">nodesize</span> <span class="kw">=</span> <span class="fl">10</span>,
-  <span class="kw">Pheno2OTUedgecolor</span> <span class="kw">=</span> <span class="st">"black"</span>,
-  <span class="kw">netlayout</span> <span class="kw">=</span> <span class="no">layout.fruchterman.reingold</span>
-)</pre></body></html></div>
+<span class="co"># browseVignettes("PhONA")</span>
+</pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit">
+<span class="co">###### Load the data</span>
+<span class="kw">phyobj</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"extdata"</span>, <span class="st">"physeqobject.rds"</span>, package = <span class="st">"PhONA"</span>))
+<span class="kw">sparcc.cor</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.delim</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"extdata"</span>, <span class="st">"cor_sparcc.out"</span>, package = <span class="st">"PhONA"</span>), sep = <span class="st">"\t"</span>, header = <span class="kw">T</span>, row.names = <span class="fl">1</span>)
+<span class="kw">sparcc.pval</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.delim</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"extdata"</span>, <span class="st">"pvals.txt"</span>, package = <span class="st">"PhONA"</span>), sep = <span class="st">"\t"</span>, header = <span class="kw">T</span>, row.names = <span class="fl">1</span>)
+</pre></div>
+<div class="sourceCode" id="cb3"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw">PhONA</span>)
+<span class="fu">PhONA</span>(
+  physeqobj = <span class="kw">phyobj</span>,
+  cordata = <span class="kw">sparcc.cor</span>,
+  pdata = <span class="kw">sparcc.pval</span>,
+  model = <span class="st">"lm"</span>,
+  iters=<span class="fl">1</span>,
+  OTU_OTU_pvalue = <span class="fl">0.001</span>,
+  OTU_OTU_rvalue = <span class="fl">0.6</span>,
+  OTU_Phenotype_pvalue = <span class="fl">0.6</span>,
+  definePhenotype = <span class="st">"Marketable"</span>,
+  defineTreatment = <span class="st">"Maxifort"</span>,
+  coloredby = <span class="st">"Phylum"</span>,
+  PhenoNodecolor = <span class="st">"yellow"</span>,
+  PhenoNodesize = <span class="fl">20</span>,
+  PhenoNodelabel = <span class="st">"Yield"</span>,
+  nodesize = <span class="fl">10</span>,
+  Pheno2OTUedgecolor = <span class="st">"black"</span>,
+  netlayout = <span class="kw">layout.fruchterman.reingold</span>
+)
+</pre></div>
 <pre><code>## Parsing Phyloseq Object</code></pre>
 <pre><code>## Done Parsing Phyloseq Object !!!!!</code></pre>
 <pre><code>## Creating network using association matrix</code></pre>
@@ -139,27 +145,29 @@
 <pre><code>## PhONA created -- Done !!!</code></pre>
 <pre><code>## Total time to run PhONA</code></pre>
 <p><img src="PhONA_files/figure-html/unnamed-chunk-3-1.png" width="400px"></p>
-<pre><code>## 12.984 sec elapsed</code></pre>
-<div class="sourceCode" id="cb15"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">PhONA</span>)
-<span class="fu"><a href="../reference/PhONA.html">PhONA</a></span>(
-  <span class="kw">physeqobj</span> <span class="kw">=</span> <span class="no">phyobj</span>,
-  <span class="kw">cordata</span> <span class="kw">=</span> <span class="no">sparcc.cor</span>,
-  <span class="kw">pdata</span> <span class="kw">=</span> <span class="no">sparcc.pval</span>,
-  <span class="kw">model</span> <span class="kw">=</span> <span class="st">"lasso"</span>,
-  <span class="kw">iters</span><span class="kw">=</span><span class="fl">2</span>,
-  <span class="kw">OTU_OTU_pvalue</span> <span class="kw">=</span> <span class="fl">0.001</span>,
-  <span class="kw">OTU_OTU_rvalue</span> <span class="kw">=</span> <span class="fl">0.6</span>,
-  <span class="kw">OTU_Phenotype_pvalue</span> <span class="kw">=</span> <span class="fl">0.6</span>,
-  <span class="kw">definePhenotype</span> <span class="kw">=</span> <span class="st">"Marketable"</span>,
-  <span class="kw">defineTreatment</span> <span class="kw">=</span> <span class="st">"Maxifort"</span>,
-  <span class="kw">coloredby</span> <span class="kw">=</span> <span class="st">"Phylum"</span>,
-  <span class="kw">PhenoNodecolor</span> <span class="kw">=</span> <span class="st">"yellow"</span>,
-  <span class="kw">PhenoNodesize</span> <span class="kw">=</span> <span class="fl">20</span>,
-  <span class="kw">PhenoNodelabel</span> <span class="kw">=</span> <span class="st">"Yield"</span>,
-  <span class="kw">nodesize</span> <span class="kw">=</span> <span class="fl">10</span>,
-  <span class="kw">Pheno2OTUedgecolor</span> <span class="kw">=</span> <span class="st">"black"</span>,
-  <span class="kw">netlayout</span> <span class="kw">=</span> <span class="no">layout.fruchterman.reingold</span>
-)</pre></body></html></div>
+<pre><code>## 8.112 sec elapsed</code></pre>
+<div class="sourceCode" id="cb15"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw">PhONA</span>)
+<span class="fu">PhONA</span>(
+  physeqobj = <span class="kw">phyobj</span>,
+  cordata = <span class="kw">sparcc.cor</span>,
+  pdata = <span class="kw">sparcc.pval</span>,
+  model = <span class="st">"lasso"</span>,
+  iters=<span class="fl">2</span>,
+  OTU_OTU_pvalue = <span class="fl">0.001</span>,
+  OTU_OTU_rvalue = <span class="fl">0.6</span>,
+  OTU_Phenotype_pvalue = <span class="fl">0.6</span>,
+  definePhenotype = <span class="st">"Marketable"</span>,
+  defineTreatment = <span class="st">"Maxifort"</span>,
+  coloredby = <span class="st">"Phylum"</span>,
+  PhenoNodecolor = <span class="st">"yellow"</span>,
+  PhenoNodesize = <span class="fl">20</span>,
+  PhenoNodelabel = <span class="st">"Yield"</span>,
+  nodesize = <span class="fl">10</span>,
+  Pheno2OTUedgecolor = <span class="st">"black"</span>,
+  netlayout = <span class="kw">layout.fruchterman.reingold</span>
+)
+</pre></div>
 <pre><code>## Parsing Phyloseq Object</code></pre>
 <pre><code>## Done Parsing Phyloseq Object !!!!!</code></pre>
 <pre><code>## Creating network using association matrix</code></pre>
@@ -175,7 +183,7 @@
 <pre><code>## PhONA created -- Done !!!</code></pre>
 <pre><code>## Total time to run PhONA</code></pre>
 <p><img src="PhONA_files/figure-html/unnamed-chunk-4-1.png" width="500px"></p>
-<pre><code>## 17.097 sec elapsed</code></pre>
+<pre><code>## 9.979 sec elapsed</code></pre>
 </div>
   </div>
 
@@ -192,7 +200,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
 </div>
 
       </footer>
