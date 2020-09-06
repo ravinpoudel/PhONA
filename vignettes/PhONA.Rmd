@@ -71,7 +71,7 @@ PhONA(
 ```
 
 
-```{r,out.width = "400px"}
+```{r,out.width = "500px"}
 library(PhONA)
 PhONA(
   physeqobj = phyobj,
