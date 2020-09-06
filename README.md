@@ -16,6 +16,6 @@ browseVignettes("PhONA")
 
 
 
-![](https://github.com/ravinpoudel/PhONA/blob/master/figures/PhONA.png)
+![](/figures/PhONA.png)
 
  
