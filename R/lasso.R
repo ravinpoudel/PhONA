@@ -21,7 +21,7 @@ lasso <- function(x1, odata1) {
   trControl = trainControl(
     method = "cv",
     number = 10,
-    verboseIter = TRUE)
+    verboseIter = FALSE) # TRUE prints
 
 
 
