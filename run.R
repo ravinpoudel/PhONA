@@ -69,6 +69,8 @@ toc()
 # Run once to configure package to use pkgdown
 #usethis::use_pkgdown()
 # Run to build the website
+document()
+build()
 pkgdown::build_site()
 
 

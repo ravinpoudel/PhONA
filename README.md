@@ -1,7 +1,7 @@
 #### Introduction
 
 PhONA provides a framework to select a testable and manageable number of
-OTUs to support microbiome-based agriculture
+OTUs to support microbiome-based agriculture.
 
 ```R
 # installation 
@@ -16,6 +16,6 @@ browseVignettes("PhONA")
 
 
 
-![](/figures/PhONA.png)
+![](figures/PhONA.png)
 
  
