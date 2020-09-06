@@ -68,6 +68,10 @@ define OTU-Phontype assocaition.
 }
 \examples{
 \strong{Running linear model based PhONA,where OTU-Phenotype association is defined using linear model}
+\strong{Load the data}
+phyobj <- readRDS(system.file("extdata", "physeqobject.rds", package = "PhONA"))
+sparcc.cor <- read.delim(system.file("extdata", "cor_sparcc.out", package = "PhONA"), sep = "\t", header = T, row.names = 1)
+sparcc.pval <- read.delim(system.file("extdata", "pvals.txt", package = "PhONA"), sep = "\t", header = T, row.names = 1)
 PhONA(
 physeqobj = phyobj,
 cordata = sparcc.cor,

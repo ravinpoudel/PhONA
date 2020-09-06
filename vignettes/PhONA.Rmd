@@ -1,0 +1,96 @@
+---
+title: "PhONA: Phenotype-OTU based Network Analyses"
+author: "Ravin Poudel"
+date: "`r Sys.Date()`"
+#output: rmarkdown::html_vignette
+fig_caption: yes
+#output: pdf_document
+#output: beamer_presentation
+output: tufte::tufte_html
+#output:
+#rmarkdown::html_document:
+#theme: lumen
+vignette: >
+  %\VignetteIndexEntry{PhONA}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+
+#### Introduction
+
+PhONA provides a framework to select a testable and manageable number of OTUs to support microbiome-based agriculture.
+
+```{r}
+# installation 
+# library(devtools)
+# devtools::install_github("ravinpoudel/PhONA", build_vignettes = TRUE, force = TRUE, auth = "5c5decd148f0378dcb762e7b14c3d1508ef49ba2")
+
+# Browse Vignettes to see the output as below. 
+
+# browseVignettes("PhONA")
+```
+
+
+```{r setup, include = FALSE}
+library(tufte)
+library(PhONA)
+```
+
+
+```{r}
+###### Load the data
+phyobj <- readRDS(system.file("extdata", "physeqobject.rds", package = "PhONA"))
+sparcc.cor <- read.delim(system.file("extdata", "cor_sparcc.out", package = "PhONA"), sep = "\t", header = T, row.names = 1)
+sparcc.pval <- read.delim(system.file("extdata", "pvals.txt", package = "PhONA"), sep = "\t", header = T, row.names = 1)
+```
+
+
+```{r,out.width = "400px"}
+library(PhONA)
+PhONA(
+  physeqobj = phyobj,
+  cordata = sparcc.cor,
+  pdata = sparcc.pval,
+  model = "lm",
+  iters=1,
+  OTU_OTU_pvalue = 0.001,
+  OTU_OTU_rvalue = 0.6,
+  OTU_Phenotype_pvalue = 0.6,
+  definePhenotype = "Marketable",
+  defineTreatment = "Maxifort",
+  coloredby = "Phylum",
+  PhenoNodecolor = "yellow",
+  PhenoNodesize = 20,
+  PhenoNodelabel = "Yield",
+  nodesize = 10,
+  Pheno2OTUedgecolor = "black",
+  netlayout = layout.fruchterman.reingold
+)
+
+```
+
+
+```{r,out.width = "500px"}
+library(PhONA)
+PhONA(
+  physeqobj = phyobj,
+  cordata = sparcc.cor,
+  pdata = sparcc.pval,
+  model = "lasso",
+  iters=2,
+  OTU_OTU_pvalue = 0.001,
+  OTU_OTU_rvalue = 0.6,
+  OTU_Phenotype_pvalue = 0.6,
+  definePhenotype = "Marketable",
+  defineTreatment = "Maxifort",
+  coloredby = "Phylum",
+  PhenoNodecolor = "yellow",
+  PhenoNodesize = 20,
+  PhenoNodelabel = "Yield",
+  nodesize = 10,
+  Pheno2OTUedgecolor = "black",
+  netlayout = layout.fruchterman.reingold
+)
+
+```
