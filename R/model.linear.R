@@ -8,7 +8,6 @@
 #' @export
 
 model.linear <- function(n, x, odata){
-  print(n)
   mat <- list()
   for (i in 1:ncol(odata)){
     y <- odata[, i]

@@ -3,8 +3,8 @@ cordata = sparcc.cor
 pdata = sparcc.pval
 model = c("lm","lasso")
 iters = 2
-OTU_OTU_pvalue = 0.001
-OTU_OTU_rvalue = 0.6
+OTU_OTU_pvalue = 0.05
+OTU_OTU_rvalue = 0.5
 OTU_Phenotype_pvalue = 0.6
 definePhenotype="Marketable"
 defineTreatment="Maxifort"
@@ -72,6 +72,11 @@ toc()
 document()
 build()
 pkgdown::build_site()
+##########
+
+ll = setDT(bb, keep.rownames = TRUE)[]
+colnames(ll)[1]<- "OTU_id"
+
 
 
 

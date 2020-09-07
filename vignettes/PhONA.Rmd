@@ -45,21 +45,28 @@ sparcc.cor <- read.delim(system.file("extdata", "cor_sparcc.out", package = "PhO
 sparcc.pval <- read.delim(system.file("extdata", "pvals.txt", package = "PhONA"), sep = "\t", header = T, row.names = 1)
 ```
 
+```{r}
 
-```{r,out.width = "400px"}
-library(PhONA)
+## Assign color to the taxa on the whole phyloseq object so that the same color is assigned for a taxon across treatments
+phyobj = taxacolor(phyobj = phyobj, coloredby = "Phylum")
+
+
+
+```
+
+
+```{r,out.width = "500px"}
 PhONA(
   physeqobj = phyobj,
   cordata = sparcc.cor,
   pdata = sparcc.pval,
   model = "lm",
   iters=1,
-  OTU_OTU_pvalue = 0.001,
-  OTU_OTU_rvalue = 0.6,
+  OTU_OTU_pvalue = 0.05,
+  OTU_OTU_rvalue = 0.5,
   OTU_Phenotype_pvalue = 0.6,
   definePhenotype = "Marketable",
   defineTreatment = "Maxifort",
-  coloredby = "Phylum",
   PhenoNodecolor = "yellow",
   PhenoNodesize = 20,
   PhenoNodelabel = "Yield",
@@ -84,7 +91,6 @@ PhONA(
   OTU_Phenotype_pvalue = 0.6,
   definePhenotype = "Marketable",
   defineTreatment = "Maxifort",
-  coloredby = "Phylum",
   PhenoNodecolor = "yellow",
   PhenoNodesize = 20,
   PhenoNodelabel = "Yield",

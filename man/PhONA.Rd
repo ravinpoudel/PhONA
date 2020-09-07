@@ -10,12 +10,11 @@ PhONA(
   pdata = sparcc.pval,
   model = c("lm", "lasso"),
   iters = 1,
-  OTU_OTU_pvalue = 0.001,
-  OTU_OTU_rvalue = 0.6,
+  OTU_OTU_pvalue = 0.05,
+  OTU_OTU_rvalue = 0.5,
   OTU_Phenotype_pvalue = 0.6,
   definePhenotype = "Marketable",
   defineTreatment = "Maxifort",
-  coloredby = "Phylum",
   PhenoNodecolor = "yellow",
   PhenoNodesize = 20,
   PhenoNodelabel = "Yield",
@@ -46,8 +45,6 @@ were ranked using \code{varImp}. Selected OTUs were then for reduced GLM model.
 
 \item{defineTreatment}{Select the treatment. It is same as the treatment name that the phyloseq object represents}
 
-\item{coloredby}{Select taxonomic group to be used for coloring node. Options: Kingdom,Phylum, Class, Order, Family, Genus, Species}
-
 \item{PhenoNodecolor}{Select color for phenotype node}
 
 \item{PhenoNodesize}{Select node size for phenotype node}
@@ -57,6 +54,8 @@ were ranked using \code{varImp}. Selected OTUs were then for reduced GLM model.
 \item{Pheno2OTUedgecolor}{Select color of edge from OTU to phenotype node}
 
 \item{netlayout}{Select layout for the network graph. All the layout options from igraph can be used}
+
+\item{coloredby}{Select taxonomic group to be used for coloring node. Options: Kingdom,Phylum, Class, Order, Family, Genus, Species}
 }
 \value{
 A PhONA representing OTU-OTU association as well as OTU-Phenotype association

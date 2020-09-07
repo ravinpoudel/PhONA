@@ -7,24 +7,278 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(PhONA)
 ```
 
-## R Markdown
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+```{r}
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+###### Load the data
 
-```{r cars}
-summary(cars)
+otu_data_fungi <- read.mothur.shared("data/Fungi1415_trim.contigs.trim.unique.precluster.pick.pick.subsample.nn.unique_list.shared")
+rownames(otu_data_fungi) <- paste0("F", rownames(otu_data_fungi))
+
+# upload meta data file
+bigmetadata <- read.csv("data/block_diversity_selected_tunnel_ww.csv", header = T, row.names = 1, stringsAsFactors = FALSE)
+rownames(bigmetadata) <- paste0("F", rownames(bigmetadata))
+
+### select otu_data based on metadata
+otu_data <- otu_data_fungi[rownames(bigmetadata), ]
+dim(otu_data)
+#rownames(otu_data)
+
+
+otu_data = na.omit(otu_data)
+
+dim(otu_data)
+
+
+# now select metadata based on od
+meta_data <- bigmetadata[rownames(otu_data), , drop = FALSE]
+
+all.equal(row.names(meta_data), row.names(otu_data))
+
+
+# upload taxanomy file
+tax_fungi <- read.mothur.taxonomy("data/Fungi1415_trim.contigs.trim.unique.precluster.pick.pick.subsample.nn.unique_list.0.03.cons.taxonomy")
+
+
+
+# checking if taxonomy file and count files have same otus
+all.equal(colnames(otu_data), row.names(tax_fungi))
+
+#
+########## read in phenome data/ Yield data
+# read in data
+pheno_data <- read.csv("data/tomato_yield.csv", header = TRUE, stringsAsFactors = FALSE, row.names = 1)
+rownames(pheno_data) <- paste0("F", rownames(pheno_data))
+
+hist(pheno_data$Marketable)
+pheno_data_mean <- aggregate(pheno_data$Marketable, by=list(Rootstock=pheno_data$Rootstock), FUN=mean)
+
+
+pheno_data_sel <- pheno_data %>%
+  select(Rootstock, Compartment, Marketable, Study_site, Year, Sample_name)
+
+meta_withpheo = inner_join(meta_data, pheno_data_sel)
+rownames(meta_withpheo)<- rownames(meta_data)
+
+# create a phyloseq object~ can combine count, metadata, taxonomy, and phylogentic tree.
+tax.mat <- tax_table(as.matrix(tax_fungi))
+otu.mat = otu_table(t(otu_data), taxa_are_rows = TRUE)
+sample.mat <- sample_data(meta_withpheo)
+physeq = phyloseq(otu.mat, tax.mat, sample.mat)
+
+
+## Assign color to the taxa on the whole phyloseq object so that the same color is assigned for a taxon across treatments
+physeq = taxacolor(phyobj = physeq, coloredby = "Phylum")
+
+physeq
+
 ```
 
-## Including Plots
+At this point we have a phyloseq object for all the treatments. Now, we will process the phyloseq object the split it by treatment combinations. 
 
-You can also embed plots, for example:
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+```{r}
+
+#### All the combinations of treatment factor
+
+region <- unique(as.character(data.frame(sample_data(physeq))$Compartment))
+region
+treatment <- unique(as.character(data.frame(sample_data(physeq))$Rootstock))
+treatment
+
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+Getting phyloseq object for endosphere
+```{r}
+
+# Endosphere 
+ng_endo <- subset_samples(physeq, c(Compartment =="Endosphere" & Rootstock=="Nongraft")) %>%
+  prune_taxa(taxa_sums(.) > 2, .)
+# Inputfile for running SparCC
+ng_endo_sparcc = otu_table(ng_endo)
+write.table(data.frame(OTU_id = rownames(ng_endo_sparcc), ng_endo_sparcc), file = "data/sparcc_data/ng_endo_sparcc.txt", sep = "\t", row.names = FALSE, quote = FALSE)
+  
+
+
+sg_endo <- subset_samples(physeq, c(Compartment =="Endosphere" & Rootstock=="Selfgraft")) %>%
+    prune_taxa(taxa_sums(.) > 2, .)
+# Inputfile for running SparCC
+sg_endo_sparcc = otu_table(sg_endo)
+write.table(data.frame(OTU_id = rownames(sg_endo_sparcc), sg_endo_sparcc), file = "data/sparcc_data/sg_endo_sparcc.txt", sep = "\t", row.names = FALSE, quote = FALSE)
+  
+
+
+rst_endo <- subset_samples(physeq, c(Compartment =="Endosphere" & Rootstock=="RST-04-106")) %>%
+    prune_taxa(taxa_sums(.) > 2, .)
+# Inputfile for running SparCC
+rst_endo_sparcc = otu_table(rst_endo)
+write.table(data.frame(OTU_id = rownames(rst_endo_sparcc), rst_endo_sparcc), file = "data/sparcc_data/rst_endo_sparcc.txt", sep = "\t", row.names = FALSE, quote = FALSE)
+  
+
+
+maxi_endo <- subset_samples(physeq, c(Compartment =="Endosphere" & Rootstock=="Maxifort")) %>%
+    prune_taxa(taxa_sums(.) > 2, .)
+# Inputfile for running SparCC
+maxi_endo_sparcc = otu_table(maxi_endo)
+write.table(data.frame(OTU_id = rownames(maxi_endo_sparcc), maxi_endo_sparcc), file = "data/sparcc_data/maxi_endo_sparcc.txt", sep = "\t", row.names = FALSE, quote = FALSE)
+  
+```
+
+
+Getting phyloseq object for rhizosphere
+```{r}
+
+# Rhizosphere
+
+ng_rhizo <- subset_samples(physeq, c(Compartment =="Rhizosphere" & Rootstock=="Nongraft")) %>%
+    prune_taxa(taxa_sums(.) > 2, .)
+# Inputfile for running SparCC
+ng_rhizo_sparcc = otu_table(ng_rhizo)
+write.table(data.frame(OTU_id = rownames(ng_rhizo_sparcc), ng_rhizo_sparcc), file = "data/sparcc_data/ng_rhizo_sparcc.txt", sep = "\t", row.names = FALSE, quote = FALSE)
+  
+
+  
+sg_rhizo <- subset_samples(physeq, c(Compartment =="Rhizosphere" & Rootstock=="Selfgraft")) %>%
+    prune_taxa(taxa_sums(.) > 2, .)
+# Inputfile for running SparCC
+sg_rhizo_sparcc = otu_table(sg_rhizo)
+write.table(data.frame(OTU_id = rownames(sg_rhizo_sparcc), sg_rhizo_sparcc), file = "data/sparcc_data/sg_rhizo_sparcc.txt", sep = "\t", row.names = FALSE, quote = FALSE)
+  
+
+  
+rst_rhizo <- subset_samples(physeq, c(Compartment =="Rhizosphere" & Rootstock=="RST-04-106"))%>%
+  prune_taxa(taxa_sums(.) > 2, .)
+# Inputfile for running SparCC
+rst_rhizo_sparcc = otu_table(rst_rhizo)
+write.table(data.frame(OTU_id = rownames(rst_rhizo_sparcc), rst_rhizo_sparcc), file = "data/sparcc_data/rst_rhizo_sparcc.txt", sep = "\t", row.names = FALSE, quote = FALSE)
+  
+
+
+maxi_rhizo <- subset_samples(physeq, c(Compartment =="Rhizosphere" & Rootstock=="Maxifort")) %>%
+  prune_taxa(taxa_sums(.) > 2, .)
+# Inputfile for running SparCC
+maxi_rhizo_sparcc = otu_table(maxi_rhizo)
+write.table(data.frame(OTU_id = rownames(maxi_rhizo_sparcc), maxi_rhizo_sparcc), file = "data/sparcc_data/maxi_rhizo_sparcc.txt", sep = "\t", row.names = FALSE, quote = FALSE)
+  
+
+
+```
+
+
+Read in output from sparcc, then run SparCC.
+
+
+Nongraft and Endosphere
+```{r}
+
+ng_endo_sparcc.cor <- read.delim("data/sparcc_output/Endosphere_Nongraft_cor_sparcc.out", sep = "\t", header = T, row.names = 1)
+ng_endo_sparcc.pval <- read.delim("data/sparcc_output/Endosphere_Nongraft_pvals.two_sided.txt", sep = "\t", header = T, row.names = 1)
+
+PhONA(physeqobj = ng_endo, cordata = ng_endo_sparcc.cor,
+      pdata = ng_endo_sparcc.pval, model = "lasso",
+      iters = 2, defineTreatment = "Nongraft",nodesize = 5,
+      PhenoNodesize = 12, definePhenotype = "Marketable", PhenoNodelabel = "Nongraft")
+
+```
+
+
+Selfgraft and Endosphere
+```{r}
+
+sg_endo_sparcc.cor <- read.delim("data/sparcc_output/Endosphere_Selfgraft_cor_sparcc.out", sep = "\t", header = T, row.names = 1)
+sg_endo_sparcc.pval <- read.delim("data/sparcc_output/Endosphere_Selfgraft_pvals.two_sided.txt", sep = "\t", header = T, row.names = 1)
+
+PhONA(physeqobj = sg_endo, cordata = sg_endo_sparcc.cor,
+      pdata = sg_endo_sparcc.pval, model = "lasso",
+      iters = 2, defineTreatment = "Selfgraft",nodesize = 5,
+      PhenoNodesize = 12, definePhenotype = "Marketable", PhenoNodelabel = "Selfgraft")
+
+```
+
+
+RST-04-106 and Endosphere
+```{r}
+
+rst_endo_sparcc.cor <- read.delim("data/sparcc_output/Endosphere_RST-04-106_cor_sparcc.out", sep = "\t", header = T, row.names = 1)
+rst_endo_sparcc.pval <- read.delim("data/sparcc_output/Endosphere_RST-04-106_pvals.two_sided.txt", sep = "\t", header = T, row.names = 1)
+
+PhONA(physeqobj = rst_endo, cordata = rst_endo_sparcc.cor,
+      pdata = rst_endo_sparcc.pval, model = "lasso",
+      iters = 2, defineTreatment = "RST-04-106",nodesize = 5,
+      PhenoNodesize = 12, definePhenotype = "Marketable", PhenoNodelabel = "RST-04-106")
+```
+
+Maxifort and Endosphere
+```{r}
+
+maxi_endo_sparcc.cor <- read.delim("data/sparcc_output/Endosphere_Maxifort_cor_sparcc.out", sep = "\t", header = T, row.names = 1)
+maxi_endo_sparcc.pval <- read.delim("data/sparcc_output/Endosphere_Maxifort_pvals.two_sided.txt", sep = "\t", header = T, row.names = 1)
+
+PhONA(physeqobj = maxi_endo, cordata = maxi_endo_sparcc.cor,
+      pdata = maxi_endo_sparcc.pval, model = "lasso",
+      iters = 2, defineTreatment = "Maxifort",nodesize = 5,
+      PhenoNodesize = 12, definePhenotype = "Marketable", PhenoNodelabel = "Maxifort")
+
+
+
+```
+
+
+
+Nongraft and Rhizosphere
+```{r}
+
+ng_rhizo_sparcc.cor <- read.delim("data/sparcc_output/Rhizosphere_Nongraft_cor_sparcc.out", sep = "\t", header = T, row.names = 1)
+ng_rhizo_sparcc.pval <- read.delim("data/sparcc_output/Rhizosphere_Nongraft_pvals.two_sided.txt", sep = "\t", header = T, row.names = 1)
+
+PhONA(physeqobj = ng_rhizo, cordata = ng_rhizo_sparcc.cor,
+      pdata = ng_rhizo_sparcc.pval, model = "lasso",
+      iters = 2, defineTreatment = "Nongraft",nodesize = 5,
+      PhenoNodesize = 12, definePhenotype = "Marketable", PhenoNodelabel = "Nongraft")
+
+```
+
+
+Selfgraft and  Rhizosphere
+```{r}
+
+sg_rhizo_sparcc.cor <- read.delim("data/sparcc_output/Rhizosphere_Selfgraft_cor_sparcc.out", sep = "\t", header = T, row.names = 1)
+sg_rhizo_sparcc.pval <- read.delim("data/sparcc_output/Rhizosphere_Selfgraft_pvals.two_sided.txt", sep = "\t", header = T, row.names = 1)
+
+PhONA(physeqobj = sg_rhizo, cordata = sg_rhizo_sparcc.cor,
+      pdata = sg_rhizo_sparcc.pval, model = "lasso",
+      iters = 5, defineTreatment = "Selfgraft",nodesize = 5,
+      PhenoNodesize = 12, definePhenotype = "Marketable", PhenoNodelabel = "Selfgraft")
+
+```
+
+
+RST-04-106 and  Rhizosphere
+```{r}
+
+rst_rhizo_sparcc.cor <- read.delim("data/sparcc_output/Rhizosphere_RST-04-106_cor_sparcc.out", sep = "\t", header = T, row.names = 1)
+rst_rhizo_sparcc.pval <- read.delim("data/sparcc_output/Rhizosphere_RST-04-106_pvals.two_sided.txt", sep = "\t", header = T, row.names = 1)
+
+PhONA(physeqobj = rst_rhizo, cordata = rst_rhizo_sparcc.cor,
+      pdata = rst_rhizo_sparcc.pval, model = "lasso",
+      iters = 2, defineTreatment = "RST-04-106",nodesize = 5,
+      PhenoNodesize = 12, definePhenotype = "Marketable", PhenoNodelabel = "RST-04-106")
+```
+
+Maxifort and  Rhizosphere
+
+```{r}
+
+maxi_rhizo_sparcc.cor <- read.delim("data/sparcc_output/Rhizosphere_Maxifort_cor_sparcc.out", sep = "\t", header = T, row.names = 1)
+maxi_rhizo_sparcc.pval <- read.delim("data/sparcc_output/Rhizosphere_Maxifort_pvals.two_sided.txt", sep = "\t", header = T, row.names = 1)
+
+PhONA(physeqobj = maxi_rhizo, cordata = maxi_rhizo_sparcc.cor,
+      pdata = maxi_rhizo_sparcc.pval, model = "lasso",
+      defineTreatment = "Maxifort",nodesize = 5,
+      iters = 2, PhenoNodesize = 12, definePhenotype = "Marketable", PhenoNodelabel = "Maxifort")
+```
+

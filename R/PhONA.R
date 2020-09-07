@@ -73,12 +73,11 @@ PhONA <- function(physeqobj = physeq,
                   pdata = sparcc.pval,
                   model = c("lm","lasso"),
                   iters = 1,
-                  OTU_OTU_pvalue = 0.001,
-                  OTU_OTU_rvalue = 0.6,
-                  OTU_Phenotype_pvalue = 0.6,
+                  OTU_OTU_pvalue = 0.05,
+                  OTU_OTU_rvalue = 0.5,
+                  OTU_Phenotype_pvalue = 0.6,## check if this has been applied.
                   definePhenotype="Marketable",
                   defineTreatment="Maxifort",
-                  coloredby="Phylum",
                   PhenoNodecolor="yellow",
                   PhenoNodesize=20,
                   PhenoNodelabel="Yield",
@@ -87,7 +86,7 @@ PhONA <- function(physeqobj = physeq,
                   netlayout=layout.fruchterman.reingold){
 
 tic()
-  message ("Parsing Phyloseq Object")
+  # message ("Parsing Phyloseq Object")
 
 
   ###
@@ -96,37 +95,12 @@ tic()
  # tdata = taxdata
   tdata = data.frame(as(tax_table(physeqobj), "matrix"))
 
-  message ("Done Parsing Phyloseq Object !!!!!")
+  # message ("Done Parsing Phyloseq Object !!!!!")
 
 
-
-
-  ###
-  ####### check the validity of parater, flag if not
-
-  possible_tax <- c("Kingdom","Phylum","Class","Order","Family","Genus","Species")
-
-  if (coloredby %in% possible_tax) {
-    # create a color palltet using coloredby
-    # number of unique color needed
-
-    mod.vec <- tdata %>%
-      pull(coloredby) %>%
-      as.character()
-    n <- length(unique(mod.vec))
-    mod.num <- as.numeric(as.factor(mod.vec))
-    ucolors <- distinctColorPalette(n)
-    tdata["color"] <- sapply(mod.num, function(j) ucolors[j])
-  } else {
-    cat(" Provided coloredby: ", coloredby,"\n")
-
-    stop("Please provide correct coloredby paramter. Available options are: Kingdom,
-         Phylum, Class, Order, Family, Genus, Species")
-
-  }
 
   ######
-  message("Creating network using association matrix")
+  # message("Creating network using association matrix")
 
   p.yes <- pdata < OTU_OTU_pvalue
 
@@ -134,7 +108,7 @@ tic()
 
   p.yes.r <- abs(p.yes.r) > OTU_OTU_rvalue
 
-  p.yes.rr <- p.yes.r * sparcc.cor
+  p.yes.rr <- p.yes.r * cordata
 
   adjm <- as.matrix(p.yes.rr)
 
@@ -157,22 +131,23 @@ tic()
   V(net.grph)$Family <- as.character(sel.tax$Family)
   V(net.grph)$Genus <- as.character(sel.tax$Genus)
   V(net.grph)$Species <- as.character(sel.tax$Species)
-  V(net.grph)$color <- tdata$color
+  V(net.grph)$color <- as.character(rev(tdata)[1] %>% pull()) # always a last column of tdata has color column
 
-  message("Association network created-- Done!!!")
+  # message("Association network created-- Done!!!")
 
 ##########
 
   x = mdata %>% pull(definePhenotype)  ## generalize to metadata
 
-message("Creating assocication model")
+# message("Creating assocication model")
+message("Total number of iterations used: ", iters)
 ##########
 
   if (model == "lm"){
    #source("R/model.linear.R")
    bb = model.linear(n=iters, x, odata)
    bb["Treatment"] <- defineTreatment
-   message("OTUs selected from linear regression")
+   # message("OTUs selected from linear regression")
   }
 
 ############
@@ -181,7 +156,7 @@ message("Creating assocication model")
 if (model == "lasso"){
   bb = model.lasso(n = iters, x, odata)
   bb["Treatment"] <- defineTreatment
-  message("Unique OTUs selected from lasso regression")
+  # message("Unique OTUs selected from lasso regression")
   }
 
 
@@ -191,7 +166,7 @@ if (model == "lasso"){
 
 #################
 
-  message("Creating PhONA")
+  # message("Creating PhONA")
 
   from <- rep(defineTreatment,dim(bb)[1])  ### how to get sel.rootstock
 
@@ -245,6 +220,7 @@ if (model == "lasso"){
   V(net.two)$nName[1] <- PhenoNodelabel
 
 
+
   par(mar = c(0, 0, 0, 0))
   plot(net.two,
        vertex.frame.color="black",
@@ -257,15 +233,18 @@ if (model == "lasso"){
        vertex.label.cex=V(net.two)$vertex.label.size)
 
   # legend_nodes <- unique(V(net.two)$Phylum)
-  legend_nodes <- unique(get.vertex.attribute(net.two)[coloredby][[1]])
+  labelfornodes_legend = tail(colnames(tdata), n=1)
+  labelfornodes_legend = unlist(strsplit(labelfornodes_legend,"_"))[1]
+
+  legend_nodes <- unique(get.vertex.attribute(net.two)[labelfornodes_legend][[1]])
   legend_nodes[1] <-  PhenoNodelabel
   legend(x=1.1, y=1.1,legend_nodes, pch=21, pt.bg=unique( V(net.two)$color), pt.cex=2, cex=0.8, bty="n", ncol=1)
   #legend("bottom",legend_nodes, pch=21, pt.bg=unique( V(net.two)$color), pt.cex=2, cex=.8, bty="n", ncol=4)
 
   net.two
 
-  message("PhONA created -- Done !!!")
-  message("Total time to run PhONA")
+  # message("PhONA created -- Done !!!")
+  # message("Total time to run PhONA")
 toc()
 }
 

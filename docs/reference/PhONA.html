@@ -147,12 +147,11 @@ define OTU-Phontype assocaition.</p>
   pdata = <span class='kw'>sparcc.pval</span>,
   model = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"lm"</span>, <span class='st'>"lasso"</span>),
   iters = <span class='fl'>1</span>,
-  OTU_OTU_pvalue = <span class='fl'>0.001</span>,
-  OTU_OTU_rvalue = <span class='fl'>0.6</span>,
+  OTU_OTU_pvalue = <span class='fl'>0.05</span>,
+  OTU_OTU_rvalue = <span class='fl'>0.5</span>,
   OTU_Phenotype_pvalue = <span class='fl'>0.6</span>,
   definePhenotype = <span class='st'>"Marketable"</span>,
   defineTreatment = <span class='st'>"Maxifort"</span>,
-  coloredby = <span class='st'>"Phylum"</span>,
   PhenoNodecolor = <span class='st'>"yellow"</span>,
   PhenoNodesize = <span class='fl'>20</span>,
   PhenoNodelabel = <span class='st'>"Yield"</span>,
@@ -204,10 +203,6 @@ were ranked using <code>varImp</code>. Selected OTUs were then for reduced GLM m
       <td><p>Select the treatment. It is same as the treatment name that the phyloseq object represents</p></td>
     </tr>
     <tr>
-      <th>coloredby</th>
-      <td><p>Select taxonomic group to be used for coloring node. Options: Kingdom,Phylum, Class, Order, Family, Genus, Species</p></td>
-    </tr>
-    <tr>
       <th>PhenoNodecolor</th>
       <td><p>Select color for phenotype node</p></td>
     </tr>
@@ -226,6 +221,10 @@ were ranked using <code>varImp</code>. Selected OTUs were then for reduced GLM m
     <tr>
       <th>netlayout</th>
       <td><p>Select layout for the network graph. All the layout options from igraph can be used</p></td>
+    </tr>
+    <tr>
+      <th>coloredby</th>
+      <td><p>Select taxonomic group to be used for coloring node. Options: Kingdom,Phylum, Class, Order, Family, Genus, Species</p></td>
     </tr>
     </table>
 
@@ -253,7 +252,7 @@ PhenoNodelabel = <span class='st'>"Yield"</span>,
 nodesize = <span class='fl'>10</span>,
 Pheno2OTUedgecolor = <span class='st'>"black"</span>,
 netlayout = <span class='kw'>layout.fruchterman.reingold</span>)
-</div><div class='output co'>#&gt; <span class='message'>Parsing Phyloseq Object</span></div><div class='output co'>#&gt; <span class='error'>Error in otu_table(physeqobj): object 'phyobj' not found</span></div><div class='input'>
+</div><div class='output co'>#&gt; <span class='error'>Error in PhONA(physeqobj = phyobj, cordata = sparcc.cor, pdata = sparcc.pval,     model = "lm", iters = 1, OTU_OTU_pvalue = 0.001, OTU_OTU_rvalue = 0.6,     OTU_Phenotype_pvalue = 0.6, definePhenotype = "Marketable",     defineTreatment = "Maxifort", coloredby = "Phylum", PhenoNodecolor = "yellow",     PhenoNodesize = 20, PhenoNodelabel = "Yield", nodesize = 10,     Pheno2OTUedgecolor = "black", netlayout = layout.fruchterman.reingold): unused argument (coloredby = "Phylum")</span></div><div class='input'>
 
 
 
@@ -275,7 +274,7 @@ PhenoNodelabel = <span class='st'>"Yield"</span>,
 nodesize = <span class='fl'>10</span>,
 Pheno2OTUedgecolor = <span class='st'>"black"</span>,
 netlayout = <span class='kw'>layout.fruchterman.reingold</span>)
-</div><div class='output co'>#&gt; <span class='message'>Parsing Phyloseq Object</span></div><div class='output co'>#&gt; <span class='error'>Error in otu_table(physeqobj): object 'phyobj' not found</span></div></pre>
+</div><div class='output co'>#&gt; <span class='error'>Error in PhONA(physeqobj = phyobj, cordata = sparcc.cor, pdata = sparcc.pval,     model = "lasso", iters = 1, OTU_OTU_pvalue = 0.001, OTU_OTU_rvalue = 0.6,     OTU_Phenotype_pvalue = 0.6, definePhenotype = "Marketable",     defineTreatment = "Maxifort", coloredby = "Phylum", PhenoNodecolor = "yellow",     PhenoNodesize = 20, PhenoNodelabel = "Yield", nodesize = 10,     Pheno2OTUedgecolor = "black", netlayout = layout.fruchterman.reingold): unused argument (coloredby = "Phylum")</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

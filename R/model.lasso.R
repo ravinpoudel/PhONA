@@ -8,10 +8,9 @@
 #' @export
 
 model.lasso <- function(n, x, odata){
-  print(n)
   df_list <- list()
   for (i in 1:n){
-    message ("Running Iteration Number::", i)
+    # message ("Running Iteration Number::", i)
     x1 =x
     odata1 = odata
     tryCatch({df_list[[i]] = lasso(x1, odata1)}, error=function(e){cat("ERROR :",conditionMessage(e), "\n")})

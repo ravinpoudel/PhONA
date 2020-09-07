@@ -84,7 +84,7 @@
       <h1 data-toc-skip>PhONA: Phenotype-OTU based Network Analyses</h1>
                         <h4 class="author">Ravin Poudel</h4>
             
-            <h4 class="date">2020-09-06</h4>
+            <h4 class="date">2020-09-07</h4>
       
       
       <div class="hidden name"><code>PhONA.Rmd</code></div>
@@ -113,19 +113,21 @@
 <span class="kw">sparcc.pval</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.delim</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"extdata"</span>, <span class="st">"pvals.txt"</span>, package = <span class="st">"PhONA"</span>), sep = <span class="st">"\t"</span>, header = <span class="kw">T</span>, row.names = <span class="fl">1</span>)
 </pre></div>
 <div class="sourceCode" id="cb3"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw">PhONA</span>)
+<span class="co">## Assign color to the taxa on the whole phyloseq object so that the same color is assigned for a taxon across treatments</span>
+<span class="kw">phyobj</span> <span class="op">=</span> <span class="fu"><a href="../reference/taxacolor.html">taxacolor</a></span>(phyobj = <span class="kw">phyobj</span>, coloredby = <span class="st">"Phylum"</span>)
+</pre></div>
+<div class="sourceCode" id="cb4"><pre class="downlit">
 <span class="fu"><a href="../reference/PhONA.html">PhONA</a></span>(
   physeqobj = <span class="kw">phyobj</span>,
   cordata = <span class="kw">sparcc.cor</span>,
   pdata = <span class="kw">sparcc.pval</span>,
   model = <span class="st">"lm"</span>,
   iters=<span class="fl">1</span>,
-  OTU_OTU_pvalue = <span class="fl">0.001</span>,
-  OTU_OTU_rvalue = <span class="fl">0.6</span>,
+  OTU_OTU_pvalue = <span class="fl">0.05</span>,
+  OTU_OTU_rvalue = <span class="fl">0.5</span>,
   OTU_Phenotype_pvalue = <span class="fl">0.6</span>,
   definePhenotype = <span class="st">"Marketable"</span>,
   defineTreatment = <span class="st">"Maxifort"</span>,
-  coloredby = <span class="st">"Phylum"</span>,
   PhenoNodecolor = <span class="st">"yellow"</span>,
   PhenoNodesize = <span class="fl">20</span>,
   PhenoNodelabel = <span class="st">"Yield"</span>,
@@ -134,19 +136,10 @@
   netlayout = <span class="kw">layout.fruchterman.reingold</span>
 )
 </pre></div>
-<pre><code>## Parsing Phyloseq Object</code></pre>
-<pre><code>## Done Parsing Phyloseq Object !!!!!</code></pre>
-<pre><code>## Creating network using association matrix</code></pre>
-<pre><code>## Association network created-- Done!!!</code></pre>
-<pre><code>## Creating assocication model</code></pre>
-<pre><code>## [1] 1</code></pre>
-<pre><code>## OTUs selected from linear regression</code></pre>
-<pre><code>## Creating PhONA</code></pre>
-<pre><code>## PhONA created -- Done !!!</code></pre>
-<pre><code>## Total time to run PhONA</code></pre>
-<p><img src="PhONA_files/figure-html/unnamed-chunk-3-1.png" width="400px"></p>
-<pre><code>## 7.844 sec elapsed</code></pre>
-<div class="sourceCode" id="cb15"><pre class="downlit">
+<pre><code>## Total number of iterations used: 1</code></pre>
+<p><img src="PhONA_files/figure-html/unnamed-chunk-4-1.png" width="500px"></p>
+<pre><code>## 19.663 sec elapsed</code></pre>
+<div class="sourceCode" id="cb7"><pre class="downlit">
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw">PhONA</span>)
 <span class="fu"><a href="../reference/PhONA.html">PhONA</a></span>(
   physeqobj = <span class="kw">phyobj</span>,
@@ -159,7 +152,6 @@
   OTU_Phenotype_pvalue = <span class="fl">0.6</span>,
   definePhenotype = <span class="st">"Marketable"</span>,
   defineTreatment = <span class="st">"Maxifort"</span>,
-  coloredby = <span class="st">"Phylum"</span>,
   PhenoNodecolor = <span class="st">"yellow"</span>,
   PhenoNodesize = <span class="fl">20</span>,
   PhenoNodelabel = <span class="st">"Yield"</span>,
@@ -168,22 +160,11 @@
   netlayout = <span class="kw">layout.fruchterman.reingold</span>
 )
 </pre></div>
-<pre><code>## Parsing Phyloseq Object</code></pre>
-<pre><code>## Done Parsing Phyloseq Object !!!!!</code></pre>
-<pre><code>## Creating network using association matrix</code></pre>
-<pre><code>## Association network created-- Done!!!</code></pre>
-<pre><code>## Creating assocication model</code></pre>
-<pre><code>## [1] 2</code></pre>
-<pre><code>## Running Iteration Number::1</code></pre>
-<pre><code>## Waiting for profiling to be done...</code></pre>
-<pre><code>## Running Iteration Number::2</code></pre>
-<pre><code>## Waiting for profiling to be done...</code></pre>
-<pre><code>## Unique OTUs selected from lasso regression</code></pre>
-<pre><code>## Creating PhONA</code></pre>
-<pre><code>## PhONA created -- Done !!!</code></pre>
-<pre><code>## Total time to run PhONA</code></pre>
-<p><img src="PhONA_files/figure-html/unnamed-chunk-4-1.png" width="500px"></p>
-<pre><code>## 13.088 sec elapsed</code></pre>
+<pre><code>## Total number of iterations used: 2</code></pre>
+<pre><code>## Warning in nominalTrainWorkflow(x = x, y = y, wts = weights, info = trainInfo, :
+## There were missing values in resampled performance measures.</code></pre>
+<p><img src="PhONA_files/figure-html/unnamed-chunk-5-1.png" width="500px"></p>
+<pre><code>## 12.653 sec elapsed</code></pre>
 </div>
   </div>
 

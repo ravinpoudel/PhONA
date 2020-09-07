@@ -42,8 +42,8 @@ lasso <- function(x1, odata1) {
   sel_cdata["Phenotype"] <- odata_with_pheno$Phenotype
 
   sub_model <- glm(Phenotype ~ ., data = sel_cdata)
-  summary.lm(sub_model)
-  confint(sub_model)
+  #summary.lm(sub_model)
+  #confint(sub_model)
   coff_df = data.frame(summary(sub_model)$coefficient)[-c(1), ] # also remove row with intercept
   #coff_df_sig = coff_df[coff_df$Pr...t.. <=0.05, ]
   #coff_df[trt] <- trt
