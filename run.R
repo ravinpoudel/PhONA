@@ -77,7 +77,10 @@ pkgdown::build_site()
 ll = setDT(bb, keep.rownames = TRUE)[]
 colnames(ll)[1]<- "OTU_id"
 
-
-
+summary_graph_endo_df <- rbind(phona_ng_endo$graph_summary,
+                          phona_sg_endo$graph_summary,
+                          phona_rst_endo$graph_summary,
+                          phona_maxi_endo$graph_summary)
+summary_graph_endo_df
 
 

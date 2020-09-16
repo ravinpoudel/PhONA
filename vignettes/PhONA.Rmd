@@ -77,6 +77,16 @@ example_lm <- PhONA(
 
 ```
 
+
+Summary of the graph
+
+```{r}
+
+kable(summarizePhONA(example_lm$phona_graph, example_lm$roles))
+
+```
+
+
 Role analyses using SA algorithm implemented in rnetcarto package. 
 
 ```{r}
@@ -122,6 +132,13 @@ example_lasso <- PhONA(
   Pheno2OTUedgecolor = "black",
   netlayout = layout.fruchterman.reingold
 )
+
+```
+
+Summary of the graph
+
+```{r}
+kable(summarizePhONA(example_lasso$phona_graph, example_lasso$roles))
 
 ```
 

@@ -138,8 +138,59 @@
 </pre></div>
 <pre><code>## Total number of iterations used: 1</code></pre>
 <p><img src="PhONA_files/figure-html/unnamed-chunk-4-1.png" width="500px"></p>
-<p>Role analyses using SA algorithm implemented in rnetcarto package.</p>
+<p>Summary of the graph</p>
 <div class="sourceCode" id="cb6"><pre class="downlit">
+<span class="fu">kable</span>(<span class="fu"><a href="../reference/summarizePhONA.html">summarizePhONA</a></span>(<span class="kw">example_lm</span><span class="op">$</span><span class="kw">phona_graph</span>, <span class="kw">example_lm</span><span class="op">$</span><span class="kw">roles</span>))
+</pre></div>
+<table class="table">
+<colgroup>
+<col width="4%">
+<col width="4%">
+<col width="9%">
+<col width="7%">
+<col width="5%">
+<col width="5%">
+<col width="10%">
+<col width="3%">
+<col width="10%">
+<col width="7%">
+<col width="11%">
+<col width="9%">
+<col width="10%">
+</colgroup>
+<thead><tr class="header">
+<th align="right">node</th>
+<th align="right">edge</th>
+<th align="right">nodeDegree</th>
+<th align="right">avgpath</th>
+<th align="right">trans</th>
+<th align="right">mod</th>
+<th align="right">connectance</th>
+<th align="right">wtc</th>
+<th align="right">nModules.SA</th>
+<th align="left">top3hub</th>
+<th align="left">top3hubv</th>
+<th align="right">n_postiveL</th>
+<th align="right">n_negativeL</th>
+</tr></thead>
+<tbody><tr class="odd">
+<td align="right">235</td>
+<td align="right">1019</td>
+<td align="right">4.336</td>
+<td align="right">1.963</td>
+<td align="right">0.773</td>
+<td align="right">0.314</td>
+<td align="right">0.018</td>
+<td align="right">30</td>
+<td align="right">6</td>
+<td align="left">1;17;36</td>
+<td align="left">1;0.578;0.56</td>
+<td align="right">496</td>
+<td align="right">289</td>
+</tr></tbody>
+</table>
+<p>Role analyses using SA algorithm implemented in rnetcarto package.</p>
+<div class="sourceCode" id="cb7"><pre class="downlit">
 <span class="kw">example_lm_roles</span> <span class="op">&lt;-</span> <span class="kw">example_lm</span><span class="op">$</span><span class="kw">role</span>
 <span class="fu">ggplot</span>(<span class="kw">example_lm_roles</span>, <span class="fu">aes</span>(<span class="kw">participation</span>,<span class="kw">connectivity</span>,label=<span class="kw">name</span>)) <span class="op">+</span> <span class="fu">geom_point</span>(<span class="fu">aes</span>(colour = <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span>(<span class="kw">Treatment</span>)))<span class="op">+</span>
   <span class="fu">scale_size</span>(guide = <span class="st">'none'</span>)<span class="op">+</span>
@@ -160,8 +211,8 @@
         legend.text=<span class="fu">element_text</span>(size=<span class="fl">16</span>,family=<span class="st">"Times New Roman"</span>)) <span class="op">+</span>
   <span class="fu">guides</span>(color = <span class="fu">guide_legend</span>(override.aes = <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(size=<span class="fl">5</span>)))
 </pre></div>
-<p><img src="PhONA_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
-<div class="sourceCode" id="cb7"><pre class="downlit">
+<p><img src="PhONA_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
+<div class="sourceCode" id="cb8"><pre class="downlit">
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw">PhONA</span>)
 <span class="kw">example_lasso</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/PhONA.html">PhONA</a></span>(
   physeqobj = <span class="kw">phyobj</span>,
@@ -183,8 +234,59 @@
 )
 </pre></div>
 <pre><code>## Total number of iterations used: 2</code></pre>
-<p><img src="PhONA_files/figure-html/unnamed-chunk-6-1.png" width="500px"></p>
-<div class="sourceCode" id="cb9"><pre class="downlit">
+<p><img src="PhONA_files/figure-html/unnamed-chunk-7-1.png" width="500px"></p>
+<p>Summary of the graph</p>
+<div class="sourceCode" id="cb10"><pre class="downlit">
+<span class="fu">kable</span>(<span class="fu"><a href="../reference/summarizePhONA.html">summarizePhONA</a></span>(<span class="kw">example_lasso</span><span class="op">$</span><span class="kw">phona_graph</span>, <span class="kw">example_lasso</span><span class="op">$</span><span class="kw">roles</span>))
+</pre></div>
+<table class="table">
+<colgroup>
+<col width="4%">
+<col width="4%">
+<col width="9%">
+<col width="6%">
+<col width="5%">
+<col width="5%">
+<col width="10%">
+<col width="3%">
+<col width="10%">
+<col width="7%">
+<col width="12%">
+<col width="9%">
+<col width="10%">
+</colgroup>
+<thead><tr class="header">
+<th align="right">node</th>
+<th align="right">edge</th>
+<th align="right">nodeDegree</th>
+<th align="right">avgpath</th>
+<th align="right">trans</th>
+<th align="right">mod</th>
+<th align="right">connectance</th>
+<th align="right">wtc</th>
+<th align="right">nModules.SA</th>
+<th align="left">top3hub</th>
+<th align="left">top3hubv</th>
+<th align="right">n_postiveL</th>
+<th align="right">n_negativeL</th>
+</tr></thead>
+<tbody><tr class="odd">
+<td align="right">61</td>
+<td align="right">182</td>
+<td align="right">2.984</td>
+<td align="right">2.958</td>
+<td align="right">0.596</td>
+<td align="right">0.364</td>
+<td align="right">0.049</td>
+<td align="right">8</td>
+<td align="right">7</td>
+<td align="left">38;23;24</td>
+<td align="left">1;0.932;0.897</td>
+<td align="right">107</td>
+<td align="right">69</td>
+</tr></tbody>
+</table>
+<div class="sourceCode" id="cb11"><pre class="downlit">
 <span class="kw">example_lasso_roles</span> <span class="op">&lt;-</span> <span class="kw">example_lasso</span><span class="op">$</span><span class="kw">role</span>
 <span class="fu">ggplot</span>(<span class="kw">example_lasso_roles</span>, <span class="fu">aes</span>(<span class="kw">participation</span>,<span class="kw">connectivity</span>,label=<span class="kw">name</span>)) <span class="op">+</span> <span class="fu">geom_point</span>(<span class="fu">aes</span>(colour = <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span>(<span class="kw">Treatment</span>)))<span class="op">+</span>
   <span class="fu">scale_size</span>(guide = <span class="st">'none'</span>)<span class="op">+</span>
@@ -205,7 +307,7 @@
         legend.text=<span class="fu">element_text</span>(size=<span class="fl">16</span>,family=<span class="st">"Times New Roman"</span>)) <span class="op">+</span>
   <span class="fu">guides</span>(color = <span class="fu">guide_legend</span>(override.aes = <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(size=<span class="fl">5</span>)))
 </pre></div>
-<p><img src="PhONA_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
+<p><img src="PhONA_files/figure-html/unnamed-chunk-9-1.png" width="700"></p>
 </div>
   </div>
 

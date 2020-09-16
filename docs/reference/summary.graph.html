@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Function reference • PhONA</title>
+<title>Summarize graph object — summary.graph • PhONA</title>
 
 
 <!-- jquery -->
@@ -39,7 +39,10 @@
 
 
 
-<meta property="og:title" content="Function reference" />
+<meta property="og:title" content="Summarize graph object — summary.graph" />
+<meta property="og:description" content="This function takes in phyloseq object, association matix, p value matrix
+and create a combined OTU-OTU and OTU-Phenotype network. User can select model to
+define OTU-Phontype assocaition." />
 
 
 
@@ -68,7 +71,7 @@
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    <div class="container template-reference-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -125,96 +128,36 @@
       </header>
 
 <div class="row">
-  <div class="contents col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Reference</h1>
+    <h1>Summarize graph object</h1>
+    
+    <div class="hidden name"><code>summary.graph.Rd</code></div>
     </div>
 
-    <table class="ref-index">
+    <div class="ref-description">
+    <p>This function takes in phyloseq object, association matix, p value matrix
+and create a combined OTU-OTU and OTU-Phenotype network. User can select model to
+define OTU-Phontype assocaition.</p>
+    </div>
 
-    <colgroup>
-      
-      <col class="alias" />
-      <col class="title" />
-    </colgroup>
+    <pre class="usage"><span class='co'># S3 method for graph</span>
+<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='kw'>graph.object</span>, <span class='kw'>roledf</span>)</pre>
 
-    <tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
-          <p class="section-desc"></p>
-        </th>
-      </tr>
-      
-      
-    </tbody><tbody>
-      
-      
-      <tr>
-        
-        <td>
-          <p><code><a href="PhONA.html">PhONA()</a></code> </p>
-        </td>
-        <td><p>Run PhONA</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="getMean.html">getMean()</a></code> </p>
-        </td>
-        <td><p>Run Linear Models</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="lasso.html">lasso()</a></code> </p>
-        </td>
-        <td><p>Run Lasso Models</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="model.lasso.html">model.lasso()</a></code> </p>
-        </td>
-        <td><p>Run Lasso Models</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="model.linear.html">model.linear()</a></code> </p>
-        </td>
-        <td><p>Run Linear Models</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="node.role.html">node.role()</a></code> </p>
-        </td>
-        <td><p>Run Node Roles usign rnetcarto</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="read.mothur.shared.html">read.mothur.shared()</a></code> </p>
-        </td>
-        <td><p>Run Lasso Models</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="read.mothur.taxonomy.html">read.mothur.taxonomy()</a></code> </p>
-        </td>
-        <td><p>Run Lasso Models</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="summarizePhONA.html">summarizePhONA()</a></code> </p>
-        </td>
-        <td><p>Summarize graph object</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="taxacolor.html">taxacolor()</a></code> </p>
-        </td>
-        <td><p>Function to assign color to the phyloseq object</p></td>
-      </tr>
-    </tbody>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>x</th>
+      <td><p>A phyloseq object which combined OTU count, taxonomy and metadata</p></td>
+    </tr>
     </table>
-  </div>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>A matrix of the infile</p>
+
+  </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
       <h2 data-toc-skip>Contents</h2>

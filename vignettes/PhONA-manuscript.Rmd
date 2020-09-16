@@ -305,8 +305,6 @@ role_df_Endosphere <- rbind(phona_ng_endo$roles,
                             phona_rst_endo$roles,
                             phona_maxi_endo$roles)
 
-
-head(role_df_Endosphere)
 ```
 
 ```{r}
@@ -347,7 +345,6 @@ role_df_Rhizosphere <- rbind(phona_ng_rhizo$roles,
                              phona_maxi_rhizo$roles)
                             
 
-head(role_df_Rhizosphere)
 ```
 
 
@@ -380,8 +377,28 @@ fig3b_rhizo
 ```
 
 
+Summary of all the graphs:
 
+Endosphere
 
+```{r}
+summary_graph_endo_df <- rbind(phona_ng_endo$graph_summary,
+                          phona_sg_endo$graph_summary,
+                          phona_rst_endo$graph_summary,
+                          phona_maxi_endo$graph_summary)
+kable(summary_graph_endo_df)
 
+```
+
+Rhizosphere
+
+```{r}
+summary_graph_rhizo_df <- rbind(phona_ng_rhizo$graph_summary,
+                          phona_sg_rhizo$graph_summary,
+                          phona_rst_rhizo$graph_summary,
+                          phona_maxi_rhizo$graph_summary)
+kable(summary_graph_rhizo_df)
+
+```
 
 

@@ -22,8 +22,8 @@ Depends:
   tictoc,
   randomcoloR,
   caret,
-  rnetcarto
+  rnetcarto,
+  knitr
 Suggests: 
-    knitr,
     rmarkdown,
     testthat

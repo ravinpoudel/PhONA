@@ -258,16 +258,23 @@ if (model == "lasso"){
   roles_merged$role [roles_merged$role == "Ultra peripheral"] <- "Peripheral"
 
 
+  ## get summary of the graph and append to list
 
-  ## we need to inlcude a column for taxonomy
-  # for OTUs in roles get the taxonomic information from tdata as the coloredby taxonomix label. if not present in the tax table, retain the name from roles df-- Yield varibale will not be in tax table
+  graph_summary <- summarizePhONA(net.two, roles_merged)
+  graph_summary["Treatment"] <-  unique(roles_merged$Treatment)
 
+
+  # return list
   list_to_return <- list(glm_output = bb,
                          phona_graph = net.two,
                          phyloseqobj = physeqobj,
                          cordata = cordata,
                          pvalue= pdata,
-                         roles = roles_merged)
+                         roles = roles_merged,
+                         graph_summary = graph_summary )
+
+
+
 
   return(invisible(list_to_return)) # invisible allows to return values of the list without printing them on console.
 
