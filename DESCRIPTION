@@ -21,7 +21,8 @@ Depends:
   igraph,
   tictoc,
   randomcoloR,
-  caret
+  caret,
+  rnetcarto
 Suggests: 
     knitr,
     rmarkdown,

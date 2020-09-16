@@ -8,8 +8,15 @@ output: html_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(PhONA)
+
 ```
 
+```{r}
+# GLOBAL VARIABLE
+ITERS=5
+
+
+```
 
 ```{r}
 
@@ -178,13 +185,12 @@ Nongraft and Endosphere
 ng_endo_sparcc.cor <- read.delim("data/sparcc_output/Endosphere_Nongraft_cor_sparcc.out", sep = "\t", header = T, row.names = 1)
 ng_endo_sparcc.pval <- read.delim("data/sparcc_output/Endosphere_Nongraft_pvals.two_sided.txt", sep = "\t", header = T, row.names = 1)
 
-PhONA(physeqobj = ng_endo, cordata = ng_endo_sparcc.cor,
+phona_ng_endo <- PhONA(physeqobj = ng_endo, cordata = ng_endo_sparcc.cor,
       pdata = ng_endo_sparcc.pval, model = "lasso",
-      iters = 2, defineTreatment = "Nongraft",nodesize = 5,
+      iters = ITERS, defineTreatment = "Nongraft",nodesize = 5,
       PhenoNodesize = 12, definePhenotype = "Marketable", PhenoNodelabel = "Nongraft")
 
 ```
-
 
 Selfgraft and Endosphere
 ```{r}
@@ -192,12 +198,14 @@ Selfgraft and Endosphere
 sg_endo_sparcc.cor <- read.delim("data/sparcc_output/Endosphere_Selfgraft_cor_sparcc.out", sep = "\t", header = T, row.names = 1)
 sg_endo_sparcc.pval <- read.delim("data/sparcc_output/Endosphere_Selfgraft_pvals.two_sided.txt", sep = "\t", header = T, row.names = 1)
 
-PhONA(physeqobj = sg_endo, cordata = sg_endo_sparcc.cor,
+phona_sg_endo <-PhONA(physeqobj = sg_endo, cordata = sg_endo_sparcc.cor,
       pdata = sg_endo_sparcc.pval, model = "lasso",
-      iters = 2, defineTreatment = "Selfgraft",nodesize = 5,
+      iters = ITERS, defineTreatment = "Selfgraft",nodesize = 5,
       PhenoNodesize = 12, definePhenotype = "Marketable", PhenoNodelabel = "Selfgraft")
 
 ```
+
+
 
 
 RST-04-106 and Endosphere
@@ -206,9 +214,9 @@ RST-04-106 and Endosphere
 rst_endo_sparcc.cor <- read.delim("data/sparcc_output/Endosphere_RST-04-106_cor_sparcc.out", sep = "\t", header = T, row.names = 1)
 rst_endo_sparcc.pval <- read.delim("data/sparcc_output/Endosphere_RST-04-106_pvals.two_sided.txt", sep = "\t", header = T, row.names = 1)
 
-PhONA(physeqobj = rst_endo, cordata = rst_endo_sparcc.cor,
+phona_rst_endo <-PhONA(physeqobj = rst_endo, cordata = rst_endo_sparcc.cor,
       pdata = rst_endo_sparcc.pval, model = "lasso",
-      iters = 2, defineTreatment = "RST-04-106",nodesize = 5,
+      iters = ITERS, defineTreatment = "RST-04-106",nodesize = 5,
       PhenoNodesize = 12, definePhenotype = "Marketable", PhenoNodelabel = "RST-04-106")
 ```
 
@@ -218,9 +226,9 @@ Maxifort and Endosphere
 maxi_endo_sparcc.cor <- read.delim("data/sparcc_output/Endosphere_Maxifort_cor_sparcc.out", sep = "\t", header = T, row.names = 1)
 maxi_endo_sparcc.pval <- read.delim("data/sparcc_output/Endosphere_Maxifort_pvals.two_sided.txt", sep = "\t", header = T, row.names = 1)
 
-PhONA(physeqobj = maxi_endo, cordata = maxi_endo_sparcc.cor,
+phona_maxi_endo <-PhONA(physeqobj = maxi_endo, cordata = maxi_endo_sparcc.cor,
       pdata = maxi_endo_sparcc.pval, model = "lasso",
-      iters = 2, defineTreatment = "Maxifort",nodesize = 5,
+      iters = ITERS, defineTreatment = "Maxifort",nodesize = 5,
       PhenoNodesize = 12, definePhenotype = "Marketable", PhenoNodelabel = "Maxifort")
 
 
@@ -235,9 +243,9 @@ Nongraft and Rhizosphere
 ng_rhizo_sparcc.cor <- read.delim("data/sparcc_output/Rhizosphere_Nongraft_cor_sparcc.out", sep = "\t", header = T, row.names = 1)
 ng_rhizo_sparcc.pval <- read.delim("data/sparcc_output/Rhizosphere_Nongraft_pvals.two_sided.txt", sep = "\t", header = T, row.names = 1)
 
-PhONA(physeqobj = ng_rhizo, cordata = ng_rhizo_sparcc.cor,
+phona_ng_rhizo <- PhONA(physeqobj = ng_rhizo, cordata = ng_rhizo_sparcc.cor,
       pdata = ng_rhizo_sparcc.pval, model = "lasso",
-      iters = 2, defineTreatment = "Nongraft",nodesize = 5,
+      iters = ITERS, defineTreatment = "Nongraft",nodesize = 5,
       PhenoNodesize = 12, definePhenotype = "Marketable", PhenoNodelabel = "Nongraft")
 
 ```
@@ -249,9 +257,9 @@ Selfgraft and  Rhizosphere
 sg_rhizo_sparcc.cor <- read.delim("data/sparcc_output/Rhizosphere_Selfgraft_cor_sparcc.out", sep = "\t", header = T, row.names = 1)
 sg_rhizo_sparcc.pval <- read.delim("data/sparcc_output/Rhizosphere_Selfgraft_pvals.two_sided.txt", sep = "\t", header = T, row.names = 1)
 
-PhONA(physeqobj = sg_rhizo, cordata = sg_rhizo_sparcc.cor,
+phona_sg_rhizo <- PhONA(physeqobj = sg_rhizo, cordata = sg_rhizo_sparcc.cor,
       pdata = sg_rhizo_sparcc.pval, model = "lasso",
-      iters = 5, defineTreatment = "Selfgraft",nodesize = 5,
+      iters = ITERS, defineTreatment = "Selfgraft",nodesize = 5,
       PhenoNodesize = 12, definePhenotype = "Marketable", PhenoNodelabel = "Selfgraft")
 
 ```
@@ -263,9 +271,9 @@ RST-04-106 and  Rhizosphere
 rst_rhizo_sparcc.cor <- read.delim("data/sparcc_output/Rhizosphere_RST-04-106_cor_sparcc.out", sep = "\t", header = T, row.names = 1)
 rst_rhizo_sparcc.pval <- read.delim("data/sparcc_output/Rhizosphere_RST-04-106_pvals.two_sided.txt", sep = "\t", header = T, row.names = 1)
 
-PhONA(physeqobj = rst_rhizo, cordata = rst_rhizo_sparcc.cor,
+phona_rst_rhizo <- PhONA(physeqobj = rst_rhizo, cordata = rst_rhizo_sparcc.cor,
       pdata = rst_rhizo_sparcc.pval, model = "lasso",
-      iters = 2, defineTreatment = "RST-04-106",nodesize = 5,
+      iters = ITERS, defineTreatment = "RST-04-106",nodesize = 5,
       PhenoNodesize = 12, definePhenotype = "Marketable", PhenoNodelabel = "RST-04-106")
 ```
 
@@ -276,9 +284,104 @@ Maxifort and  Rhizosphere
 maxi_rhizo_sparcc.cor <- read.delim("data/sparcc_output/Rhizosphere_Maxifort_cor_sparcc.out", sep = "\t", header = T, row.names = 1)
 maxi_rhizo_sparcc.pval <- read.delim("data/sparcc_output/Rhizosphere_Maxifort_pvals.two_sided.txt", sep = "\t", header = T, row.names = 1)
 
-PhONA(physeqobj = maxi_rhizo, cordata = maxi_rhizo_sparcc.cor,
+phona_maxi_rhizo <- PhONA(physeqobj = maxi_rhizo, cordata = maxi_rhizo_sparcc.cor,
       pdata = maxi_rhizo_sparcc.pval, model = "lasso",
       defineTreatment = "Maxifort",nodesize = 5,
-      iters = 2, PhenoNodesize = 12, definePhenotype = "Marketable", PhenoNodelabel = "Maxifort")
+      iters = ITERS, PhenoNodesize = 12, definePhenotype = "Marketable", PhenoNodelabel = "Maxifort")
 ```
+
+
+
+Role analyses using SA algorithm as implemented in rnetcarto package.
+
+Endosphere
+
+```{r}
+
+# Endosphere 
+
+role_df_Endosphere <- rbind(phona_ng_endo$roles,
+                            phona_sg_endo$roles,
+                            phona_rst_endo$roles,
+                            phona_maxi_endo$roles)
+
+
+head(role_df_Endosphere)
+```
+
+```{r}
+fig3b_endo <-ggplot(role_df_Endosphere, aes(participation,connectivity,label=name)) + geom_point(aes(colour = factor(Treatment)))+
+  scale_size(guide = 'none')+
+  scale_color_manual(breaks= c("Nongraft", "Selfgraft", "RST-04-106", "Maxifort"),values = c("mediumaquamarine","sienna4","#ffae19","blueviolet"))+
+  geom_text(aes(label=ifelse(role!="Peripheral",as.character(Order),'')),hjust=0.1,vjust=0.1,size=3,color="black",family="Times New Roman")+
+  geom_hline(yintercept=2.5, linetype="dashed", color = "red")+
+  geom_vline(xintercept = 0.62, linetype="dashed",color = "blue")+
+  annotate("text", x = 0.2, y = 3, label = "Module hubs",color="gray20",size=8,family="Times New Roman")+
+  annotate("text", x = 0.75, y = 3, label = " Network hubs",color="gray20",size=8,family="Times New Roman")+
+  annotate("text", x = 0.2, y = -2, label = "Peripherals",color="gray20",size=8,family="Times New Roman")+
+  annotate("text", x = 0.75, y = -2, label = "Connectors",color="gray20",size=8,family="Times New Roman")+
+  labs(x = "Among-module connectivity", y = "Within-module degree", col="Rootstocks") +
+  theme_bw() +
+  scale_x_continuous(limits = c(0, 1.0))+
+  theme(axis.text=element_text(size=16,face="bold",family="Times New Roman"),axis.title=element_text(size=16,face="bold",family="Times New Roman"))+
+  labs(fill = "Dose (mg)") +
+  theme(legend.title=element_text(size=16,face="bold",family="Times New Roman"),
+        legend.text=element_text(size=16,family="Times New Roman")) +
+  guides(color = guide_legend(override.aes = list(size=5)))
+
+fig3b_endo
+
+
+
+```
+
+
+Rhizosphere 
+```{r}
+
+# Endosphere 
+
+role_df_Rhizosphere <- rbind(phona_ng_rhizo$roles,
+                             phona_sg_rhizo$roles,
+                             phona_rst_rhizo$roles,
+                             phona_maxi_rhizo$roles)
+                            
+
+head(role_df_Rhizosphere)
+```
+
+
+
+
+```{r}
+fig3b_rhizo <-ggplot(role_df_Rhizosphere, aes(participation,connectivity,label=name)) + geom_point(aes(colour = factor(Treatment)))+
+  scale_size(guide = 'none')+
+  scale_color_manual(breaks= c("Nongraft", "Selfgraft", "RST-04-106", "Maxifort"),values = c("mediumaquamarine","sienna4","#ffae19","blueviolet"))+
+  geom_text(aes(label=ifelse(role!="Peripheral",as.character(Order),'')),hjust=0.1,vjust=0.1,size=3,color="black",family="Times New Roman")+
+  geom_hline(yintercept=2.5, linetype="dashed", color = "red")+
+  geom_vline(xintercept = 0.62, linetype="dashed",color = "blue")+
+  annotate("text", x = 0.2, y = 3, label = "Module hubs",color="gray20",size=8,family="Times New Roman")+
+  annotate("text", x = 0.75, y = 3, label = " Network hubs",color="gray20",size=8,family="Times New Roman")+
+  annotate("text", x = 0.2, y = -2, label = "Peripherals",color="gray20",size=8,family="Times New Roman")+
+  annotate("text", x = 0.75, y = -2, label = "Connectors",color="gray20",size=8,family="Times New Roman")+
+  labs(x = "Among-module connectivity", y = "Within-module degree", col="Rootstocks") +
+  theme_bw() +
+  scale_x_continuous(limits = c(0, 1.0))+
+  theme(axis.text=element_text(size=16,face="bold",family="Times New Roman"),axis.title=element_text(size=16,face="bold",family="Times New Roman"))+
+  labs(fill = "Dose (mg)") +
+  theme(legend.title=element_text(size=16,face="bold",family="Times New Roman"),
+        legend.text=element_text(size=16,family="Times New Roman")) +
+  guides(color = guide_legend(override.aes = list(size=5)))
+
+fig3b_rhizo
+
+
+
+```
+
+
+
+
+
+
 

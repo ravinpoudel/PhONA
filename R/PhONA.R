@@ -156,8 +156,11 @@ message("Total number of iterations used: ", iters)
 if (model == "lasso"){
   bb = model.lasso(n = iters, x, odata)
   bb["Treatment"] <- defineTreatment
+  bb = bb = bb[bb$pvalue< OTU_Phenotype_pvalue, ]
   # message("Unique OTUs selected from lasso regression")
-  }
+}
+
+
 
 
 #bb$relation <- rnorm(dim(bb)[1], mean = 0.2, sd = 0.2)
@@ -242,6 +245,31 @@ if (model == "lasso"){
   #legend("bottom",legend_nodes, pch=21, pt.bg=unique( V(net.two)$color), pt.cex=2, cex=.8, bty="n", ncol=4)
 
   net.two
+
+
+  ##### run role analyses
+
+  roles <- node.role(net.two)[[1]]
+  roles["Treatment"] <- defineTreatment
+  roles = roles[!roles$name %in% defineTreatment, ]
+  tdata["OTUID"] <- rownames(tdata)
+  roles_merged = merge(roles, tdata, by.x='name', by.y='OTUID')
+  roles_merged$role <- as.character(roles_merged$role)
+  roles_merged$role [roles_merged$role == "Ultra peripheral"] <- "Peripheral"
+
+
+
+  ## we need to inlcude a column for taxonomy
+  # for OTUs in roles get the taxonomic information from tdata as the coloredby taxonomix label. if not present in the tax table, retain the name from roles df-- Yield varibale will not be in tax table
+
+  list_to_return <- list(glm_output = bb,
+                         phona_graph = net.two,
+                         phyloseqobj = physeqobj,
+                         cordata = cordata,
+                         pvalue= pdata,
+                         roles = roles_merged)
+
+  return(invisible(list_to_return)) # invisible allows to return values of the list without printing them on console.
 
   # message("PhONA created -- Done !!!")
   # message("Total time to run PhONA")

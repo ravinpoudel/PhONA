@@ -94,6 +94,10 @@
     
     
 <div class="sourceCode" id="cb1"><pre class="downlit">
+<span class="co"># GLOBAL VARIABLE</span>
+<span class="kw">ITERS</span><span class="op">=</span><span class="fl">5</span>
+</pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit">
 <span class="co">###### Load the data</span>
 
 <span class="kw">otu_data_fungi</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read.mothur.shared.html">read.mothur.shared</a></span>(<span class="st">"data/Fungi1415_trim.contigs.trim.unique.precluster.pick.pick.subsample.nn.unique_list.shared"</span>)
@@ -108,7 +112,7 @@
 <span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span>(<span class="kw">otu_data</span>)
 </pre></div>
 <pre><code>## [1]   160 16151</code></pre>
-<div class="sourceCode" id="cb3"><pre class="downlit">
+<div class="sourceCode" id="cb4"><pre class="downlit">
 <span class="co">#rownames(otu_data)</span>
 
 
@@ -117,14 +121,14 @@
 <span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span>(<span class="kw">otu_data</span>)
 </pre></div>
 <pre><code>## [1]   160 16151</code></pre>
-<div class="sourceCode" id="cb5"><pre class="downlit">
+<div class="sourceCode" id="cb6"><pre class="downlit">
 <span class="co"># now select metadata based on od</span>
 <span class="kw">meta_data</span> <span class="op">&lt;-</span> <span class="kw">bigmetadata</span>[<span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span>(<span class="kw">otu_data</span>), , drop = <span class="fl">FALSE</span>]
 
 <span class="fu"><a href="https://rdrr.io/r/base/all.equal.html">all.equal</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/row.names.html">row.names</a></span>(<span class="kw">meta_data</span>), <span class="fu"><a href="https://rdrr.io/r/base/row.names.html">row.names</a></span>(<span class="kw">otu_data</span>))
 </pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb7"><pre class="downlit">
+<div class="sourceCode" id="cb8"><pre class="downlit">
 <span class="co"># upload taxanomy file</span>
 <span class="kw">tax_fungi</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read.mothur.taxonomy.html">read.mothur.taxonomy</a></span>(<span class="st">"data/Fungi1415_trim.contigs.trim.unique.precluster.pick.pick.subsample.nn.unique_list.0.03.cons.taxonomy"</span>)
 
@@ -134,7 +138,7 @@
 <span class="fu"><a href="https://rdrr.io/r/base/all.equal.html">all.equal</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span>(<span class="kw">otu_data</span>), <span class="fu"><a href="https://rdrr.io/r/base/row.names.html">row.names</a></span>(<span class="kw">tax_fungi</span>))
 </pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb9"><pre class="downlit">
+<div class="sourceCode" id="cb10"><pre class="downlit">
 <span class="co">#</span>
 <span class="co">########## read in phenome data/ Yield data</span>
 <span class="co"># read in data</span>
@@ -143,8 +147,8 @@
 
 <span class="fu"><a href="https://rdrr.io/r/graphics/hist.html">hist</a></span>(<span class="kw">pheno_data</span><span class="op">$</span><span class="kw">Marketable</span>)
 </pre></div>
-<p><img src="PhONA-manuscript_files/figure-html/unnamed-chunk-1-1.png" width="700"></p>
-<div class="sourceCode" id="cb10"><pre class="downlit">
+<p><img src="PhONA-manuscript_files/figure-html/unnamed-chunk-2-1.png" width="700"></p>
+<div class="sourceCode" id="cb11"><pre class="downlit">
 <span class="kw">pheno_data_mean</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/aggregate.html">aggregate</a></span>(<span class="kw">pheno_data</span><span class="op">$</span><span class="kw">Marketable</span>, by=<span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(Rootstock=<span class="kw">pheno_data</span><span class="op">$</span><span class="kw">Rootstock</span>), FUN=<span class="kw">mean</span>)
 
 
@@ -154,7 +158,7 @@
 <span class="kw">meta_withpheo</span> <span class="op">=</span> <span class="fu">inner_join</span>(<span class="kw">meta_data</span>, <span class="kw">pheno_data_sel</span>)
 </pre></div>
 <pre><code>## Joining, by = c("Rootstock", "Compartment", "Study_site", "Year", "Sample_name")</code></pre>
-<div class="sourceCode" id="cb12"><pre class="downlit">
+<div class="sourceCode" id="cb13"><pre class="downlit">
 <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span>(<span class="kw">meta_withpheo</span>)<span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span>(<span class="kw">meta_data</span>)
 
 <span class="co"># create a phyloseq object~ can combine count, metadata, taxonomy, and phylogentic tree.</span>
@@ -174,20 +178,20 @@
 ## sample_data() Sample Data:       [ 160 samples by 10 sample variables ]
 ## tax_table()   Taxonomy Table:    [ 16151 taxa by 9 taxonomic ranks ]</code></pre>
 <p>At this point we have a phyloseq object for all the treatments. Now, we will process the phyloseq object the split it by treatment combinations.</p>
-<div class="sourceCode" id="cb14"><pre class="downlit">
+<div class="sourceCode" id="cb15"><pre class="downlit">
 <span class="co">#### All the combinations of treatment factor</span>
 
 <span class="kw">region</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(<span class="fu">sample_data</span>(<span class="kw">physeq</span>))<span class="op">$</span><span class="kw">Compartment</span>))
 <span class="kw">region</span>
 </pre></div>
 <pre><code>## [1] "Rhizosphere" "Endosphere"</code></pre>
-<div class="sourceCode" id="cb16"><pre class="downlit">
+<div class="sourceCode" id="cb17"><pre class="downlit">
 <span class="kw">treatment</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(<span class="fu">sample_data</span>(<span class="kw">physeq</span>))<span class="op">$</span><span class="kw">Rootstock</span>))
 <span class="kw">treatment</span>
 </pre></div>
 <pre><code>## [1] "Selfgraft"  "RST-04-106" "Nongraft"   "Maxifort"</code></pre>
 <p>Getting phyloseq object for endosphere</p>
-<div class="sourceCode" id="cb18"><pre class="downlit">
+<div class="sourceCode" id="cb19"><pre class="downlit">
 <span class="co"># Endosphere </span>
 <span class="kw">ng_endo</span> <span class="op">&lt;-</span> <span class="fu">subset_samples</span>(<span class="kw">physeq</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="kw">Compartment</span> <span class="op">==</span><span class="st">"Endosphere"</span> <span class="op">&amp;</span> <span class="kw">Rootstock</span><span class="op">==</span><span class="st">"Nongraft"</span>)) <span class="op">%&gt;%</span>
   <span class="fu">prune_taxa</span>(<span class="fu">taxa_sums</span>(<span class="kw">.</span>) <span class="op">&gt;</span> <span class="fl">2</span>, <span class="kw">.</span>)
@@ -220,7 +224,7 @@
 <span class="fu"><a href="https://rdrr.io/r/utils/write.table.html">write.table</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(OTU_id = <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span>(<span class="kw">maxi_endo_sparcc</span>), <span class="kw">maxi_endo_sparcc</span>), file = <span class="st">"data/sparcc_data/maxi_endo_sparcc.txt"</span>, sep = <span class="st">"\t"</span>, row.names = <span class="fl">FALSE</span>, quote = <span class="fl">FALSE</span>)
 </pre></div>
 <p>Getting phyloseq object for rhizosphere</p>
-<div class="sourceCode" id="cb19"><pre class="downlit">
+<div class="sourceCode" id="cb20"><pre class="downlit">
 <span class="co"># Rhizosphere</span>
 
 <span class="kw">ng_rhizo</span> <span class="op">&lt;-</span> <span class="fu">subset_samples</span>(<span class="kw">physeq</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="kw">Compartment</span> <span class="op">==</span><span class="st">"Rhizosphere"</span> <span class="op">&amp;</span> <span class="kw">Rootstock</span><span class="op">==</span><span class="st">"Nongraft"</span>)) <span class="op">%&gt;%</span>
@@ -255,111 +259,237 @@
 </pre></div>
 <p>Read in output from sparcc, then run SparCC.</p>
 <p>Nongraft and Endosphere</p>
-<div class="sourceCode" id="cb20"><pre class="downlit">
+<div class="sourceCode" id="cb21"><pre class="downlit">
 <span class="kw">ng_endo_sparcc.cor</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.delim</a></span>(<span class="st">"data/sparcc_output/Endosphere_Nongraft_cor_sparcc.out"</span>, sep = <span class="st">"\t"</span>, header = <span class="kw">T</span>, row.names = <span class="fl">1</span>)
 <span class="kw">ng_endo_sparcc.pval</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.delim</a></span>(<span class="st">"data/sparcc_output/Endosphere_Nongraft_pvals.two_sided.txt"</span>, sep = <span class="st">"\t"</span>, header = <span class="kw">T</span>, row.names = <span class="fl">1</span>)
 
-<span class="fu"><a href="../reference/PhONA.html">PhONA</a></span>(physeqobj = <span class="kw">ng_endo</span>, cordata = <span class="kw">ng_endo_sparcc.cor</span>,
+<span class="kw">phona_ng_endo</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/PhONA.html">PhONA</a></span>(physeqobj = <span class="kw">ng_endo</span>, cordata = <span class="kw">ng_endo_sparcc.cor</span>,
       pdata = <span class="kw">ng_endo_sparcc.pval</span>, model = <span class="st">"lasso"</span>,
-      iters = <span class="fl">2</span>, defineTreatment = <span class="st">"Nongraft"</span>,nodesize = <span class="fl">5</span>,
+      iters = <span class="kw">ITERS</span>, defineTreatment = <span class="st">"Nongraft"</span>,nodesize = <span class="fl">5</span>,
       PhenoNodesize = <span class="fl">12</span>, definePhenotype = <span class="st">"Marketable"</span>, PhenoNodelabel = <span class="st">"Nongraft"</span>)
 </pre></div>
-<pre><code>## Total number of iterations used: 2</code></pre>
-<p><img src="PhONA-manuscript_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
-<pre><code>## 7.269 sec elapsed</code></pre>
+<pre><code>## Total number of iterations used: 5</code></pre>
+<pre><code>## Warning in nominalTrainWorkflow(x = x, y = y, wts = weights, info = trainInfo, :
+## There were missing values in resampled performance measures.</code></pre>
+<p><img src="PhONA-manuscript_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
 <p>Selfgraft and Endosphere</p>
-<div class="sourceCode" id="cb23"><pre class="downlit">
+<div class="sourceCode" id="cb24"><pre class="downlit">
 <span class="kw">sg_endo_sparcc.cor</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.delim</a></span>(<span class="st">"data/sparcc_output/Endosphere_Selfgraft_cor_sparcc.out"</span>, sep = <span class="st">"\t"</span>, header = <span class="kw">T</span>, row.names = <span class="fl">1</span>)
 <span class="kw">sg_endo_sparcc.pval</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.delim</a></span>(<span class="st">"data/sparcc_output/Endosphere_Selfgraft_pvals.two_sided.txt"</span>, sep = <span class="st">"\t"</span>, header = <span class="kw">T</span>, row.names = <span class="fl">1</span>)
 
-<span class="fu"><a href="../reference/PhONA.html">PhONA</a></span>(physeqobj = <span class="kw">sg_endo</span>, cordata = <span class="kw">sg_endo_sparcc.cor</span>,
+<span class="kw">phona_sg_endo</span> <span class="op">&lt;-</span><span class="fu"><a href="../reference/PhONA.html">PhONA</a></span>(physeqobj = <span class="kw">sg_endo</span>, cordata = <span class="kw">sg_endo_sparcc.cor</span>,
       pdata = <span class="kw">sg_endo_sparcc.pval</span>, model = <span class="st">"lasso"</span>,
-      iters = <span class="fl">2</span>, defineTreatment = <span class="st">"Selfgraft"</span>,nodesize = <span class="fl">5</span>,
+      iters = <span class="kw">ITERS</span>, defineTreatment = <span class="st">"Selfgraft"</span>,nodesize = <span class="fl">5</span>,
       PhenoNodesize = <span class="fl">12</span>, definePhenotype = <span class="st">"Marketable"</span>, PhenoNodelabel = <span class="st">"Selfgraft"</span>)
 </pre></div>
-<pre><code>## Total number of iterations used: 2</code></pre>
-<p><img src="PhONA-manuscript_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
-<pre><code>## 6.736 sec elapsed</code></pre>
+<pre><code>## Total number of iterations used: 5</code></pre>
+<p><img src="PhONA-manuscript_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
 <p>RST-04-106 and Endosphere</p>
 <div class="sourceCode" id="cb26"><pre class="downlit">
 <span class="kw">rst_endo_sparcc.cor</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.delim</a></span>(<span class="st">"data/sparcc_output/Endosphere_RST-04-106_cor_sparcc.out"</span>, sep = <span class="st">"\t"</span>, header = <span class="kw">T</span>, row.names = <span class="fl">1</span>)
 <span class="kw">rst_endo_sparcc.pval</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.delim</a></span>(<span class="st">"data/sparcc_output/Endosphere_RST-04-106_pvals.two_sided.txt"</span>, sep = <span class="st">"\t"</span>, header = <span class="kw">T</span>, row.names = <span class="fl">1</span>)
 
-<span class="fu"><a href="../reference/PhONA.html">PhONA</a></span>(physeqobj = <span class="kw">rst_endo</span>, cordata = <span class="kw">rst_endo_sparcc.cor</span>,
+<span class="kw">phona_rst_endo</span> <span class="op">&lt;-</span><span class="fu"><a href="../reference/PhONA.html">PhONA</a></span>(physeqobj = <span class="kw">rst_endo</span>, cordata = <span class="kw">rst_endo_sparcc.cor</span>,
       pdata = <span class="kw">rst_endo_sparcc.pval</span>, model = <span class="st">"lasso"</span>,
-      iters = <span class="fl">2</span>, defineTreatment = <span class="st">"RST-04-106"</span>,nodesize = <span class="fl">5</span>,
+      iters = <span class="kw">ITERS</span>, defineTreatment = <span class="st">"RST-04-106"</span>,nodesize = <span class="fl">5</span>,
       PhenoNodesize = <span class="fl">12</span>, definePhenotype = <span class="st">"Marketable"</span>, PhenoNodelabel = <span class="st">"RST-04-106"</span>)
 </pre></div>
-<pre><code>## Total number of iterations used: 2</code></pre>
-<p><img src="PhONA-manuscript_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
-<pre><code>## 6.48 sec elapsed</code></pre>
+<pre><code>## Total number of iterations used: 5</code></pre>
+<p><img src="PhONA-manuscript_files/figure-html/unnamed-chunk-8-1.png" width="700"></p>
 <p>Maxifort and Endosphere</p>
-<div class="sourceCode" id="cb29"><pre class="downlit">
+<div class="sourceCode" id="cb28"><pre class="downlit">
 <span class="kw">maxi_endo_sparcc.cor</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.delim</a></span>(<span class="st">"data/sparcc_output/Endosphere_Maxifort_cor_sparcc.out"</span>, sep = <span class="st">"\t"</span>, header = <span class="kw">T</span>, row.names = <span class="fl">1</span>)
 <span class="kw">maxi_endo_sparcc.pval</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.delim</a></span>(<span class="st">"data/sparcc_output/Endosphere_Maxifort_pvals.two_sided.txt"</span>, sep = <span class="st">"\t"</span>, header = <span class="kw">T</span>, row.names = <span class="fl">1</span>)
 
-<span class="fu"><a href="../reference/PhONA.html">PhONA</a></span>(physeqobj = <span class="kw">maxi_endo</span>, cordata = <span class="kw">maxi_endo_sparcc.cor</span>,
+<span class="kw">phona_maxi_endo</span> <span class="op">&lt;-</span><span class="fu"><a href="../reference/PhONA.html">PhONA</a></span>(physeqobj = <span class="kw">maxi_endo</span>, cordata = <span class="kw">maxi_endo_sparcc.cor</span>,
       pdata = <span class="kw">maxi_endo_sparcc.pval</span>, model = <span class="st">"lasso"</span>,
-      iters = <span class="fl">2</span>, defineTreatment = <span class="st">"Maxifort"</span>,nodesize = <span class="fl">5</span>,
+      iters = <span class="kw">ITERS</span>, defineTreatment = <span class="st">"Maxifort"</span>,nodesize = <span class="fl">5</span>,
       PhenoNodesize = <span class="fl">12</span>, definePhenotype = <span class="st">"Marketable"</span>, PhenoNodelabel = <span class="st">"Maxifort"</span>)
 </pre></div>
-<pre><code>## Total number of iterations used: 2</code></pre>
-<p><img src="PhONA-manuscript_files/figure-html/unnamed-chunk-8-1.png" width="700"></p>
-<pre><code>## 7.227 sec elapsed</code></pre>
+<pre><code>## Total number of iterations used: 5</code></pre>
+<pre><code>## Warning in nominalTrainWorkflow(x = x, y = y, wts = weights, info = trainInfo, :
+## There were missing values in resampled performance measures.
+
+## Warning in nominalTrainWorkflow(x = x, y = y, wts = weights, info = trainInfo, :
+## There were missing values in resampled performance measures.</code></pre>
+<p><img src="PhONA-manuscript_files/figure-html/unnamed-chunk-9-1.png" width="700"></p>
 <p>Nongraft and Rhizosphere</p>
-<div class="sourceCode" id="cb32"><pre class="downlit">
+<div class="sourceCode" id="cb31"><pre class="downlit">
 <span class="kw">ng_rhizo_sparcc.cor</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.delim</a></span>(<span class="st">"data/sparcc_output/Rhizosphere_Nongraft_cor_sparcc.out"</span>, sep = <span class="st">"\t"</span>, header = <span class="kw">T</span>, row.names = <span class="fl">1</span>)
 <span class="kw">ng_rhizo_sparcc.pval</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.delim</a></span>(<span class="st">"data/sparcc_output/Rhizosphere_Nongraft_pvals.two_sided.txt"</span>, sep = <span class="st">"\t"</span>, header = <span class="kw">T</span>, row.names = <span class="fl">1</span>)
 
-<span class="fu"><a href="../reference/PhONA.html">PhONA</a></span>(physeqobj = <span class="kw">ng_rhizo</span>, cordata = <span class="kw">ng_rhizo_sparcc.cor</span>,
+<span class="kw">phona_ng_rhizo</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/PhONA.html">PhONA</a></span>(physeqobj = <span class="kw">ng_rhizo</span>, cordata = <span class="kw">ng_rhizo_sparcc.cor</span>,
       pdata = <span class="kw">ng_rhizo_sparcc.pval</span>, model = <span class="st">"lasso"</span>,
-      iters = <span class="fl">2</span>, defineTreatment = <span class="st">"Nongraft"</span>,nodesize = <span class="fl">5</span>,
+      iters = <span class="kw">ITERS</span>, defineTreatment = <span class="st">"Nongraft"</span>,nodesize = <span class="fl">5</span>,
       PhenoNodesize = <span class="fl">12</span>, definePhenotype = <span class="st">"Marketable"</span>, PhenoNodelabel = <span class="st">"Nongraft"</span>)
-</pre></div>
-<pre><code>## Total number of iterations used: 2</code></pre>
-<p><img src="PhONA-manuscript_files/figure-html/unnamed-chunk-9-1.png" width="700"></p>
-<pre><code>## 8.895 sec elapsed</code></pre>
-<p>Selfgraft and Rhizosphere</p>
-<div class="sourceCode" id="cb35"><pre class="downlit">
-<span class="kw">sg_rhizo_sparcc.cor</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.delim</a></span>(<span class="st">"data/sparcc_output/Rhizosphere_Selfgraft_cor_sparcc.out"</span>, sep = <span class="st">"\t"</span>, header = <span class="kw">T</span>, row.names = <span class="fl">1</span>)
-<span class="kw">sg_rhizo_sparcc.pval</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.delim</a></span>(<span class="st">"data/sparcc_output/Rhizosphere_Selfgraft_pvals.two_sided.txt"</span>, sep = <span class="st">"\t"</span>, header = <span class="kw">T</span>, row.names = <span class="fl">1</span>)
-
-<span class="fu"><a href="../reference/PhONA.html">PhONA</a></span>(physeqobj = <span class="kw">sg_rhizo</span>, cordata = <span class="kw">sg_rhizo_sparcc.cor</span>,
-      pdata = <span class="kw">sg_rhizo_sparcc.pval</span>, model = <span class="st">"lasso"</span>,
-      iters = <span class="fl">5</span>, defineTreatment = <span class="st">"Selfgraft"</span>,nodesize = <span class="fl">5</span>,
-      PhenoNodesize = <span class="fl">12</span>, definePhenotype = <span class="st">"Marketable"</span>, PhenoNodelabel = <span class="st">"Selfgraft"</span>)
 </pre></div>
 <pre><code>## Total number of iterations used: 5</code></pre>
 <p><img src="PhONA-manuscript_files/figure-html/unnamed-chunk-10-1.png" width="700"></p>
-<pre><code>## 29.814 sec elapsed</code></pre>
+<p>Selfgraft and Rhizosphere</p>
+<div class="sourceCode" id="cb33"><pre class="downlit">
+<span class="kw">sg_rhizo_sparcc.cor</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.delim</a></span>(<span class="st">"data/sparcc_output/Rhizosphere_Selfgraft_cor_sparcc.out"</span>, sep = <span class="st">"\t"</span>, header = <span class="kw">T</span>, row.names = <span class="fl">1</span>)
+<span class="kw">sg_rhizo_sparcc.pval</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.delim</a></span>(<span class="st">"data/sparcc_output/Rhizosphere_Selfgraft_pvals.two_sided.txt"</span>, sep = <span class="st">"\t"</span>, header = <span class="kw">T</span>, row.names = <span class="fl">1</span>)
+
+<span class="kw">phona_sg_rhizo</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/PhONA.html">PhONA</a></span>(physeqobj = <span class="kw">sg_rhizo</span>, cordata = <span class="kw">sg_rhizo_sparcc.cor</span>,
+      pdata = <span class="kw">sg_rhizo_sparcc.pval</span>, model = <span class="st">"lasso"</span>,
+      iters = <span class="kw">ITERS</span>, defineTreatment = <span class="st">"Selfgraft"</span>,nodesize = <span class="fl">5</span>,
+      PhenoNodesize = <span class="fl">12</span>, definePhenotype = <span class="st">"Marketable"</span>, PhenoNodelabel = <span class="st">"Selfgraft"</span>)
+</pre></div>
+<pre><code>## Total number of iterations used: 5</code></pre>
+<p><img src="PhONA-manuscript_files/figure-html/unnamed-chunk-11-1.png" width="700"></p>
 <p>RST-04-106 and Rhizosphere</p>
-<div class="sourceCode" id="cb38"><pre class="downlit">
+<div class="sourceCode" id="cb35"><pre class="downlit">
 <span class="kw">rst_rhizo_sparcc.cor</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.delim</a></span>(<span class="st">"data/sparcc_output/Rhizosphere_RST-04-106_cor_sparcc.out"</span>, sep = <span class="st">"\t"</span>, header = <span class="kw">T</span>, row.names = <span class="fl">1</span>)
 <span class="kw">rst_rhizo_sparcc.pval</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.delim</a></span>(<span class="st">"data/sparcc_output/Rhizosphere_RST-04-106_pvals.two_sided.txt"</span>, sep = <span class="st">"\t"</span>, header = <span class="kw">T</span>, row.names = <span class="fl">1</span>)
 
-<span class="fu"><a href="../reference/PhONA.html">PhONA</a></span>(physeqobj = <span class="kw">rst_rhizo</span>, cordata = <span class="kw">rst_rhizo_sparcc.cor</span>,
+<span class="kw">phona_rst_rhizo</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/PhONA.html">PhONA</a></span>(physeqobj = <span class="kw">rst_rhizo</span>, cordata = <span class="kw">rst_rhizo_sparcc.cor</span>,
       pdata = <span class="kw">rst_rhizo_sparcc.pval</span>, model = <span class="st">"lasso"</span>,
-      iters = <span class="fl">2</span>, defineTreatment = <span class="st">"RST-04-106"</span>,nodesize = <span class="fl">5</span>,
+      iters = <span class="kw">ITERS</span>, defineTreatment = <span class="st">"RST-04-106"</span>,nodesize = <span class="fl">5</span>,
       PhenoNodesize = <span class="fl">12</span>, definePhenotype = <span class="st">"Marketable"</span>, PhenoNodelabel = <span class="st">"RST-04-106"</span>)
 </pre></div>
-<pre><code>## Total number of iterations used: 2</code></pre>
-<p><img src="PhONA-manuscript_files/figure-html/unnamed-chunk-11-1.png" width="700"></p>
-<pre><code>## 10.653 sec elapsed</code></pre>
-<p>Maxifort and Rhizosphere</p>
-<div class="sourceCode" id="cb41"><pre class="downlit">
-<span class="kw">maxi_rhizo_sparcc.cor</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.delim</a></span>(<span class="st">"data/sparcc_output/Rhizosphere_Maxifort_cor_sparcc.out"</span>, sep = <span class="st">"\t"</span>, header = <span class="kw">T</span>, row.names = <span class="fl">1</span>)
-<span class="kw">maxi_rhizo_sparcc.pval</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.delim</a></span>(<span class="st">"data/sparcc_output/Rhizosphere_Maxifort_pvals.two_sided.txt"</span>, sep = <span class="st">"\t"</span>, header = <span class="kw">T</span>, row.names = <span class="fl">1</span>)
-
-<span class="fu"><a href="../reference/PhONA.html">PhONA</a></span>(physeqobj = <span class="kw">maxi_rhizo</span>, cordata = <span class="kw">maxi_rhizo_sparcc.cor</span>,
-      pdata = <span class="kw">maxi_rhizo_sparcc.pval</span>, model = <span class="st">"lasso"</span>,
-      defineTreatment = <span class="st">"Maxifort"</span>,nodesize = <span class="fl">5</span>,
-      iters = <span class="fl">2</span>, PhenoNodesize = <span class="fl">12</span>, definePhenotype = <span class="st">"Marketable"</span>, PhenoNodelabel = <span class="st">"Maxifort"</span>)
-</pre></div>
-<pre><code>## Total number of iterations used: 2</code></pre>
+<pre><code>## Total number of iterations used: 5</code></pre>
 <pre><code>## Warning in nominalTrainWorkflow(x = x, y = y, wts = weights, info = trainInfo, :
 ## There were missing values in resampled performance measures.</code></pre>
 <p><img src="PhONA-manuscript_files/figure-html/unnamed-chunk-12-1.png" width="700"></p>
-<pre><code>## 13.522 sec elapsed</code></pre>
+<p>Maxifort and Rhizosphere</p>
+<div class="sourceCode" id="cb38"><pre class="downlit">
+<span class="kw">maxi_rhizo_sparcc.cor</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.delim</a></span>(<span class="st">"data/sparcc_output/Rhizosphere_Maxifort_cor_sparcc.out"</span>, sep = <span class="st">"\t"</span>, header = <span class="kw">T</span>, row.names = <span class="fl">1</span>)
+<span class="kw">maxi_rhizo_sparcc.pval</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.delim</a></span>(<span class="st">"data/sparcc_output/Rhizosphere_Maxifort_pvals.two_sided.txt"</span>, sep = <span class="st">"\t"</span>, header = <span class="kw">T</span>, row.names = <span class="fl">1</span>)
+
+<span class="kw">phona_maxi_rhizo</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/PhONA.html">PhONA</a></span>(physeqobj = <span class="kw">maxi_rhizo</span>, cordata = <span class="kw">maxi_rhizo_sparcc.cor</span>,
+      pdata = <span class="kw">maxi_rhizo_sparcc.pval</span>, model = <span class="st">"lasso"</span>,
+      defineTreatment = <span class="st">"Maxifort"</span>,nodesize = <span class="fl">5</span>,
+      iters = <span class="kw">ITERS</span>, PhenoNodesize = <span class="fl">12</span>, definePhenotype = <span class="st">"Marketable"</span>, PhenoNodelabel = <span class="st">"Maxifort"</span>)
+</pre></div>
+<pre><code>## Total number of iterations used: 5</code></pre>
+<p><img src="PhONA-manuscript_files/figure-html/unnamed-chunk-13-1.png" width="700"></p>
+<p>Role analyses using SA algorithm as implemented in rnetcarto package.</p>
+<p>Endosphere</p>
+<div class="sourceCode" id="cb40"><pre class="downlit">
+<span class="co"># Endosphere </span>
+
+<span class="kw">role_df_Endosphere</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span>(<span class="kw">phona_ng_endo</span><span class="op">$</span><span class="kw">roles</span>,
+                            <span class="kw">phona_sg_endo</span><span class="op">$</span><span class="kw">roles</span>,
+                            <span class="kw">phona_rst_endo</span><span class="op">$</span><span class="kw">roles</span>,
+                            <span class="kw">phona_maxi_endo</span><span class="op">$</span><span class="kw">roles</span>)
+
+
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="kw">role_df_Endosphere</span>)
+</pre></div>
+<pre><code>##       name module connectivity participation       role Treatment  Count
+## 1 Otu00002      5   -0.2800560     0.0000000 Peripheral  Nongraft 176227
+## 2 Otu00003      5   -0.2800560     0.4489796 Peripheral  Nongraft 168987
+## 3 Otu00004      4    0.7071068     0.0000000 Peripheral  Nongraft  87928
+## 4 Otu00005      3   -1.2126781     0.5000000 Peripheral  Nongraft  81978
+## 5 Otu00006      3    0.2425356     0.0000000 Peripheral  Nongraft  51221
+## 6 Otu00007      6   -0.5714286     0.0000000 Peripheral  Nongraft  46176
+##    Kingdom        Phylum                              Class             Order
+## 1 k__Fungi p__Ascomycota                   c__Pezizomycetes      o__Pezizales
+## 2 k__Fungi p__Ascomycota                   c__Pezizomycetes      o__Pezizales
+## 3 k__Fungi p__Ascomycota                   c__Pezizomycetes      o__Pezizales
+## 4 k__Fungi p__Ascomycota                 c__Dothideomycetes   o__Pleosporales
+## 5 k__Fungi p__Ascomycota                 c__Dothideomycetes   o__Pleosporales
+## 6 k__Fungi p__Zygomycota c__Zygomycota_class_Incertae_sedis o__Mortierellales
+##                                  Family                          Genus
+## 1             o__Pezizales_unclassified      o__Pezizales_unclassified
+## 2                     f__Pyronemataceae f__Pyronemataceae_unclassified
+## 3             o__Pezizales_unclassified      o__Pezizales_unclassified
+## 4                      f__Pleosporaceae                  g__Alternaria
+## 5 f__Pleosporales_family_Incertae_sedis                       g__Phoma
+## 6                    f__Mortierellaceae                 g__Mortierella
+##                 Species Phylum_color
+## 1                  &lt;NA&gt;      #DBD3CD
+## 2                  &lt;NA&gt;      #DBD3CD
+## 3                  &lt;NA&gt;      #DBD3CD
+## 4   s__Alternaria_porri      #DBD3CD
+## 5 s__Phoma_sp_UASWS0872      #DBD3CD
+## 6                  &lt;NA&gt;      #D38E5A</code></pre>
+<div class="sourceCode" id="cb42"><pre class="downlit">
+<span class="kw">fig3b_endo</span> <span class="op">&lt;-</span><span class="fu">ggplot</span>(<span class="kw">role_df_Endosphere</span>, <span class="fu">aes</span>(<span class="kw">participation</span>,<span class="kw">connectivity</span>,label=<span class="kw">name</span>)) <span class="op">+</span> <span class="fu">geom_point</span>(<span class="fu">aes</span>(colour = <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span>(<span class="kw">Treatment</span>)))<span class="op">+</span>
+  <span class="fu">scale_size</span>(guide = <span class="st">'none'</span>)<span class="op">+</span>
+  <span class="fu">scale_color_manual</span>(breaks= <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Nongraft"</span>, <span class="st">"Selfgraft"</span>, <span class="st">"RST-04-106"</span>, <span class="st">"Maxifort"</span>),values = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"mediumaquamarine"</span>,<span class="st">"sienna4"</span>,<span class="st">"#ffae19"</span>,<span class="st">"blueviolet"</span>))<span class="op">+</span>
+  <span class="fu">geom_text</span>(<span class="fu">aes</span>(label=<span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span>(<span class="kw">role</span>!=<span class="st">"Peripheral"</span>,<span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span>(<span class="kw">Order</span>),<span class="st">''</span>)),hjust=<span class="fl">0.1</span>,vjust=<span class="fl">0.1</span>,size=<span class="fl">3</span>,color=<span class="st">"black"</span>,family=<span class="st">"Times New Roman"</span>)<span class="op">+</span>
+  <span class="fu">geom_hline</span>(yintercept=<span class="fl">2.5</span>, linetype=<span class="st">"dashed"</span>, color = <span class="st">"red"</span>)<span class="op">+</span>
+  <span class="fu">geom_vline</span>(xintercept = <span class="fl">0.62</span>, linetype=<span class="st">"dashed"</span>,color = <span class="st">"blue"</span>)<span class="op">+</span>
+  <span class="fu">annotate</span>(<span class="st">"text"</span>, x = <span class="fl">0.2</span>, y = <span class="fl">3</span>, label = <span class="st">"Module hubs"</span>,color=<span class="st">"gray20"</span>,size=<span class="fl">8</span>,family=<span class="st">"Times New Roman"</span>)<span class="op">+</span>
+  <span class="fu">annotate</span>(<span class="st">"text"</span>, x = <span class="fl">0.75</span>, y = <span class="fl">3</span>, label = <span class="st">" Network hubs"</span>,color=<span class="st">"gray20"</span>,size=<span class="fl">8</span>,family=<span class="st">"Times New Roman"</span>)<span class="op">+</span>
+  <span class="fu">annotate</span>(<span class="st">"text"</span>, x = <span class="fl">0.2</span>, y = <span class="op">-</span><span class="fl">2</span>, label = <span class="st">"Peripherals"</span>,color=<span class="st">"gray20"</span>,size=<span class="fl">8</span>,family=<span class="st">"Times New Roman"</span>)<span class="op">+</span>
+  <span class="fu">annotate</span>(<span class="st">"text"</span>, x = <span class="fl">0.75</span>, y = <span class="op">-</span><span class="fl">2</span>, label = <span class="st">"Connectors"</span>,color=<span class="st">"gray20"</span>,size=<span class="fl">8</span>,family=<span class="st">"Times New Roman"</span>)<span class="op">+</span>
+  <span class="fu">labs</span>(x = <span class="st">"Among-module connectivity"</span>, y = <span class="st">"Within-module degree"</span>, col=<span class="st">"Rootstocks"</span>) <span class="op">+</span>
+  <span class="fu">theme_bw</span>() <span class="op">+</span>
+  <span class="fu">scale_x_continuous</span>(limits = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0</span>, <span class="fl">1.0</span>))<span class="op">+</span>
+  <span class="fu">theme</span>(axis.text=<span class="fu">element_text</span>(size=<span class="fl">16</span>,face=<span class="st">"bold"</span>,family=<span class="st">"Times New Roman"</span>),axis.title=<span class="fu">element_text</span>(size=<span class="fl">16</span>,face=<span class="st">"bold"</span>,family=<span class="st">"Times New Roman"</span>))<span class="op">+</span>
+  <span class="fu">labs</span>(fill = <span class="st">"Dose (mg)"</span>) <span class="op">+</span>
+  <span class="fu">theme</span>(legend.title=<span class="fu">element_text</span>(size=<span class="fl">16</span>,face=<span class="st">"bold"</span>,family=<span class="st">"Times New Roman"</span>),
+        legend.text=<span class="fu">element_text</span>(size=<span class="fl">16</span>,family=<span class="st">"Times New Roman"</span>)) <span class="op">+</span>
+  <span class="fu">guides</span>(color = <span class="fu">guide_legend</span>(override.aes = <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(size=<span class="fl">5</span>)))
+
+<span class="kw">fig3b_endo</span>
+</pre></div>
+<p><img src="PhONA-manuscript_files/figure-html/unnamed-chunk-15-1.png" width="700"></p>
+<p>Rhizosphere</p>
+<div class="sourceCode" id="cb43"><pre class="downlit">
+<span class="co"># Endosphere </span>
+
+<span class="kw">role_df_Rhizosphere</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span>(<span class="kw">phona_ng_rhizo</span><span class="op">$</span><span class="kw">roles</span>,
+                             <span class="kw">phona_sg_rhizo</span><span class="op">$</span><span class="kw">roles</span>,
+                             <span class="kw">phona_rst_rhizo</span><span class="op">$</span><span class="kw">roles</span>,
+                             <span class="kw">phona_maxi_rhizo</span><span class="op">$</span><span class="kw">roles</span>)
+                            
+
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="kw">role_df_Rhizosphere</span>)
+</pre></div>
+<pre><code>##       name module connectivity participation       role Treatment  Count
+## 1 Otu00002      0    0.3713907     0.5000000 Peripheral  Nongraft 176227
+## 2 Otu00003      8   -0.9831921     0.4444444 Peripheral  Nongraft 168987
+## 3 Otu00005     10    1.2531007     0.3456790 Peripheral  Nongraft  81978
+## 4 Otu00006     10    1.6977494     0.1975309 Peripheral  Nongraft  51221
+## 5 Otu00008      8   -0.9831921     0.0000000 Peripheral  Nongraft  45693
+## 6 Otu00010     10   -1.4147911     0.0000000 Peripheral  Nongraft  40081
+##    Kingdom             Phylum               Class           Order
+## 1 k__Fungi      p__Ascomycota    c__Pezizomycetes    o__Pezizales
+## 2 k__Fungi      p__Ascomycota    c__Pezizomycetes    o__Pezizales
+## 3 k__Fungi      p__Ascomycota  c__Dothideomycetes o__Pleosporales
+## 4 k__Fungi      p__Ascomycota  c__Dothideomycetes o__Pleosporales
+## 5 k__Fungi p__Chytridiomycota c__Chytridiomycetes   o__Olpidiales
+## 6 k__Fungi   p__Basidiomycota  c__Wallemiomycetes  o__Wallemiales
+##                                  Family                          Genus
+## 1             o__Pezizales_unclassified      o__Pezizales_unclassified
+## 2                     f__Pyronemataceae f__Pyronemataceae_unclassified
+## 3                      f__Pleosporaceae                  g__Alternaria
+## 4 f__Pleosporales_family_Incertae_sedis                       g__Phoma
+## 5                        f__Olpidiaceae                    g__Olpidium
+## 6                       f__Wallemiaceae                    g__Wallemia
+##                 Species Phylum_color
+## 1                  &lt;NA&gt;      #DBD3CD
+## 2                  &lt;NA&gt;      #DBD3CD
+## 3   s__Alternaria_porri      #DBD3CD
+## 4 s__Phoma_sp_UASWS0872      #DBD3CD
+## 5 s__Olpidium_brassicae      #DD5F94
+## 6      s__Wallemia_sebi      #AF8FD3</code></pre>
+<div class="sourceCode" id="cb45"><pre class="downlit">
+<span class="kw">fig3b_rhizo</span> <span class="op">&lt;-</span><span class="fu">ggplot</span>(<span class="kw">role_df_Rhizosphere</span>, <span class="fu">aes</span>(<span class="kw">participation</span>,<span class="kw">connectivity</span>,label=<span class="kw">name</span>)) <span class="op">+</span> <span class="fu">geom_point</span>(<span class="fu">aes</span>(colour = <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span>(<span class="kw">Treatment</span>)))<span class="op">+</span>
+  <span class="fu">scale_size</span>(guide = <span class="st">'none'</span>)<span class="op">+</span>
+  <span class="fu">scale_color_manual</span>(breaks= <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Nongraft"</span>, <span class="st">"Selfgraft"</span>, <span class="st">"RST-04-106"</span>, <span class="st">"Maxifort"</span>),values = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"mediumaquamarine"</span>,<span class="st">"sienna4"</span>,<span class="st">"#ffae19"</span>,<span class="st">"blueviolet"</span>))<span class="op">+</span>
+  <span class="fu">geom_text</span>(<span class="fu">aes</span>(label=<span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span>(<span class="kw">role</span>!=<span class="st">"Peripheral"</span>,<span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span>(<span class="kw">Order</span>),<span class="st">''</span>)),hjust=<span class="fl">0.1</span>,vjust=<span class="fl">0.1</span>,size=<span class="fl">3</span>,color=<span class="st">"black"</span>,family=<span class="st">"Times New Roman"</span>)<span class="op">+</span>
+  <span class="fu">geom_hline</span>(yintercept=<span class="fl">2.5</span>, linetype=<span class="st">"dashed"</span>, color = <span class="st">"red"</span>)<span class="op">+</span>
+  <span class="fu">geom_vline</span>(xintercept = <span class="fl">0.62</span>, linetype=<span class="st">"dashed"</span>,color = <span class="st">"blue"</span>)<span class="op">+</span>
+  <span class="fu">annotate</span>(<span class="st">"text"</span>, x = <span class="fl">0.2</span>, y = <span class="fl">3</span>, label = <span class="st">"Module hubs"</span>,color=<span class="st">"gray20"</span>,size=<span class="fl">8</span>,family=<span class="st">"Times New Roman"</span>)<span class="op">+</span>
+  <span class="fu">annotate</span>(<span class="st">"text"</span>, x = <span class="fl">0.75</span>, y = <span class="fl">3</span>, label = <span class="st">" Network hubs"</span>,color=<span class="st">"gray20"</span>,size=<span class="fl">8</span>,family=<span class="st">"Times New Roman"</span>)<span class="op">+</span>
+  <span class="fu">annotate</span>(<span class="st">"text"</span>, x = <span class="fl">0.2</span>, y = <span class="op">-</span><span class="fl">2</span>, label = <span class="st">"Peripherals"</span>,color=<span class="st">"gray20"</span>,size=<span class="fl">8</span>,family=<span class="st">"Times New Roman"</span>)<span class="op">+</span>
+  <span class="fu">annotate</span>(<span class="st">"text"</span>, x = <span class="fl">0.75</span>, y = <span class="op">-</span><span class="fl">2</span>, label = <span class="st">"Connectors"</span>,color=<span class="st">"gray20"</span>,size=<span class="fl">8</span>,family=<span class="st">"Times New Roman"</span>)<span class="op">+</span>
+  <span class="fu">labs</span>(x = <span class="st">"Among-module connectivity"</span>, y = <span class="st">"Within-module degree"</span>, col=<span class="st">"Rootstocks"</span>) <span class="op">+</span>
+  <span class="fu">theme_bw</span>() <span class="op">+</span>
+  <span class="fu">scale_x_continuous</span>(limits = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0</span>, <span class="fl">1.0</span>))<span class="op">+</span>
+  <span class="fu">theme</span>(axis.text=<span class="fu">element_text</span>(size=<span class="fl">16</span>,face=<span class="st">"bold"</span>,family=<span class="st">"Times New Roman"</span>),axis.title=<span class="fu">element_text</span>(size=<span class="fl">16</span>,face=<span class="st">"bold"</span>,family=<span class="st">"Times New Roman"</span>))<span class="op">+</span>
+  <span class="fu">labs</span>(fill = <span class="st">"Dose (mg)"</span>) <span class="op">+</span>
+  <span class="fu">theme</span>(legend.title=<span class="fu">element_text</span>(size=<span class="fl">16</span>,face=<span class="st">"bold"</span>,family=<span class="st">"Times New Roman"</span>),
+        legend.text=<span class="fu">element_text</span>(size=<span class="fl">16</span>,family=<span class="st">"Times New Roman"</span>)) <span class="op">+</span>
+  <span class="fu">guides</span>(color = <span class="fu">guide_legend</span>(override.aes = <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(size=<span class="fl">5</span>)))
+
+<span class="kw">fig3b_rhizo</span>
+</pre></div>
+<p><img src="PhONA-manuscript_files/figure-html/unnamed-chunk-17-1.png" width="700"></p>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

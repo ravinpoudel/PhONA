@@ -32,7 +32,7 @@ lasso <- function(x1, odata1) {
 
   aa = data.frame(varImp(model,scale=F)$importance)
   aa["otu"] <- rownames(aa)
-  bb = aa[aa$Overall > 0, ]
+  bb = aa[aa$Overall > 0, ]  ### remove one with zero
 
 
 
@@ -50,6 +50,7 @@ lasso <- function(x1, odata1) {
   coff_df["otus"] <- rownames(coff_df)
   coff_df["relation"] <- coff_df$Estimate
   coff_df["pvalue"] <- coff_df$Pr...t..
+  coff_df <- na.omit(coff_df) # remove rows with NA
 
   if (dim(coff_df)[1] > 0){
     coff_df

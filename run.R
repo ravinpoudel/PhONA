@@ -10,15 +10,15 @@ definePhenotype="Marketable"
 defineTreatment="Maxifort"
 coloredby="Phylum"
 PhenoNodecolor="yellow"
-PhenoNodesize=20
+PhenoNodesize=10
 PhenoNodelabel="Yield"
-nodesize=10
+nodesize=5
 Pheno2OTUedgecolor = "black"
 netlayout=layout.fruchterman.reingold
 
 
 PhONA(physeqobj, model="lm")
-PhONA(physeqobj, model="lasso", iters = 2)
+PhONA(physeqobj, model="lasso", iters = 2, OTU_Phenotype_pvalue= 0.01, nodesize=2, PhenoNodesize=4)
 
 # https://rmarkdown.rstudio.com/docs/reference/md_document.html
 # Convert to a markdown document

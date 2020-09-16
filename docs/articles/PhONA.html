@@ -84,7 +84,7 @@
       <h1 data-toc-skip>PhONA: Phenotype-OTU based Network Analyses</h1>
                         <h4 class="author">Ravin Poudel</h4>
             
-            <h4 class="date">2020-09-07</h4>
+            <h4 class="date">2020-09-16</h4>
       
       
       <div class="hidden name"><code>PhONA.Rmd</code></div>
@@ -117,7 +117,7 @@
 <span class="kw">phyobj</span> <span class="op">=</span> <span class="fu"><a href="../reference/taxacolor.html">taxacolor</a></span>(phyobj = <span class="kw">phyobj</span>, coloredby = <span class="st">"Phylum"</span>)
 </pre></div>
 <div class="sourceCode" id="cb4"><pre class="downlit">
-<span class="fu"><a href="../reference/PhONA.html">PhONA</a></span>(
+<span class="kw">example_lm</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/PhONA.html">PhONA</a></span>(
   physeqobj = <span class="kw">phyobj</span>,
   cordata = <span class="kw">sparcc.cor</span>,
   pdata = <span class="kw">sparcc.pval</span>,
@@ -138,10 +138,32 @@
 </pre></div>
 <pre><code>## Total number of iterations used: 1</code></pre>
 <p><img src="PhONA_files/figure-html/unnamed-chunk-4-1.png" width="500px"></p>
-<pre><code>## 19.663 sec elapsed</code></pre>
+<p>Role analyses using SA algorithm implemented in rnetcarto package.</p>
+<div class="sourceCode" id="cb6"><pre class="downlit">
+<span class="kw">example_lm_roles</span> <span class="op">&lt;-</span> <span class="kw">example_lm</span><span class="op">$</span><span class="kw">role</span>
+<span class="fu">ggplot</span>(<span class="kw">example_lm_roles</span>, <span class="fu">aes</span>(<span class="kw">participation</span>,<span class="kw">connectivity</span>,label=<span class="kw">name</span>)) <span class="op">+</span> <span class="fu">geom_point</span>(<span class="fu">aes</span>(colour = <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span>(<span class="kw">Treatment</span>)))<span class="op">+</span>
+  <span class="fu">scale_size</span>(guide = <span class="st">'none'</span>)<span class="op">+</span>
+  <span class="fu">scale_color_manual</span>(breaks= <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Nongraft"</span>, <span class="st">"Selfgraft"</span>, <span class="st">"RST-04-106"</span>, <span class="st">"Maxifort"</span>),values = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"mediumaquamarine"</span>,<span class="st">"sienna4"</span>,<span class="st">"#ffae19"</span>,<span class="st">"blueviolet"</span>))<span class="op">+</span>
+  <span class="fu">geom_text</span>(<span class="fu">aes</span>(label=<span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span>(<span class="kw">role</span>!=<span class="st">"Peripheral"</span>,<span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span>(<span class="kw">Order</span>),<span class="st">''</span>)),hjust=<span class="fl">0.1</span>,vjust=<span class="fl">0.1</span>,size=<span class="fl">3</span>,color=<span class="st">"black"</span>,family=<span class="st">"Times New Roman"</span>)<span class="op">+</span>
+  <span class="fu">geom_hline</span>(yintercept=<span class="fl">2.5</span>, linetype=<span class="st">"dashed"</span>, color = <span class="st">"red"</span>)<span class="op">+</span>
+  <span class="fu">geom_vline</span>(xintercept = <span class="fl">0.62</span>, linetype=<span class="st">"dashed"</span>,color = <span class="st">"blue"</span>)<span class="op">+</span>
+  <span class="fu">annotate</span>(<span class="st">"text"</span>, x = <span class="fl">0.2</span>, y = <span class="fl">3</span>, label = <span class="st">"Module hubs"</span>,color=<span class="st">"gray20"</span>,size=<span class="fl">8</span>,family=<span class="st">"Times New Roman"</span>)<span class="op">+</span>
+  <span class="fu">annotate</span>(<span class="st">"text"</span>, x = <span class="fl">0.75</span>, y = <span class="fl">3</span>, label = <span class="st">" Network hubs"</span>,color=<span class="st">"gray20"</span>,size=<span class="fl">8</span>,family=<span class="st">"Times New Roman"</span>)<span class="op">+</span>
+  <span class="fu">annotate</span>(<span class="st">"text"</span>, x = <span class="fl">0.2</span>, y = <span class="op">-</span><span class="fl">2</span>, label = <span class="st">"Peripherals"</span>,color=<span class="st">"gray20"</span>,size=<span class="fl">8</span>,family=<span class="st">"Times New Roman"</span>)<span class="op">+</span>
+  <span class="fu">annotate</span>(<span class="st">"text"</span>, x = <span class="fl">0.75</span>, y = <span class="op">-</span><span class="fl">2</span>, label = <span class="st">"Connectors"</span>,color=<span class="st">"gray20"</span>,size=<span class="fl">8</span>,family=<span class="st">"Times New Roman"</span>)<span class="op">+</span>
+  <span class="fu">labs</span>(x = <span class="st">"Among-module connectivity"</span>, y = <span class="st">"Within-module degree"</span>, col=<span class="st">"Rootstocks"</span>) <span class="op">+</span>
+  <span class="fu">theme_bw</span>() <span class="op">+</span>
+  <span class="fu">scale_x_continuous</span>(limits = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0</span>, <span class="fl">1.0</span>))<span class="op">+</span>
+  <span class="fu">theme</span>(axis.text=<span class="fu">element_text</span>(size=<span class="fl">16</span>,face=<span class="st">"bold"</span>,family=<span class="st">"Times New Roman"</span>),axis.title=<span class="fu">element_text</span>(size=<span class="fl">16</span>,face=<span class="st">"bold"</span>,family=<span class="st">"Times New Roman"</span>))<span class="op">+</span>
+  <span class="fu">labs</span>(fill = <span class="st">"Dose (mg)"</span>) <span class="op">+</span>
+  <span class="fu">theme</span>(legend.title=<span class="fu">element_text</span>(size=<span class="fl">16</span>,face=<span class="st">"bold"</span>,family=<span class="st">"Times New Roman"</span>),
+        legend.text=<span class="fu">element_text</span>(size=<span class="fl">16</span>,family=<span class="st">"Times New Roman"</span>)) <span class="op">+</span>
+  <span class="fu">guides</span>(color = <span class="fu">guide_legend</span>(override.aes = <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(size=<span class="fl">5</span>)))
+</pre></div>
+<p><img src="PhONA_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
 <div class="sourceCode" id="cb7"><pre class="downlit">
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw">PhONA</span>)
-<span class="fu"><a href="../reference/PhONA.html">PhONA</a></span>(
+<span class="kw">example_lasso</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/PhONA.html">PhONA</a></span>(
   physeqobj = <span class="kw">phyobj</span>,
   cordata = <span class="kw">sparcc.cor</span>,
   pdata = <span class="kw">sparcc.pval</span>,
@@ -161,10 +183,29 @@
 )
 </pre></div>
 <pre><code>## Total number of iterations used: 2</code></pre>
-<pre><code>## Warning in nominalTrainWorkflow(x = x, y = y, wts = weights, info = trainInfo, :
-## There were missing values in resampled performance measures.</code></pre>
-<p><img src="PhONA_files/figure-html/unnamed-chunk-5-1.png" width="500px"></p>
-<pre><code>## 12.653 sec elapsed</code></pre>
+<p><img src="PhONA_files/figure-html/unnamed-chunk-6-1.png" width="500px"></p>
+<div class="sourceCode" id="cb9"><pre class="downlit">
+<span class="kw">example_lasso_roles</span> <span class="op">&lt;-</span> <span class="kw">example_lasso</span><span class="op">$</span><span class="kw">role</span>
+<span class="fu">ggplot</span>(<span class="kw">example_lasso_roles</span>, <span class="fu">aes</span>(<span class="kw">participation</span>,<span class="kw">connectivity</span>,label=<span class="kw">name</span>)) <span class="op">+</span> <span class="fu">geom_point</span>(<span class="fu">aes</span>(colour = <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span>(<span class="kw">Treatment</span>)))<span class="op">+</span>
+  <span class="fu">scale_size</span>(guide = <span class="st">'none'</span>)<span class="op">+</span>
+  <span class="fu">scale_color_manual</span>(breaks= <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Nongraft"</span>, <span class="st">"Selfgraft"</span>, <span class="st">"RST-04-106"</span>, <span class="st">"Maxifort"</span>),values = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"mediumaquamarine"</span>,<span class="st">"sienna4"</span>,<span class="st">"#ffae19"</span>,<span class="st">"blueviolet"</span>))<span class="op">+</span>
+  <span class="fu">geom_text</span>(<span class="fu">aes</span>(label=<span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span>(<span class="kw">role</span>!=<span class="st">"Peripheral"</span>,<span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span>(<span class="kw">Order</span>),<span class="st">''</span>)),hjust=<span class="fl">0.1</span>,vjust=<span class="fl">0.1</span>,size=<span class="fl">3</span>,color=<span class="st">"black"</span>,family=<span class="st">"Times New Roman"</span>)<span class="op">+</span>
+  <span class="fu">geom_hline</span>(yintercept=<span class="fl">2.5</span>, linetype=<span class="st">"dashed"</span>, color = <span class="st">"red"</span>)<span class="op">+</span>
+  <span class="fu">geom_vline</span>(xintercept = <span class="fl">0.62</span>, linetype=<span class="st">"dashed"</span>,color = <span class="st">"blue"</span>)<span class="op">+</span>
+  <span class="fu">annotate</span>(<span class="st">"text"</span>, x = <span class="fl">0.2</span>, y = <span class="fl">3</span>, label = <span class="st">"Module hubs"</span>,color=<span class="st">"gray20"</span>,size=<span class="fl">8</span>,family=<span class="st">"Times New Roman"</span>)<span class="op">+</span>
+  <span class="fu">annotate</span>(<span class="st">"text"</span>, x = <span class="fl">0.75</span>, y = <span class="fl">3</span>, label = <span class="st">" Network hubs"</span>,color=<span class="st">"gray20"</span>,size=<span class="fl">8</span>,family=<span class="st">"Times New Roman"</span>)<span class="op">+</span>
+  <span class="fu">annotate</span>(<span class="st">"text"</span>, x = <span class="fl">0.2</span>, y = <span class="op">-</span><span class="fl">2</span>, label = <span class="st">"Peripherals"</span>,color=<span class="st">"gray20"</span>,size=<span class="fl">8</span>,family=<span class="st">"Times New Roman"</span>)<span class="op">+</span>
+  <span class="fu">annotate</span>(<span class="st">"text"</span>, x = <span class="fl">0.75</span>, y = <span class="op">-</span><span class="fl">2</span>, label = <span class="st">"Connectors"</span>,color=<span class="st">"gray20"</span>,size=<span class="fl">8</span>,family=<span class="st">"Times New Roman"</span>)<span class="op">+</span>
+  <span class="fu">labs</span>(x = <span class="st">"Among-module connectivity"</span>, y = <span class="st">"Within-module degree"</span>, col=<span class="st">"Rootstocks"</span>) <span class="op">+</span>
+  <span class="fu">theme_bw</span>() <span class="op">+</span>
+  <span class="fu">scale_x_continuous</span>(limits = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0</span>, <span class="fl">1.0</span>))<span class="op">+</span>
+  <span class="fu">theme</span>(axis.text=<span class="fu">element_text</span>(size=<span class="fl">16</span>,face=<span class="st">"bold"</span>,family=<span class="st">"Times New Roman"</span>),axis.title=<span class="fu">element_text</span>(size=<span class="fl">16</span>,face=<span class="st">"bold"</span>,family=<span class="st">"Times New Roman"</span>))<span class="op">+</span>
+  <span class="fu">labs</span>(fill = <span class="st">"Dose (mg)"</span>) <span class="op">+</span>
+  <span class="fu">theme</span>(legend.title=<span class="fu">element_text</span>(size=<span class="fl">16</span>,face=<span class="st">"bold"</span>,family=<span class="st">"Times New Roman"</span>),
+        legend.text=<span class="fu">element_text</span>(size=<span class="fl">16</span>,family=<span class="st">"Times New Roman"</span>)) <span class="op">+</span>
+  <span class="fu">guides</span>(color = <span class="fu">guide_legend</span>(override.aes = <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(size=<span class="fl">5</span>)))
+</pre></div>
+<p><img src="PhONA_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
 </div>
   </div>
 
