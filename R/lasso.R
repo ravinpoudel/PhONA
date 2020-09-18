@@ -20,7 +20,7 @@ lasso <- function(x1, odata1) {
 
   trControl = trainControl(
     method = "cv",
-    number = 10,
+    number = 5,  # changed to 5, becasue of small data set - 10 would give each fold only 2 observations, not 4.
     verboseIter = FALSE) # TRUE prints
 
 
