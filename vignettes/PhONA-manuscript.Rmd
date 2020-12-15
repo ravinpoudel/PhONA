@@ -13,7 +13,7 @@ library(PhONA)
 
 ```{r, cache=TRUE}
 # GLOBAL VARIABLE
-ITERS=5
+ITERS=2
 
 
 ```
@@ -307,31 +307,23 @@ role_df_Endosphere <- rbind(phona_ng_endo$roles,
 
 ```
 
+
 ```{r, cache=TRUE}
-fig3b_endo <-ggplot(role_df_Endosphere, aes(participation,connectivity,label=name)) + geom_point(aes(colour = factor(Treatment)))+
-  scale_size(guide = 'none')+
-  scale_color_manual(breaks= c("Nongraft", "Selfgraft", "RST-04-106", "Maxifort"),values = c("mediumaquamarine","sienna4","#ffae19","blueviolet"))+
-  geom_text(aes(label=ifelse(role!="Peripheral",as.character(Order),'')),hjust=0.1,vjust=0.1,size=3,color="black",family="Times New Roman")+
-  geom_hline(yintercept=2.5, linetype="dashed", color = "red")+
-  geom_vline(xintercept = 0.62, linetype="dashed",color = "blue")+
-  annotate("text", x = 0.2, y = 3, label = "Module hubs",color="gray20",size=8,family="Times New Roman")+
-  annotate("text", x = 0.75, y = 3, label = " Network hubs",color="gray20",size=8,family="Times New Roman")+
-  annotate("text", x = 0.2, y = -2, label = "Peripherals",color="gray20",size=8,family="Times New Roman")+
-  annotate("text", x = 0.75, y = -2, label = "Connectors",color="gray20",size=8,family="Times New Roman")+
-  labs(x = "Among-module connectivity", y = "Within-module degree", col="Rootstocks") +
-  theme_bw() +
-  scale_x_continuous(limits = c(0, 1.0))+
-  theme(axis.text=element_text(size=16,face="bold",family="Times New Roman"),axis.title=element_text(size=16,face="bold",family="Times New Roman"))+
-  labs(fill = "Dose (mg)") +
-  theme(legend.title=element_text(size=16,face="bold",family="Times New Roman"),
-        legend.text=element_text(size=16,family="Times New Roman")) +
-  guides(color = guide_legend(override.aes = list(size=5)))
 
-fig3b_endo
+rolePlot(role_df_Endosphere)
 
+```
+
+If you are not happy with the plot, you can pass any ggplot paramter to the rolePlot funciton. 
+
+```{r}
+
+rolePlot(role_df_Endosphere) + 
+  scale_color_manual(breaks= c("Nongraft", "Selfgraft", "RST-04-106", "Maxifort"),values = c("mediumaquamarine","sienna4","#ffae19","blueviolet"))
 
 
 ```
+
 
 
 Rhizosphere 
@@ -347,31 +339,18 @@ role_df_Rhizosphere <- rbind(phona_ng_rhizo$roles,
 
 ```
 
-
-
-
 ```{r, cache=TRUE}
-fig3b_rhizo <-ggplot(role_df_Rhizosphere, aes(participation,connectivity,label=name)) + geom_point(aes(colour = factor(Treatment)))+
-  scale_size(guide = 'none')+
-  scale_color_manual(breaks= c("Nongraft", "Selfgraft", "RST-04-106", "Maxifort"),values = c("mediumaquamarine","sienna4","#ffae19","blueviolet"))+
-  geom_text(aes(label=ifelse(role!="Peripheral",as.character(Order),'')),hjust=0.1,vjust=0.1,size=3,color="black",family="Times New Roman")+
-  geom_hline(yintercept=2.5, linetype="dashed", color = "red")+
-  geom_vline(xintercept = 0.62, linetype="dashed",color = "blue")+
-  annotate("text", x = 0.2, y = 3, label = "Module hubs",color="gray20",size=8,family="Times New Roman")+
-  annotate("text", x = 0.75, y = 3, label = " Network hubs",color="gray20",size=8,family="Times New Roman")+
-  annotate("text", x = 0.2, y = -2, label = "Peripherals",color="gray20",size=8,family="Times New Roman")+
-  annotate("text", x = 0.75, y = -2, label = "Connectors",color="gray20",size=8,family="Times New Roman")+
-  labs(x = "Among-module connectivity", y = "Within-module degree", col="Rootstocks") +
-  theme_bw() +
-  scale_x_continuous(limits = c(0, 1.0))+
-  theme(axis.text=element_text(size=16,face="bold",family="Times New Roman"),axis.title=element_text(size=16,face="bold",family="Times New Roman"))+
-  labs(fill = "Dose (mg)") +
-  theme(legend.title=element_text(size=16,face="bold",family="Times New Roman"),
-        legend.text=element_text(size=16,family="Times New Roman")) +
-  guides(color = guide_legend(override.aes = list(size=5)))
 
-fig3b_rhizo
+rolePlot(role_df_Rhizosphere)
 
+```
+
+If you are not happy with the plot, you can pass any ggplot paramter to the rolePlot funciton. 
+
+```{r}
+
+rolePlot(role_df_Rhizosphere) + 
+  scale_color_manual(breaks= c("Nongraft", "Selfgraft", "RST-04-106", "Maxifort"),values = c("mediumaquamarine","sienna4","#ffae19","blueviolet"))
 
 
 ```
