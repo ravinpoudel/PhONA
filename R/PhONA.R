@@ -74,8 +74,8 @@ PhONA <- function(physeqobj = physeq,
                   model = c("lm","lasso"),
                   iters = 1,
                   OTU_OTU_pvalue = 0.05,
-                  OTU_OTU_rvalue = 0.5,
-                  OTU_Phenotype_pvalue = 0.6,## check if this has been applied.
+                  OTU_OTU_rvalue = 0.6,
+                  OTU_Phenotype_pvalue = 0.5,## check if this has been applied.
                   definePhenotype="Marketable",
                   defineTreatment="Maxifort",
                   PhenoNodecolor="yellow",
@@ -156,7 +156,7 @@ message("Total number of iterations used: ", iters)
 if (model == "lasso"){
   bb = model.lasso(n = iters, x, odata)
   bb["Treatment"] <- defineTreatment
-  bb = bb = bb[bb$pvalue< OTU_Phenotype_pvalue, ]
+  bb = bb = bb[bb$pvalue < OTU_Phenotype_pvalue, ]
   # message("Unique OTUs selected from lasso regression")
 }
 

@@ -45,7 +45,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -93,345 +93,320 @@
 
     
     
-<div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="co"># GLOBAL VARIABLE</span>
-<span class="kw">ITERS</span><span class="op">=</span><span class="fl">5</span>
-</pre></div>
-<div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="co">###### Load the data</span>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># GLOBAL VARIABLE</span>
+<span class="va">ITERS</span><span class="op">=</span><span class="fl">5</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co">###### Load the data</span>
 
-<span class="kw">otu_data_fungi</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read.mothur.shared.html">read.mothur.shared</a></span>(<span class="st">"data/Fungi1415_trim.contigs.trim.unique.precluster.pick.pick.subsample.nn.unique_list.shared"</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span>(<span class="kw">otu_data_fungi</span>) <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span>(<span class="st">"F"</span>, <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span>(<span class="kw">otu_data_fungi</span>))
+<span class="va">otu_data_fungi</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read.mothur.shared.html">read.mothur.shared</a></span><span class="op">(</span><span class="st">"data/Fungi1415_trim.contigs.trim.unique.precluster.pick.pick.subsample.nn.unique_list.shared"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">otu_data_fungi</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"F"</span>, <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">otu_data_fungi</span><span class="op">)</span><span class="op">)</span>
 
 <span class="co"># upload meta data file</span>
-<span class="kw">bigmetadata</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span>(<span class="st">"data/block_diversity_selected_tunnel_ww.csv"</span>, header = <span class="kw">T</span>, row.names = <span class="fl">1</span>, stringsAsFactors = <span class="fl">FALSE</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span>(<span class="kw">bigmetadata</span>) <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span>(<span class="st">"F"</span>, <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span>(<span class="kw">bigmetadata</span>))
+<span class="va">bigmetadata</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span><span class="op">(</span><span class="st">"data/block_diversity_selected_tunnel_ww.csv"</span>, header <span class="op">=</span> <span class="cn">T</span>, row.names <span class="op">=</span> <span class="fl">1</span>, stringsAsFactors <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">bigmetadata</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"F"</span>, <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">bigmetadata</span><span class="op">)</span><span class="op">)</span>
 
 <span class="co">### select otu_data based on metadata</span>
-<span class="kw">otu_data</span> <span class="op">&lt;-</span> <span class="kw">otu_data_fungi</span>[<span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span>(<span class="kw">bigmetadata</span>), ]
-<span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span>(<span class="kw">otu_data</span>)
-</pre></div>
+<span class="va">otu_data</span> <span class="op">&lt;-</span> <span class="va">otu_data_fungi</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">bigmetadata</span><span class="op">)</span>, <span class="op">]</span>
+<span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">otu_data</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1]   160 16151</code></pre>
-<div class="sourceCode" id="cb4"><pre class="downlit">
-<span class="co">#rownames(otu_data)</span>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co">#rownames(otu_data)</span>
 
 
-<span class="kw">otu_data</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html">na.omit</a></span>(<span class="kw">otu_data</span>)
+<span class="va">otu_data</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html">na.omit</a></span><span class="op">(</span><span class="va">otu_data</span><span class="op">)</span>
 
-<span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span>(<span class="kw">otu_data</span>)
-</pre></div>
+<span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">otu_data</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1]   160 16151</code></pre>
-<div class="sourceCode" id="cb6"><pre class="downlit">
-<span class="co"># now select metadata based on od</span>
-<span class="kw">meta_data</span> <span class="op">&lt;-</span> <span class="kw">bigmetadata</span>[<span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span>(<span class="kw">otu_data</span>), , drop = <span class="fl">FALSE</span>]
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># now select metadata based on od</span>
+<span class="va">meta_data</span> <span class="op">&lt;-</span> <span class="va">bigmetadata</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">otu_data</span><span class="op">)</span>, , drop <span class="op">=</span> <span class="cn">FALSE</span><span class="op">]</span>
 
-<span class="fu"><a href="https://rdrr.io/r/base/all.equal.html">all.equal</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/row.names.html">row.names</a></span>(<span class="kw">meta_data</span>), <span class="fu"><a href="https://rdrr.io/r/base/row.names.html">row.names</a></span>(<span class="kw">otu_data</span>))
-</pre></div>
+<span class="fu"><a href="https://rdrr.io/r/base/all.equal.html">all.equal</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/row.names.html">row.names</a></span><span class="op">(</span><span class="va">meta_data</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/row.names.html">row.names</a></span><span class="op">(</span><span class="va">otu_data</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb8"><pre class="downlit">
-<span class="co"># upload taxanomy file</span>
-<span class="kw">tax_fungi</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read.mothur.taxonomy.html">read.mothur.taxonomy</a></span>(<span class="st">"data/Fungi1415_trim.contigs.trim.unique.precluster.pick.pick.subsample.nn.unique_list.0.03.cons.taxonomy"</span>)
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># upload taxanomy file</span>
+<span class="va">tax_fungi</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read.mothur.taxonomy.html">read.mothur.taxonomy</a></span><span class="op">(</span><span class="st">"data/Fungi1415_trim.contigs.trim.unique.precluster.pick.pick.subsample.nn.unique_list.0.03.cons.taxonomy"</span><span class="op">)</span>
 
 
 
 <span class="co"># checking if taxonomy file and count files have same otus</span>
-<span class="fu"><a href="https://rdrr.io/r/base/all.equal.html">all.equal</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span>(<span class="kw">otu_data</span>), <span class="fu"><a href="https://rdrr.io/r/base/row.names.html">row.names</a></span>(<span class="kw">tax_fungi</span>))
-</pre></div>
+<span class="fu"><a href="https://rdrr.io/r/base/all.equal.html">all.equal</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">otu_data</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/row.names.html">row.names</a></span><span class="op">(</span><span class="va">tax_fungi</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb10"><pre class="downlit">
-<span class="co">#</span>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co">#</span>
 <span class="co">########## read in phenome data/ Yield data</span>
 <span class="co"># read in data</span>
-<span class="kw">pheno_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span>(<span class="st">"data/tomato_yield.csv"</span>, header = <span class="fl">TRUE</span>, stringsAsFactors = <span class="fl">FALSE</span>, row.names = <span class="fl">1</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span>(<span class="kw">pheno_data</span>) <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span>(<span class="st">"F"</span>, <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span>(<span class="kw">pheno_data</span>))
+<span class="va">pheno_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span><span class="op">(</span><span class="st">"data/tomato_yield.csv"</span>, header <span class="op">=</span> <span class="cn">TRUE</span>, stringsAsFactors <span class="op">=</span> <span class="cn">FALSE</span>, row.names <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">pheno_data</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"F"</span>, <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">pheno_data</span><span class="op">)</span><span class="op">)</span>
 
-<span class="fu"><a href="https://rdrr.io/r/graphics/hist.html">hist</a></span>(<span class="kw">pheno_data</span><span class="op">$</span><span class="kw">Marketable</span>)
-</pre></div>
+<span class="fu"><a href="https://rdrr.io/r/graphics/hist.html">hist</a></span><span class="op">(</span><span class="va">pheno_data</span><span class="op">$</span><span class="va">Marketable</span><span class="op">)</span></code></pre></div>
 <p><img src="PhONA-manuscript_files/figure-html/unnamed-chunk-2-1.png" width="700"></p>
-<div class="sourceCode" id="cb11"><pre class="downlit">
-<span class="kw">pheno_data_mean</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/aggregate.html">aggregate</a></span>(<span class="kw">pheno_data</span><span class="op">$</span><span class="kw">Marketable</span>, by=<span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(Rootstock=<span class="kw">pheno_data</span><span class="op">$</span><span class="kw">Rootstock</span>), FUN=<span class="kw">mean</span>)
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">pheno_data_mean</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/aggregate.html">aggregate</a></span><span class="op">(</span><span class="va">pheno_data</span><span class="op">$</span><span class="va">Marketable</span>, by<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>Rootstock<span class="op">=</span><span class="va">pheno_data</span><span class="op">$</span><span class="va">Rootstock</span><span class="op">)</span>, FUN<span class="op">=</span><span class="va">mean</span><span class="op">)</span>
 
 
-<span class="kw">pheno_data_sel</span> <span class="op">&lt;-</span> <span class="kw">pheno_data</span> <span class="op">%&gt;%</span>
-  <span class="fu">select</span>(<span class="kw">Rootstock</span>, <span class="kw">Compartment</span>, <span class="kw">Marketable</span>, <span class="kw">Study_site</span>, <span class="kw">Year</span>, <span class="kw">Sample_name</span>)
+<span class="va">pheno_data_sel</span> <span class="op">&lt;-</span> <span class="va">pheno_data</span> <span class="op">%&gt;%</span>
+  <span class="fu">select</span><span class="op">(</span><span class="va">Rootstock</span>, <span class="va">Compartment</span>, <span class="va">Marketable</span>, <span class="va">Study_site</span>, <span class="va">Year</span>, <span class="va">Sample_name</span><span class="op">)</span>
 
-<span class="kw">meta_withpheo</span> <span class="op">=</span> <span class="fu">inner_join</span>(<span class="kw">meta_data</span>, <span class="kw">pheno_data_sel</span>)
-</pre></div>
+<span class="va">meta_withpheo</span> <span class="op">=</span> <span class="fu">inner_join</span><span class="op">(</span><span class="va">meta_data</span>, <span class="va">pheno_data_sel</span><span class="op">)</span></code></pre></div>
 <pre><code>## Joining, by = c("Rootstock", "Compartment", "Study_site", "Year", "Sample_name")</code></pre>
-<div class="sourceCode" id="cb13"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span>(<span class="kw">meta_withpheo</span>)<span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span>(<span class="kw">meta_data</span>)
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">meta_withpheo</span><span class="op">)</span><span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">meta_data</span><span class="op">)</span>
 
 <span class="co"># create a phyloseq object~ can combine count, metadata, taxonomy, and phylogentic tree.</span>
-<span class="kw">tax.mat</span> <span class="op">&lt;-</span> <span class="fu">tax_table</span>(<span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span>(<span class="kw">tax_fungi</span>))
-<span class="kw">otu.mat</span> <span class="op">=</span> <span class="fu">otu_table</span>(<span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span>(<span class="kw">otu_data</span>), taxa_are_rows = <span class="fl">TRUE</span>)
-<span class="kw">sample.mat</span> <span class="op">&lt;-</span> <span class="fu">sample_data</span>(<span class="kw">meta_withpheo</span>)
-<span class="kw">physeq</span> <span class="op">=</span> <span class="fu">phyloseq</span>(<span class="kw">otu.mat</span>, <span class="kw">tax.mat</span>, <span class="kw">sample.mat</span>)
+<span class="va">tax.mat</span> <span class="op">&lt;-</span> <span class="fu">tax_table</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span><span class="op">(</span><span class="va">tax_fungi</span><span class="op">)</span><span class="op">)</span>
+<span class="va">otu.mat</span> <span class="op">=</span> <span class="fu">otu_table</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="va">otu_data</span><span class="op">)</span>, taxa_are_rows <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<span class="va">sample.mat</span> <span class="op">&lt;-</span> <span class="fu">sample_data</span><span class="op">(</span><span class="va">meta_withpheo</span><span class="op">)</span>
+<span class="va">physeq</span> <span class="op">=</span> <span class="fu">phyloseq</span><span class="op">(</span><span class="va">otu.mat</span>, <span class="va">tax.mat</span>, <span class="va">sample.mat</span><span class="op">)</span>
 
 
 <span class="co">## Assign color to the taxa on the whole phyloseq object so that the same color is assigned for a taxon across treatments</span>
-<span class="kw">physeq</span> <span class="op">=</span> <span class="fu"><a href="../reference/taxacolor.html">taxacolor</a></span>(phyobj = <span class="kw">physeq</span>, coloredby = <span class="st">"Phylum"</span>)
+<span class="va">physeq</span> <span class="op">=</span> <span class="fu"><a href="../reference/taxacolor.html">taxacolor</a></span><span class="op">(</span>phyobj <span class="op">=</span> <span class="va">physeq</span>, coloredby <span class="op">=</span> <span class="st">"Phylum"</span><span class="op">)</span>
 
-<span class="kw">physeq</span>
-</pre></div>
+<span class="va">physeq</span></code></pre></div>
 <pre><code>## phyloseq-class experiment-level object
 ## otu_table()   OTU Table:         [ 16151 taxa and 160 samples ]
 ## sample_data() Sample Data:       [ 160 samples by 10 sample variables ]
 ## tax_table()   Taxonomy Table:    [ 16151 taxa by 9 taxonomic ranks ]</code></pre>
 <p>At this point we have a phyloseq object for all the treatments. Now, we will process the phyloseq object the split it by treatment combinations.</p>
-<div class="sourceCode" id="cb15"><pre class="downlit">
-<span class="co">#### All the combinations of treatment factor</span>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co">#### All the combinations of treatment factor</span>
 
-<span class="kw">region</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(<span class="fu">sample_data</span>(<span class="kw">physeq</span>))<span class="op">$</span><span class="kw">Compartment</span>))
-<span class="kw">region</span>
-</pre></div>
+<span class="va">region</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="fu">sample_data</span><span class="op">(</span><span class="va">physeq</span><span class="op">)</span><span class="op">)</span><span class="op">$</span><span class="va">Compartment</span><span class="op">)</span><span class="op">)</span>
+<span class="va">region</span></code></pre></div>
 <pre><code>## [1] "Rhizosphere" "Endosphere"</code></pre>
-<div class="sourceCode" id="cb17"><pre class="downlit">
-<span class="kw">treatment</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(<span class="fu">sample_data</span>(<span class="kw">physeq</span>))<span class="op">$</span><span class="kw">Rootstock</span>))
-<span class="kw">treatment</span>
-</pre></div>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">treatment</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="fu">sample_data</span><span class="op">(</span><span class="va">physeq</span><span class="op">)</span><span class="op">)</span><span class="op">$</span><span class="va">Rootstock</span><span class="op">)</span><span class="op">)</span>
+<span class="va">treatment</span></code></pre></div>
 <pre><code>## [1] "Selfgraft"  "RST-04-106" "Nongraft"   "Maxifort"</code></pre>
 <p>Getting phyloseq object for endosphere</p>
-<div class="sourceCode" id="cb19"><pre class="downlit">
-<span class="co"># Endosphere </span>
-<span class="kw">ng_endo</span> <span class="op">&lt;-</span> <span class="fu">subset_samples</span>(<span class="kw">physeq</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="kw">Compartment</span> <span class="op">==</span><span class="st">"Endosphere"</span> <span class="op">&amp;</span> <span class="kw">Rootstock</span><span class="op">==</span><span class="st">"Nongraft"</span>)) <span class="op">%&gt;%</span>
-  <span class="fu">prune_taxa</span>(<span class="fu">taxa_sums</span>(<span class="kw">.</span>) <span class="op">&gt;</span> <span class="fl">2</span>, <span class="kw">.</span>)
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Endosphere </span>
+<span class="va">ng_endo</span> <span class="op">&lt;-</span> <span class="fu">subset_samples</span><span class="op">(</span><span class="va">physeq</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">Compartment</span> <span class="op">==</span><span class="st">"Endosphere"</span> <span class="op">&amp;</span> <span class="va">Rootstock</span><span class="op">==</span><span class="st">"Nongraft"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">prune_taxa</span><span class="op">(</span><span class="fu">taxa_sums</span><span class="op">(</span><span class="va">.</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">2</span>, <span class="va">.</span><span class="op">)</span>
 <span class="co"># Inputfile for running SparCC</span>
-<span class="kw">ng_endo_sparcc</span> <span class="op">=</span> <span class="fu">otu_table</span>(<span class="kw">ng_endo</span>)
-<span class="fu"><a href="https://rdrr.io/r/utils/write.table.html">write.table</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(OTU_id = <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span>(<span class="kw">ng_endo_sparcc</span>), <span class="kw">ng_endo_sparcc</span>), file = <span class="st">"data/sparcc_data/ng_endo_sparcc.txt"</span>, sep = <span class="st">"\t"</span>, row.names = <span class="fl">FALSE</span>, quote = <span class="fl">FALSE</span>)
+<span class="va">ng_endo_sparcc</span> <span class="op">=</span> <span class="fu">otu_table</span><span class="op">(</span><span class="va">ng_endo</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/write.table.html">write.table</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>OTU_id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">ng_endo_sparcc</span><span class="op">)</span>, <span class="va">ng_endo_sparcc</span><span class="op">)</span>, file <span class="op">=</span> <span class="st">"data/sparcc_data/ng_endo_sparcc.txt"</span>, sep <span class="op">=</span> <span class="st">"\t"</span>, row.names <span class="op">=</span> <span class="cn">FALSE</span>, quote <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
   
 
 
-<span class="kw">sg_endo</span> <span class="op">&lt;-</span> <span class="fu">subset_samples</span>(<span class="kw">physeq</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="kw">Compartment</span> <span class="op">==</span><span class="st">"Endosphere"</span> <span class="op">&amp;</span> <span class="kw">Rootstock</span><span class="op">==</span><span class="st">"Selfgraft"</span>)) <span class="op">%&gt;%</span>
-    <span class="fu">prune_taxa</span>(<span class="fu">taxa_sums</span>(<span class="kw">.</span>) <span class="op">&gt;</span> <span class="fl">2</span>, <span class="kw">.</span>)
+<span class="va">sg_endo</span> <span class="op">&lt;-</span> <span class="fu">subset_samples</span><span class="op">(</span><span class="va">physeq</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">Compartment</span> <span class="op">==</span><span class="st">"Endosphere"</span> <span class="op">&amp;</span> <span class="va">Rootstock</span><span class="op">==</span><span class="st">"Selfgraft"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu">prune_taxa</span><span class="op">(</span><span class="fu">taxa_sums</span><span class="op">(</span><span class="va">.</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">2</span>, <span class="va">.</span><span class="op">)</span>
 <span class="co"># Inputfile for running SparCC</span>
-<span class="kw">sg_endo_sparcc</span> <span class="op">=</span> <span class="fu">otu_table</span>(<span class="kw">sg_endo</span>)
-<span class="fu"><a href="https://rdrr.io/r/utils/write.table.html">write.table</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(OTU_id = <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span>(<span class="kw">sg_endo_sparcc</span>), <span class="kw">sg_endo_sparcc</span>), file = <span class="st">"data/sparcc_data/sg_endo_sparcc.txt"</span>, sep = <span class="st">"\t"</span>, row.names = <span class="fl">FALSE</span>, quote = <span class="fl">FALSE</span>)
+<span class="va">sg_endo_sparcc</span> <span class="op">=</span> <span class="fu">otu_table</span><span class="op">(</span><span class="va">sg_endo</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/write.table.html">write.table</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>OTU_id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">sg_endo_sparcc</span><span class="op">)</span>, <span class="va">sg_endo_sparcc</span><span class="op">)</span>, file <span class="op">=</span> <span class="st">"data/sparcc_data/sg_endo_sparcc.txt"</span>, sep <span class="op">=</span> <span class="st">"\t"</span>, row.names <span class="op">=</span> <span class="cn">FALSE</span>, quote <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
   
 
 
-<span class="kw">rst_endo</span> <span class="op">&lt;-</span> <span class="fu">subset_samples</span>(<span class="kw">physeq</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="kw">Compartment</span> <span class="op">==</span><span class="st">"Endosphere"</span> <span class="op">&amp;</span> <span class="kw">Rootstock</span><span class="op">==</span><span class="st">"RST-04-106"</span>)) <span class="op">%&gt;%</span>
-    <span class="fu">prune_taxa</span>(<span class="fu">taxa_sums</span>(<span class="kw">.</span>) <span class="op">&gt;</span> <span class="fl">2</span>, <span class="kw">.</span>)
+<span class="va">rst_endo</span> <span class="op">&lt;-</span> <span class="fu">subset_samples</span><span class="op">(</span><span class="va">physeq</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">Compartment</span> <span class="op">==</span><span class="st">"Endosphere"</span> <span class="op">&amp;</span> <span class="va">Rootstock</span><span class="op">==</span><span class="st">"RST-04-106"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu">prune_taxa</span><span class="op">(</span><span class="fu">taxa_sums</span><span class="op">(</span><span class="va">.</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">2</span>, <span class="va">.</span><span class="op">)</span>
 <span class="co"># Inputfile for running SparCC</span>
-<span class="kw">rst_endo_sparcc</span> <span class="op">=</span> <span class="fu">otu_table</span>(<span class="kw">rst_endo</span>)
-<span class="fu"><a href="https://rdrr.io/r/utils/write.table.html">write.table</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(OTU_id = <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span>(<span class="kw">rst_endo_sparcc</span>), <span class="kw">rst_endo_sparcc</span>), file = <span class="st">"data/sparcc_data/rst_endo_sparcc.txt"</span>, sep = <span class="st">"\t"</span>, row.names = <span class="fl">FALSE</span>, quote = <span class="fl">FALSE</span>)
+<span class="va">rst_endo_sparcc</span> <span class="op">=</span> <span class="fu">otu_table</span><span class="op">(</span><span class="va">rst_endo</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/write.table.html">write.table</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>OTU_id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">rst_endo_sparcc</span><span class="op">)</span>, <span class="va">rst_endo_sparcc</span><span class="op">)</span>, file <span class="op">=</span> <span class="st">"data/sparcc_data/rst_endo_sparcc.txt"</span>, sep <span class="op">=</span> <span class="st">"\t"</span>, row.names <span class="op">=</span> <span class="cn">FALSE</span>, quote <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
   
 
 
-<span class="kw">maxi_endo</span> <span class="op">&lt;-</span> <span class="fu">subset_samples</span>(<span class="kw">physeq</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="kw">Compartment</span> <span class="op">==</span><span class="st">"Endosphere"</span> <span class="op">&amp;</span> <span class="kw">Rootstock</span><span class="op">==</span><span class="st">"Maxifort"</span>)) <span class="op">%&gt;%</span>
-    <span class="fu">prune_taxa</span>(<span class="fu">taxa_sums</span>(<span class="kw">.</span>) <span class="op">&gt;</span> <span class="fl">2</span>, <span class="kw">.</span>)
+<span class="va">maxi_endo</span> <span class="op">&lt;-</span> <span class="fu">subset_samples</span><span class="op">(</span><span class="va">physeq</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">Compartment</span> <span class="op">==</span><span class="st">"Endosphere"</span> <span class="op">&amp;</span> <span class="va">Rootstock</span><span class="op">==</span><span class="st">"Maxifort"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu">prune_taxa</span><span class="op">(</span><span class="fu">taxa_sums</span><span class="op">(</span><span class="va">.</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">2</span>, <span class="va">.</span><span class="op">)</span>
 <span class="co"># Inputfile for running SparCC</span>
-<span class="kw">maxi_endo_sparcc</span> <span class="op">=</span> <span class="fu">otu_table</span>(<span class="kw">maxi_endo</span>)
-<span class="fu"><a href="https://rdrr.io/r/utils/write.table.html">write.table</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(OTU_id = <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span>(<span class="kw">maxi_endo_sparcc</span>), <span class="kw">maxi_endo_sparcc</span>), file = <span class="st">"data/sparcc_data/maxi_endo_sparcc.txt"</span>, sep = <span class="st">"\t"</span>, row.names = <span class="fl">FALSE</span>, quote = <span class="fl">FALSE</span>)
-</pre></div>
+<span class="va">maxi_endo_sparcc</span> <span class="op">=</span> <span class="fu">otu_table</span><span class="op">(</span><span class="va">maxi_endo</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/write.table.html">write.table</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>OTU_id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">maxi_endo_sparcc</span><span class="op">)</span>, <span class="va">maxi_endo_sparcc</span><span class="op">)</span>, file <span class="op">=</span> <span class="st">"data/sparcc_data/maxi_endo_sparcc.txt"</span>, sep <span class="op">=</span> <span class="st">"\t"</span>, row.names <span class="op">=</span> <span class="cn">FALSE</span>, quote <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
 <p>Getting phyloseq object for rhizosphere</p>
-<div class="sourceCode" id="cb20"><pre class="downlit">
-<span class="co"># Rhizosphere</span>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Rhizosphere</span>
 
-<span class="kw">ng_rhizo</span> <span class="op">&lt;-</span> <span class="fu">subset_samples</span>(<span class="kw">physeq</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="kw">Compartment</span> <span class="op">==</span><span class="st">"Rhizosphere"</span> <span class="op">&amp;</span> <span class="kw">Rootstock</span><span class="op">==</span><span class="st">"Nongraft"</span>)) <span class="op">%&gt;%</span>
-    <span class="fu">prune_taxa</span>(<span class="fu">taxa_sums</span>(<span class="kw">.</span>) <span class="op">&gt;</span> <span class="fl">2</span>, <span class="kw">.</span>)
+<span class="va">ng_rhizo</span> <span class="op">&lt;-</span> <span class="fu">subset_samples</span><span class="op">(</span><span class="va">physeq</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">Compartment</span> <span class="op">==</span><span class="st">"Rhizosphere"</span> <span class="op">&amp;</span> <span class="va">Rootstock</span><span class="op">==</span><span class="st">"Nongraft"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu">prune_taxa</span><span class="op">(</span><span class="fu">taxa_sums</span><span class="op">(</span><span class="va">.</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">2</span>, <span class="va">.</span><span class="op">)</span>
 <span class="co"># Inputfile for running SparCC</span>
-<span class="kw">ng_rhizo_sparcc</span> <span class="op">=</span> <span class="fu">otu_table</span>(<span class="kw">ng_rhizo</span>)
-<span class="fu"><a href="https://rdrr.io/r/utils/write.table.html">write.table</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(OTU_id = <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span>(<span class="kw">ng_rhizo_sparcc</span>), <span class="kw">ng_rhizo_sparcc</span>), file = <span class="st">"data/sparcc_data/ng_rhizo_sparcc.txt"</span>, sep = <span class="st">"\t"</span>, row.names = <span class="fl">FALSE</span>, quote = <span class="fl">FALSE</span>)
+<span class="va">ng_rhizo_sparcc</span> <span class="op">=</span> <span class="fu">otu_table</span><span class="op">(</span><span class="va">ng_rhizo</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/write.table.html">write.table</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>OTU_id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">ng_rhizo_sparcc</span><span class="op">)</span>, <span class="va">ng_rhizo_sparcc</span><span class="op">)</span>, file <span class="op">=</span> <span class="st">"data/sparcc_data/ng_rhizo_sparcc.txt"</span>, sep <span class="op">=</span> <span class="st">"\t"</span>, row.names <span class="op">=</span> <span class="cn">FALSE</span>, quote <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
   
 
   
-<span class="kw">sg_rhizo</span> <span class="op">&lt;-</span> <span class="fu">subset_samples</span>(<span class="kw">physeq</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="kw">Compartment</span> <span class="op">==</span><span class="st">"Rhizosphere"</span> <span class="op">&amp;</span> <span class="kw">Rootstock</span><span class="op">==</span><span class="st">"Selfgraft"</span>)) <span class="op">%&gt;%</span>
-    <span class="fu">prune_taxa</span>(<span class="fu">taxa_sums</span>(<span class="kw">.</span>) <span class="op">&gt;</span> <span class="fl">2</span>, <span class="kw">.</span>)
+<span class="va">sg_rhizo</span> <span class="op">&lt;-</span> <span class="fu">subset_samples</span><span class="op">(</span><span class="va">physeq</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">Compartment</span> <span class="op">==</span><span class="st">"Rhizosphere"</span> <span class="op">&amp;</span> <span class="va">Rootstock</span><span class="op">==</span><span class="st">"Selfgraft"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu">prune_taxa</span><span class="op">(</span><span class="fu">taxa_sums</span><span class="op">(</span><span class="va">.</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">2</span>, <span class="va">.</span><span class="op">)</span>
 <span class="co"># Inputfile for running SparCC</span>
-<span class="kw">sg_rhizo_sparcc</span> <span class="op">=</span> <span class="fu">otu_table</span>(<span class="kw">sg_rhizo</span>)
-<span class="fu"><a href="https://rdrr.io/r/utils/write.table.html">write.table</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(OTU_id = <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span>(<span class="kw">sg_rhizo_sparcc</span>), <span class="kw">sg_rhizo_sparcc</span>), file = <span class="st">"data/sparcc_data/sg_rhizo_sparcc.txt"</span>, sep = <span class="st">"\t"</span>, row.names = <span class="fl">FALSE</span>, quote = <span class="fl">FALSE</span>)
+<span class="va">sg_rhizo_sparcc</span> <span class="op">=</span> <span class="fu">otu_table</span><span class="op">(</span><span class="va">sg_rhizo</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/write.table.html">write.table</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>OTU_id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">sg_rhizo_sparcc</span><span class="op">)</span>, <span class="va">sg_rhizo_sparcc</span><span class="op">)</span>, file <span class="op">=</span> <span class="st">"data/sparcc_data/sg_rhizo_sparcc.txt"</span>, sep <span class="op">=</span> <span class="st">"\t"</span>, row.names <span class="op">=</span> <span class="cn">FALSE</span>, quote <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
   
 
   
-<span class="kw">rst_rhizo</span> <span class="op">&lt;-</span> <span class="fu">subset_samples</span>(<span class="kw">physeq</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="kw">Compartment</span> <span class="op">==</span><span class="st">"Rhizosphere"</span> <span class="op">&amp;</span> <span class="kw">Rootstock</span><span class="op">==</span><span class="st">"RST-04-106"</span>))<span class="op">%&gt;%</span>
-  <span class="fu">prune_taxa</span>(<span class="fu">taxa_sums</span>(<span class="kw">.</span>) <span class="op">&gt;</span> <span class="fl">2</span>, <span class="kw">.</span>)
+<span class="va">rst_rhizo</span> <span class="op">&lt;-</span> <span class="fu">subset_samples</span><span class="op">(</span><span class="va">physeq</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">Compartment</span> <span class="op">==</span><span class="st">"Rhizosphere"</span> <span class="op">&amp;</span> <span class="va">Rootstock</span><span class="op">==</span><span class="st">"RST-04-106"</span><span class="op">)</span><span class="op">)</span><span class="op">%&gt;%</span>
+  <span class="fu">prune_taxa</span><span class="op">(</span><span class="fu">taxa_sums</span><span class="op">(</span><span class="va">.</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">2</span>, <span class="va">.</span><span class="op">)</span>
 <span class="co"># Inputfile for running SparCC</span>
-<span class="kw">rst_rhizo_sparcc</span> <span class="op">=</span> <span class="fu">otu_table</span>(<span class="kw">rst_rhizo</span>)
-<span class="fu"><a href="https://rdrr.io/r/utils/write.table.html">write.table</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(OTU_id = <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span>(<span class="kw">rst_rhizo_sparcc</span>), <span class="kw">rst_rhizo_sparcc</span>), file = <span class="st">"data/sparcc_data/rst_rhizo_sparcc.txt"</span>, sep = <span class="st">"\t"</span>, row.names = <span class="fl">FALSE</span>, quote = <span class="fl">FALSE</span>)
+<span class="va">rst_rhizo_sparcc</span> <span class="op">=</span> <span class="fu">otu_table</span><span class="op">(</span><span class="va">rst_rhizo</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/write.table.html">write.table</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>OTU_id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">rst_rhizo_sparcc</span><span class="op">)</span>, <span class="va">rst_rhizo_sparcc</span><span class="op">)</span>, file <span class="op">=</span> <span class="st">"data/sparcc_data/rst_rhizo_sparcc.txt"</span>, sep <span class="op">=</span> <span class="st">"\t"</span>, row.names <span class="op">=</span> <span class="cn">FALSE</span>, quote <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
   
 
 
-<span class="kw">maxi_rhizo</span> <span class="op">&lt;-</span> <span class="fu">subset_samples</span>(<span class="kw">physeq</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="kw">Compartment</span> <span class="op">==</span><span class="st">"Rhizosphere"</span> <span class="op">&amp;</span> <span class="kw">Rootstock</span><span class="op">==</span><span class="st">"Maxifort"</span>)) <span class="op">%&gt;%</span>
-  <span class="fu">prune_taxa</span>(<span class="fu">taxa_sums</span>(<span class="kw">.</span>) <span class="op">&gt;</span> <span class="fl">2</span>, <span class="kw">.</span>)
+<span class="va">maxi_rhizo</span> <span class="op">&lt;-</span> <span class="fu">subset_samples</span><span class="op">(</span><span class="va">physeq</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">Compartment</span> <span class="op">==</span><span class="st">"Rhizosphere"</span> <span class="op">&amp;</span> <span class="va">Rootstock</span><span class="op">==</span><span class="st">"Maxifort"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">prune_taxa</span><span class="op">(</span><span class="fu">taxa_sums</span><span class="op">(</span><span class="va">.</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">2</span>, <span class="va">.</span><span class="op">)</span>
 <span class="co"># Inputfile for running SparCC</span>
-<span class="kw">maxi_rhizo_sparcc</span> <span class="op">=</span> <span class="fu">otu_table</span>(<span class="kw">maxi_rhizo</span>)
-<span class="fu"><a href="https://rdrr.io/r/utils/write.table.html">write.table</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(OTU_id = <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span>(<span class="kw">maxi_rhizo_sparcc</span>), <span class="kw">maxi_rhizo_sparcc</span>), file = <span class="st">"data/sparcc_data/maxi_rhizo_sparcc.txt"</span>, sep = <span class="st">"\t"</span>, row.names = <span class="fl">FALSE</span>, quote = <span class="fl">FALSE</span>)
-</pre></div>
+<span class="va">maxi_rhizo_sparcc</span> <span class="op">=</span> <span class="fu">otu_table</span><span class="op">(</span><span class="va">maxi_rhizo</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/write.table.html">write.table</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>OTU_id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">maxi_rhizo_sparcc</span><span class="op">)</span>, <span class="va">maxi_rhizo_sparcc</span><span class="op">)</span>, file <span class="op">=</span> <span class="st">"data/sparcc_data/maxi_rhizo_sparcc.txt"</span>, sep <span class="op">=</span> <span class="st">"\t"</span>, row.names <span class="op">=</span> <span class="cn">FALSE</span>, quote <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
 <p>Read in output from sparcc, then run SparCC.</p>
 <p>Nongraft and Endosphere</p>
-<div class="sourceCode" id="cb21"><pre class="downlit">
-<span class="kw">ng_endo_sparcc.cor</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.delim</a></span>(<span class="st">"data/sparcc_output/Endosphere_Nongraft_cor_sparcc.out"</span>, sep = <span class="st">"\t"</span>, header = <span class="kw">T</span>, row.names = <span class="fl">1</span>)
-<span class="kw">ng_endo_sparcc.pval</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.delim</a></span>(<span class="st">"data/sparcc_output/Endosphere_Nongraft_pvals.two_sided.txt"</span>, sep = <span class="st">"\t"</span>, header = <span class="kw">T</span>, row.names = <span class="fl">1</span>)
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">ng_endo_sparcc.cor</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.delim</a></span><span class="op">(</span><span class="st">"data/sparcc_output/Endosphere_Nongraft_cor_sparcc.out"</span>, sep <span class="op">=</span> <span class="st">"\t"</span>, header <span class="op">=</span> <span class="cn">T</span>, row.names <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
+<span class="va">ng_endo_sparcc.pval</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.delim</a></span><span class="op">(</span><span class="st">"data/sparcc_output/Endosphere_Nongraft_pvals.two_sided.txt"</span>, sep <span class="op">=</span> <span class="st">"\t"</span>, header <span class="op">=</span> <span class="cn">T</span>, row.names <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
 
-<span class="kw">phona_ng_endo</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/PhONA.html">PhONA</a></span>(physeqobj = <span class="kw">ng_endo</span>, cordata = <span class="kw">ng_endo_sparcc.cor</span>,
-      pdata = <span class="kw">ng_endo_sparcc.pval</span>, model = <span class="st">"lasso"</span>,
-      iters = <span class="kw">ITERS</span>, defineTreatment = <span class="st">"Nongraft"</span>,nodesize = <span class="fl">5</span>,
-      PhenoNodesize = <span class="fl">12</span>, definePhenotype = <span class="st">"Marketable"</span>, PhenoNodelabel = <span class="st">"Nongraft"</span>)
-</pre></div>
+<span class="va">phona_ng_endo</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/PhONA.html">PhONA</a></span><span class="op">(</span>physeqobj <span class="op">=</span> <span class="va">ng_endo</span>, cordata <span class="op">=</span> <span class="va">ng_endo_sparcc.cor</span>,
+      pdata <span class="op">=</span> <span class="va">ng_endo_sparcc.pval</span>, model <span class="op">=</span> <span class="st">"lasso"</span>,
+      iters <span class="op">=</span> <span class="va">ITERS</span>, defineTreatment <span class="op">=</span> <span class="st">"Nongraft"</span>,nodesize <span class="op">=</span> <span class="fl">5</span>,
+      PhenoNodesize <span class="op">=</span> <span class="fl">12</span>, definePhenotype <span class="op">=</span> <span class="st">"Marketable"</span>, PhenoNodelabel <span class="op">=</span> <span class="st">"Nongraft"</span><span class="op">)</span></code></pre></div>
 <pre><code>## Total number of iterations used: 5</code></pre>
 <p><img src="PhONA-manuscript_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
 <p>Selfgraft and Endosphere</p>
-<div class="sourceCode" id="cb23"><pre class="downlit">
-<span class="kw">sg_endo_sparcc.cor</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.delim</a></span>(<span class="st">"data/sparcc_output/Endosphere_Selfgraft_cor_sparcc.out"</span>, sep = <span class="st">"\t"</span>, header = <span class="kw">T</span>, row.names = <span class="fl">1</span>)
-<span class="kw">sg_endo_sparcc.pval</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.delim</a></span>(<span class="st">"data/sparcc_output/Endosphere_Selfgraft_pvals.two_sided.txt"</span>, sep = <span class="st">"\t"</span>, header = <span class="kw">T</span>, row.names = <span class="fl">1</span>)
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">sg_endo_sparcc.cor</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.delim</a></span><span class="op">(</span><span class="st">"data/sparcc_output/Endosphere_Selfgraft_cor_sparcc.out"</span>, sep <span class="op">=</span> <span class="st">"\t"</span>, header <span class="op">=</span> <span class="cn">T</span>, row.names <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
+<span class="va">sg_endo_sparcc.pval</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.delim</a></span><span class="op">(</span><span class="st">"data/sparcc_output/Endosphere_Selfgraft_pvals.two_sided.txt"</span>, sep <span class="op">=</span> <span class="st">"\t"</span>, header <span class="op">=</span> <span class="cn">T</span>, row.names <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
 
-<span class="kw">phona_sg_endo</span> <span class="op">&lt;-</span><span class="fu"><a href="../reference/PhONA.html">PhONA</a></span>(physeqobj = <span class="kw">sg_endo</span>, cordata = <span class="kw">sg_endo_sparcc.cor</span>,
-      pdata = <span class="kw">sg_endo_sparcc.pval</span>, model = <span class="st">"lasso"</span>,
-      iters = <span class="kw">ITERS</span>, defineTreatment = <span class="st">"Selfgraft"</span>,nodesize = <span class="fl">5</span>,
-      PhenoNodesize = <span class="fl">12</span>, definePhenotype = <span class="st">"Marketable"</span>, PhenoNodelabel = <span class="st">"Selfgraft"</span>)
-</pre></div>
+<span class="va">phona_sg_endo</span> <span class="op">&lt;-</span><span class="fu"><a href="../reference/PhONA.html">PhONA</a></span><span class="op">(</span>physeqobj <span class="op">=</span> <span class="va">sg_endo</span>, cordata <span class="op">=</span> <span class="va">sg_endo_sparcc.cor</span>,
+      pdata <span class="op">=</span> <span class="va">sg_endo_sparcc.pval</span>, model <span class="op">=</span> <span class="st">"lasso"</span>,
+      iters <span class="op">=</span> <span class="va">ITERS</span>, defineTreatment <span class="op">=</span> <span class="st">"Selfgraft"</span>,nodesize <span class="op">=</span> <span class="fl">5</span>,
+      PhenoNodesize <span class="op">=</span> <span class="fl">12</span>, definePhenotype <span class="op">=</span> <span class="st">"Marketable"</span>, PhenoNodelabel <span class="op">=</span> <span class="st">"Selfgraft"</span><span class="op">)</span></code></pre></div>
 <pre><code>## Total number of iterations used: 5</code></pre>
 <p><img src="PhONA-manuscript_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
 <p>RST-04-106 and Endosphere</p>
-<div class="sourceCode" id="cb25"><pre class="downlit">
-<span class="kw">rst_endo_sparcc.cor</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.delim</a></span>(<span class="st">"data/sparcc_output/Endosphere_RST-04-106_cor_sparcc.out"</span>, sep = <span class="st">"\t"</span>, header = <span class="kw">T</span>, row.names = <span class="fl">1</span>)
-<span class="kw">rst_endo_sparcc.pval</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.delim</a></span>(<span class="st">"data/sparcc_output/Endosphere_RST-04-106_pvals.two_sided.txt"</span>, sep = <span class="st">"\t"</span>, header = <span class="kw">T</span>, row.names = <span class="fl">1</span>)
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">rst_endo_sparcc.cor</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.delim</a></span><span class="op">(</span><span class="st">"data/sparcc_output/Endosphere_RST-04-106_cor_sparcc.out"</span>, sep <span class="op">=</span> <span class="st">"\t"</span>, header <span class="op">=</span> <span class="cn">T</span>, row.names <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
+<span class="va">rst_endo_sparcc.pval</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.delim</a></span><span class="op">(</span><span class="st">"data/sparcc_output/Endosphere_RST-04-106_pvals.two_sided.txt"</span>, sep <span class="op">=</span> <span class="st">"\t"</span>, header <span class="op">=</span> <span class="cn">T</span>, row.names <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
 
-<span class="kw">phona_rst_endo</span> <span class="op">&lt;-</span><span class="fu"><a href="../reference/PhONA.html">PhONA</a></span>(physeqobj = <span class="kw">rst_endo</span>, cordata = <span class="kw">rst_endo_sparcc.cor</span>,
-      pdata = <span class="kw">rst_endo_sparcc.pval</span>, model = <span class="st">"lasso"</span>,
-      iters = <span class="kw">ITERS</span>, defineTreatment = <span class="st">"RST-04-106"</span>,nodesize = <span class="fl">5</span>,
-      PhenoNodesize = <span class="fl">12</span>, definePhenotype = <span class="st">"Marketable"</span>, PhenoNodelabel = <span class="st">"RST-04-106"</span>)
-</pre></div>
+<span class="va">phona_rst_endo</span> <span class="op">&lt;-</span><span class="fu"><a href="../reference/PhONA.html">PhONA</a></span><span class="op">(</span>physeqobj <span class="op">=</span> <span class="va">rst_endo</span>, cordata <span class="op">=</span> <span class="va">rst_endo_sparcc.cor</span>,
+      pdata <span class="op">=</span> <span class="va">rst_endo_sparcc.pval</span>, model <span class="op">=</span> <span class="st">"lasso"</span>,
+      iters <span class="op">=</span> <span class="va">ITERS</span>, defineTreatment <span class="op">=</span> <span class="st">"RST-04-106"</span>,nodesize <span class="op">=</span> <span class="fl">5</span>,
+      PhenoNodesize <span class="op">=</span> <span class="fl">12</span>, definePhenotype <span class="op">=</span> <span class="st">"Marketable"</span>, PhenoNodelabel <span class="op">=</span> <span class="st">"RST-04-106"</span><span class="op">)</span></code></pre></div>
 <pre><code>## Total number of iterations used: 5</code></pre>
 <p><img src="PhONA-manuscript_files/figure-html/unnamed-chunk-8-1.png" width="700"></p>
 <p>Maxifort and Endosphere</p>
-<div class="sourceCode" id="cb27"><pre class="downlit">
-<span class="kw">maxi_endo_sparcc.cor</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.delim</a></span>(<span class="st">"data/sparcc_output/Endosphere_Maxifort_cor_sparcc.out"</span>, sep = <span class="st">"\t"</span>, header = <span class="kw">T</span>, row.names = <span class="fl">1</span>)
-<span class="kw">maxi_endo_sparcc.pval</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.delim</a></span>(<span class="st">"data/sparcc_output/Endosphere_Maxifort_pvals.two_sided.txt"</span>, sep = <span class="st">"\t"</span>, header = <span class="kw">T</span>, row.names = <span class="fl">1</span>)
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">maxi_endo_sparcc.cor</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.delim</a></span><span class="op">(</span><span class="st">"data/sparcc_output/Endosphere_Maxifort_cor_sparcc.out"</span>, sep <span class="op">=</span> <span class="st">"\t"</span>, header <span class="op">=</span> <span class="cn">T</span>, row.names <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
+<span class="va">maxi_endo_sparcc.pval</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.delim</a></span><span class="op">(</span><span class="st">"data/sparcc_output/Endosphere_Maxifort_pvals.two_sided.txt"</span>, sep <span class="op">=</span> <span class="st">"\t"</span>, header <span class="op">=</span> <span class="cn">T</span>, row.names <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
 
-<span class="kw">phona_maxi_endo</span> <span class="op">&lt;-</span><span class="fu"><a href="../reference/PhONA.html">PhONA</a></span>(physeqobj = <span class="kw">maxi_endo</span>, cordata = <span class="kw">maxi_endo_sparcc.cor</span>,
-      pdata = <span class="kw">maxi_endo_sparcc.pval</span>, model = <span class="st">"lasso"</span>,
-      iters = <span class="kw">ITERS</span>, defineTreatment = <span class="st">"Maxifort"</span>,nodesize = <span class="fl">5</span>,
-      PhenoNodesize = <span class="fl">12</span>, definePhenotype = <span class="st">"Marketable"</span>, PhenoNodelabel = <span class="st">"Maxifort"</span>)
-</pre></div>
+<span class="va">phona_maxi_endo</span> <span class="op">&lt;-</span><span class="fu"><a href="../reference/PhONA.html">PhONA</a></span><span class="op">(</span>physeqobj <span class="op">=</span> <span class="va">maxi_endo</span>, cordata <span class="op">=</span> <span class="va">maxi_endo_sparcc.cor</span>,
+      pdata <span class="op">=</span> <span class="va">maxi_endo_sparcc.pval</span>, model <span class="op">=</span> <span class="st">"lasso"</span>,
+      iters <span class="op">=</span> <span class="va">ITERS</span>, defineTreatment <span class="op">=</span> <span class="st">"Maxifort"</span>,nodesize <span class="op">=</span> <span class="fl">5</span>,
+      PhenoNodesize <span class="op">=</span> <span class="fl">12</span>, definePhenotype <span class="op">=</span> <span class="st">"Marketable"</span>, PhenoNodelabel <span class="op">=</span> <span class="st">"Maxifort"</span><span class="op">)</span></code></pre></div>
 <pre><code>## Total number of iterations used: 5</code></pre>
 <p><img src="PhONA-manuscript_files/figure-html/unnamed-chunk-9-1.png" width="700"></p>
 <p>Nongraft and Rhizosphere</p>
-<div class="sourceCode" id="cb29"><pre class="downlit">
-<span class="kw">ng_rhizo_sparcc.cor</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.delim</a></span>(<span class="st">"data/sparcc_output/Rhizosphere_Nongraft_cor_sparcc.out"</span>, sep = <span class="st">"\t"</span>, header = <span class="kw">T</span>, row.names = <span class="fl">1</span>)
-<span class="kw">ng_rhizo_sparcc.pval</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.delim</a></span>(<span class="st">"data/sparcc_output/Rhizosphere_Nongraft_pvals.two_sided.txt"</span>, sep = <span class="st">"\t"</span>, header = <span class="kw">T</span>, row.names = <span class="fl">1</span>)
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">ng_rhizo_sparcc.cor</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.delim</a></span><span class="op">(</span><span class="st">"data/sparcc_output/Rhizosphere_Nongraft_cor_sparcc.out"</span>, sep <span class="op">=</span> <span class="st">"\t"</span>, header <span class="op">=</span> <span class="cn">T</span>, row.names <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
+<span class="va">ng_rhizo_sparcc.pval</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.delim</a></span><span class="op">(</span><span class="st">"data/sparcc_output/Rhizosphere_Nongraft_pvals.two_sided.txt"</span>, sep <span class="op">=</span> <span class="st">"\t"</span>, header <span class="op">=</span> <span class="cn">T</span>, row.names <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
 
-<span class="kw">phona_ng_rhizo</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/PhONA.html">PhONA</a></span>(physeqobj = <span class="kw">ng_rhizo</span>, cordata = <span class="kw">ng_rhizo_sparcc.cor</span>,
-      pdata = <span class="kw">ng_rhizo_sparcc.pval</span>, model = <span class="st">"lasso"</span>,
-      iters = <span class="kw">ITERS</span>, defineTreatment = <span class="st">"Nongraft"</span>,nodesize = <span class="fl">5</span>,
-      PhenoNodesize = <span class="fl">12</span>, definePhenotype = <span class="st">"Marketable"</span>, PhenoNodelabel = <span class="st">"Nongraft"</span>)
-</pre></div>
+<span class="va">phona_ng_rhizo</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/PhONA.html">PhONA</a></span><span class="op">(</span>physeqobj <span class="op">=</span> <span class="va">ng_rhizo</span>, cordata <span class="op">=</span> <span class="va">ng_rhizo_sparcc.cor</span>,
+      pdata <span class="op">=</span> <span class="va">ng_rhizo_sparcc.pval</span>, model <span class="op">=</span> <span class="st">"lasso"</span>,
+      iters <span class="op">=</span> <span class="va">ITERS</span>, defineTreatment <span class="op">=</span> <span class="st">"Nongraft"</span>,nodesize <span class="op">=</span> <span class="fl">5</span>,
+      PhenoNodesize <span class="op">=</span> <span class="fl">12</span>, definePhenotype <span class="op">=</span> <span class="st">"Marketable"</span>, PhenoNodelabel <span class="op">=</span> <span class="st">"Nongraft"</span><span class="op">)</span></code></pre></div>
 <pre><code>## Total number of iterations used: 5</code></pre>
 <p><img src="PhONA-manuscript_files/figure-html/unnamed-chunk-10-1.png" width="700"></p>
 <p>Selfgraft and Rhizosphere</p>
-<div class="sourceCode" id="cb31"><pre class="downlit">
-<span class="kw">sg_rhizo_sparcc.cor</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.delim</a></span>(<span class="st">"data/sparcc_output/Rhizosphere_Selfgraft_cor_sparcc.out"</span>, sep = <span class="st">"\t"</span>, header = <span class="kw">T</span>, row.names = <span class="fl">1</span>)
-<span class="kw">sg_rhizo_sparcc.pval</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.delim</a></span>(<span class="st">"data/sparcc_output/Rhizosphere_Selfgraft_pvals.two_sided.txt"</span>, sep = <span class="st">"\t"</span>, header = <span class="kw">T</span>, row.names = <span class="fl">1</span>)
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">sg_rhizo_sparcc.cor</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.delim</a></span><span class="op">(</span><span class="st">"data/sparcc_output/Rhizosphere_Selfgraft_cor_sparcc.out"</span>, sep <span class="op">=</span> <span class="st">"\t"</span>, header <span class="op">=</span> <span class="cn">T</span>, row.names <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
+<span class="va">sg_rhizo_sparcc.pval</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.delim</a></span><span class="op">(</span><span class="st">"data/sparcc_output/Rhizosphere_Selfgraft_pvals.two_sided.txt"</span>, sep <span class="op">=</span> <span class="st">"\t"</span>, header <span class="op">=</span> <span class="cn">T</span>, row.names <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
 
-<span class="kw">phona_sg_rhizo</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/PhONA.html">PhONA</a></span>(physeqobj = <span class="kw">sg_rhizo</span>, cordata = <span class="kw">sg_rhizo_sparcc.cor</span>,
-      pdata = <span class="kw">sg_rhizo_sparcc.pval</span>, model = <span class="st">"lasso"</span>,
-      iters = <span class="kw">ITERS</span>, defineTreatment = <span class="st">"Selfgraft"</span>,nodesize = <span class="fl">5</span>,
-      PhenoNodesize = <span class="fl">12</span>, definePhenotype = <span class="st">"Marketable"</span>, PhenoNodelabel = <span class="st">"Selfgraft"</span>)
-</pre></div>
+<span class="va">phona_sg_rhizo</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/PhONA.html">PhONA</a></span><span class="op">(</span>physeqobj <span class="op">=</span> <span class="va">sg_rhizo</span>, cordata <span class="op">=</span> <span class="va">sg_rhizo_sparcc.cor</span>,
+      pdata <span class="op">=</span> <span class="va">sg_rhizo_sparcc.pval</span>, model <span class="op">=</span> <span class="st">"lasso"</span>,
+      iters <span class="op">=</span> <span class="va">ITERS</span>, defineTreatment <span class="op">=</span> <span class="st">"Selfgraft"</span>,nodesize <span class="op">=</span> <span class="fl">5</span>,
+      PhenoNodesize <span class="op">=</span> <span class="fl">12</span>, definePhenotype <span class="op">=</span> <span class="st">"Marketable"</span>, PhenoNodelabel <span class="op">=</span> <span class="st">"Selfgraft"</span><span class="op">)</span></code></pre></div>
 <pre><code>## Total number of iterations used: 5</code></pre>
 <p><img src="PhONA-manuscript_files/figure-html/unnamed-chunk-11-1.png" width="700"></p>
 <p>RST-04-106 and Rhizosphere</p>
-<div class="sourceCode" id="cb33"><pre class="downlit">
-<span class="kw">rst_rhizo_sparcc.cor</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.delim</a></span>(<span class="st">"data/sparcc_output/Rhizosphere_RST-04-106_cor_sparcc.out"</span>, sep = <span class="st">"\t"</span>, header = <span class="kw">T</span>, row.names = <span class="fl">1</span>)
-<span class="kw">rst_rhizo_sparcc.pval</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.delim</a></span>(<span class="st">"data/sparcc_output/Rhizosphere_RST-04-106_pvals.two_sided.txt"</span>, sep = <span class="st">"\t"</span>, header = <span class="kw">T</span>, row.names = <span class="fl">1</span>)
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">rst_rhizo_sparcc.cor</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.delim</a></span><span class="op">(</span><span class="st">"data/sparcc_output/Rhizosphere_RST-04-106_cor_sparcc.out"</span>, sep <span class="op">=</span> <span class="st">"\t"</span>, header <span class="op">=</span> <span class="cn">T</span>, row.names <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
+<span class="va">rst_rhizo_sparcc.pval</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.delim</a></span><span class="op">(</span><span class="st">"data/sparcc_output/Rhizosphere_RST-04-106_pvals.two_sided.txt"</span>, sep <span class="op">=</span> <span class="st">"\t"</span>, header <span class="op">=</span> <span class="cn">T</span>, row.names <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
 
-<span class="kw">phona_rst_rhizo</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/PhONA.html">PhONA</a></span>(physeqobj = <span class="kw">rst_rhizo</span>, cordata = <span class="kw">rst_rhizo_sparcc.cor</span>,
-      pdata = <span class="kw">rst_rhizo_sparcc.pval</span>, model = <span class="st">"lasso"</span>,
-      iters = <span class="kw">ITERS</span>, defineTreatment = <span class="st">"RST-04-106"</span>,nodesize = <span class="fl">5</span>,
-      PhenoNodesize = <span class="fl">12</span>, definePhenotype = <span class="st">"Marketable"</span>, PhenoNodelabel = <span class="st">"RST-04-106"</span>)
-</pre></div>
+<span class="va">phona_rst_rhizo</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/PhONA.html">PhONA</a></span><span class="op">(</span>physeqobj <span class="op">=</span> <span class="va">rst_rhizo</span>, cordata <span class="op">=</span> <span class="va">rst_rhizo_sparcc.cor</span>,
+      pdata <span class="op">=</span> <span class="va">rst_rhizo_sparcc.pval</span>, model <span class="op">=</span> <span class="st">"lasso"</span>,
+      iters <span class="op">=</span> <span class="va">ITERS</span>, defineTreatment <span class="op">=</span> <span class="st">"RST-04-106"</span>,nodesize <span class="op">=</span> <span class="fl">5</span>,
+      PhenoNodesize <span class="op">=</span> <span class="fl">12</span>, definePhenotype <span class="op">=</span> <span class="st">"Marketable"</span>, PhenoNodelabel <span class="op">=</span> <span class="st">"RST-04-106"</span><span class="op">)</span></code></pre></div>
 <pre><code>## Total number of iterations used: 5</code></pre>
 <p><img src="PhONA-manuscript_files/figure-html/unnamed-chunk-12-1.png" width="700"></p>
 <p>Maxifort and Rhizosphere</p>
-<div class="sourceCode" id="cb35"><pre class="downlit">
-<span class="kw">maxi_rhizo_sparcc.cor</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.delim</a></span>(<span class="st">"data/sparcc_output/Rhizosphere_Maxifort_cor_sparcc.out"</span>, sep = <span class="st">"\t"</span>, header = <span class="kw">T</span>, row.names = <span class="fl">1</span>)
-<span class="kw">maxi_rhizo_sparcc.pval</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.delim</a></span>(<span class="st">"data/sparcc_output/Rhizosphere_Maxifort_pvals.two_sided.txt"</span>, sep = <span class="st">"\t"</span>, header = <span class="kw">T</span>, row.names = <span class="fl">1</span>)
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">maxi_rhizo_sparcc.cor</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.delim</a></span><span class="op">(</span><span class="st">"data/sparcc_output/Rhizosphere_Maxifort_cor_sparcc.out"</span>, sep <span class="op">=</span> <span class="st">"\t"</span>, header <span class="op">=</span> <span class="cn">T</span>, row.names <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
+<span class="va">maxi_rhizo_sparcc.pval</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.delim</a></span><span class="op">(</span><span class="st">"data/sparcc_output/Rhizosphere_Maxifort_pvals.two_sided.txt"</span>, sep <span class="op">=</span> <span class="st">"\t"</span>, header <span class="op">=</span> <span class="cn">T</span>, row.names <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
 
-<span class="kw">phona_maxi_rhizo</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/PhONA.html">PhONA</a></span>(physeqobj = <span class="kw">maxi_rhizo</span>, cordata = <span class="kw">maxi_rhizo_sparcc.cor</span>,
-      pdata = <span class="kw">maxi_rhizo_sparcc.pval</span>, model = <span class="st">"lasso"</span>,
-      defineTreatment = <span class="st">"Maxifort"</span>,nodesize = <span class="fl">5</span>,
-      iters = <span class="kw">ITERS</span>, PhenoNodesize = <span class="fl">12</span>, definePhenotype = <span class="st">"Marketable"</span>, PhenoNodelabel = <span class="st">"Maxifort"</span>)
-</pre></div>
+<span class="va">phona_maxi_rhizo</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/PhONA.html">PhONA</a></span><span class="op">(</span>physeqobj <span class="op">=</span> <span class="va">maxi_rhizo</span>, cordata <span class="op">=</span> <span class="va">maxi_rhizo_sparcc.cor</span>,
+      pdata <span class="op">=</span> <span class="va">maxi_rhizo_sparcc.pval</span>, model <span class="op">=</span> <span class="st">"lasso"</span>,
+      defineTreatment <span class="op">=</span> <span class="st">"Maxifort"</span>,nodesize <span class="op">=</span> <span class="fl">5</span>,
+      iters <span class="op">=</span> <span class="va">ITERS</span>, PhenoNodesize <span class="op">=</span> <span class="fl">12</span>, definePhenotype <span class="op">=</span> <span class="st">"Marketable"</span>, PhenoNodelabel <span class="op">=</span> <span class="st">"Maxifort"</span><span class="op">)</span></code></pre></div>
 <pre><code>## Total number of iterations used: 5</code></pre>
 <p><img src="PhONA-manuscript_files/figure-html/unnamed-chunk-13-1.png" width="700"></p>
 <p>Role analyses using SA algorithm as implemented in rnetcarto package.</p>
 <p>Endosphere</p>
-<div class="sourceCode" id="cb37"><pre class="downlit">
-<span class="co"># Endosphere </span>
+<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Endosphere </span>
 
-<span class="kw">role_df_Endosphere</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span>(<span class="kw">phona_ng_endo</span><span class="op">$</span><span class="kw">roles</span>,
-                            <span class="kw">phona_sg_endo</span><span class="op">$</span><span class="kw">roles</span>,
-                            <span class="kw">phona_rst_endo</span><span class="op">$</span><span class="kw">roles</span>,
-                            <span class="kw">phona_maxi_endo</span><span class="op">$</span><span class="kw">roles</span>)
-</pre></div>
-<div class="sourceCode" id="cb38"><pre class="downlit">
-<span class="kw">fig3b_endo</span> <span class="op">&lt;-</span><span class="fu">ggplot</span>(<span class="kw">role_df_Endosphere</span>, <span class="fu">aes</span>(<span class="kw">participation</span>,<span class="kw">connectivity</span>,label=<span class="kw">name</span>)) <span class="op">+</span> <span class="fu">geom_point</span>(<span class="fu">aes</span>(colour = <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span>(<span class="kw">Treatment</span>)))<span class="op">+</span>
-  <span class="fu">scale_size</span>(guide = <span class="st">'none'</span>)<span class="op">+</span>
-  <span class="fu">scale_color_manual</span>(breaks= <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Nongraft"</span>, <span class="st">"Selfgraft"</span>, <span class="st">"RST-04-106"</span>, <span class="st">"Maxifort"</span>),values = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"mediumaquamarine"</span>,<span class="st">"sienna4"</span>,<span class="st">"#ffae19"</span>,<span class="st">"blueviolet"</span>))<span class="op">+</span>
-  <span class="fu">geom_text</span>(<span class="fu">aes</span>(label=<span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span>(<span class="kw">role</span>!=<span class="st">"Peripheral"</span>,<span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span>(<span class="kw">Order</span>),<span class="st">''</span>)),hjust=<span class="fl">0.1</span>,vjust=<span class="fl">0.1</span>,size=<span class="fl">3</span>,color=<span class="st">"black"</span>,family=<span class="st">"Times New Roman"</span>)<span class="op">+</span>
-  <span class="fu">geom_hline</span>(yintercept=<span class="fl">2.5</span>, linetype=<span class="st">"dashed"</span>, color = <span class="st">"red"</span>)<span class="op">+</span>
-  <span class="fu">geom_vline</span>(xintercept = <span class="fl">0.62</span>, linetype=<span class="st">"dashed"</span>,color = <span class="st">"blue"</span>)<span class="op">+</span>
-  <span class="fu">annotate</span>(<span class="st">"text"</span>, x = <span class="fl">0.2</span>, y = <span class="fl">3</span>, label = <span class="st">"Module hubs"</span>,color=<span class="st">"gray20"</span>,size=<span class="fl">8</span>,family=<span class="st">"Times New Roman"</span>)<span class="op">+</span>
-  <span class="fu">annotate</span>(<span class="st">"text"</span>, x = <span class="fl">0.75</span>, y = <span class="fl">3</span>, label = <span class="st">" Network hubs"</span>,color=<span class="st">"gray20"</span>,size=<span class="fl">8</span>,family=<span class="st">"Times New Roman"</span>)<span class="op">+</span>
-  <span class="fu">annotate</span>(<span class="st">"text"</span>, x = <span class="fl">0.2</span>, y = <span class="op">-</span><span class="fl">2</span>, label = <span class="st">"Peripherals"</span>,color=<span class="st">"gray20"</span>,size=<span class="fl">8</span>,family=<span class="st">"Times New Roman"</span>)<span class="op">+</span>
-  <span class="fu">annotate</span>(<span class="st">"text"</span>, x = <span class="fl">0.75</span>, y = <span class="op">-</span><span class="fl">2</span>, label = <span class="st">"Connectors"</span>,color=<span class="st">"gray20"</span>,size=<span class="fl">8</span>,family=<span class="st">"Times New Roman"</span>)<span class="op">+</span>
-  <span class="fu">labs</span>(x = <span class="st">"Among-module connectivity"</span>, y = <span class="st">"Within-module degree"</span>, col=<span class="st">"Rootstocks"</span>) <span class="op">+</span>
-  <span class="fu">theme_bw</span>() <span class="op">+</span>
-  <span class="fu">scale_x_continuous</span>(limits = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0</span>, <span class="fl">1.0</span>))<span class="op">+</span>
-  <span class="fu">theme</span>(axis.text=<span class="fu">element_text</span>(size=<span class="fl">16</span>,face=<span class="st">"bold"</span>,family=<span class="st">"Times New Roman"</span>),axis.title=<span class="fu">element_text</span>(size=<span class="fl">16</span>,face=<span class="st">"bold"</span>,family=<span class="st">"Times New Roman"</span>))<span class="op">+</span>
-  <span class="fu">labs</span>(fill = <span class="st">"Dose (mg)"</span>) <span class="op">+</span>
-  <span class="fu">theme</span>(legend.title=<span class="fu">element_text</span>(size=<span class="fl">16</span>,face=<span class="st">"bold"</span>,family=<span class="st">"Times New Roman"</span>),
-        legend.text=<span class="fu">element_text</span>(size=<span class="fl">16</span>,family=<span class="st">"Times New Roman"</span>)) <span class="op">+</span>
-  <span class="fu">guides</span>(color = <span class="fu">guide_legend</span>(override.aes = <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(size=<span class="fl">5</span>)))
+<span class="va">role_df_Endosphere</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span><span class="va">phona_ng_endo</span><span class="op">$</span><span class="va">roles</span>,
+                            <span class="va">phona_sg_endo</span><span class="op">$</span><span class="va">roles</span>,
+                            <span class="va">phona_rst_endo</span><span class="op">$</span><span class="va">roles</span>,
+                            <span class="va">phona_maxi_endo</span><span class="op">$</span><span class="va">roles</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">fig3b_endo</span> <span class="op">&lt;-</span><span class="fu">ggplot</span><span class="op">(</span><span class="va">role_df_Endosphere</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">participation</span>,<span class="va">connectivity</span>,label<span class="op">=</span><span class="va">name</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu">geom_point</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>colour <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">Treatment</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu">scale_size</span><span class="op">(</span>guide <span class="op">=</span> <span class="st">'none'</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu">scale_color_manual</span><span class="op">(</span>breaks<span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Nongraft"</span>, <span class="st">"Selfgraft"</span>, <span class="st">"RST-04-106"</span>, <span class="st">"Maxifort"</span><span class="op">)</span>,values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"mediumaquamarine"</span>,<span class="st">"sienna4"</span>,<span class="st">"#ffae19"</span>,<span class="st">"blueviolet"</span><span class="op">)</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu">geom_text</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>label<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">role</span><span class="op">!=</span><span class="st">"Peripheral"</span>,<span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span><span class="op">(</span><span class="va">Order</span><span class="op">)</span>,<span class="st">''</span><span class="op">)</span><span class="op">)</span>,hjust<span class="op">=</span><span class="fl">0.1</span>,vjust<span class="op">=</span><span class="fl">0.1</span>,size<span class="op">=</span><span class="fl">3</span>,color<span class="op">=</span><span class="st">"black"</span>,family<span class="op">=</span><span class="st">"Times New Roman"</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu">geom_hline</span><span class="op">(</span>yintercept<span class="op">=</span><span class="fl">2.5</span>, linetype<span class="op">=</span><span class="st">"dashed"</span>, color <span class="op">=</span> <span class="st">"red"</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu">geom_vline</span><span class="op">(</span>xintercept <span class="op">=</span> <span class="fl">0.62</span>, linetype<span class="op">=</span><span class="st">"dashed"</span>,color <span class="op">=</span> <span class="st">"blue"</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu">annotate</span><span class="op">(</span><span class="st">"text"</span>, x <span class="op">=</span> <span class="fl">0.2</span>, y <span class="op">=</span> <span class="fl">3</span>, label <span class="op">=</span> <span class="st">"Module hubs"</span>,color<span class="op">=</span><span class="st">"gray20"</span>,size<span class="op">=</span><span class="fl">8</span>,family<span class="op">=</span><span class="st">"Times New Roman"</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu">annotate</span><span class="op">(</span><span class="st">"text"</span>, x <span class="op">=</span> <span class="fl">0.75</span>, y <span class="op">=</span> <span class="fl">3</span>, label <span class="op">=</span> <span class="st">" Network hubs"</span>,color<span class="op">=</span><span class="st">"gray20"</span>,size<span class="op">=</span><span class="fl">8</span>,family<span class="op">=</span><span class="st">"Times New Roman"</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu">annotate</span><span class="op">(</span><span class="st">"text"</span>, x <span class="op">=</span> <span class="fl">0.2</span>, y <span class="op">=</span> <span class="op">-</span><span class="fl">2</span>, label <span class="op">=</span> <span class="st">"Peripherals"</span>,color<span class="op">=</span><span class="st">"gray20"</span>,size<span class="op">=</span><span class="fl">8</span>,family<span class="op">=</span><span class="st">"Times New Roman"</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu">annotate</span><span class="op">(</span><span class="st">"text"</span>, x <span class="op">=</span> <span class="fl">0.75</span>, y <span class="op">=</span> <span class="op">-</span><span class="fl">2</span>, label <span class="op">=</span> <span class="st">"Connectors"</span>,color<span class="op">=</span><span class="st">"gray20"</span>,size<span class="op">=</span><span class="fl">8</span>,family<span class="op">=</span><span class="st">"Times New Roman"</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu">labs</span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Among-module connectivity"</span>, y <span class="op">=</span> <span class="st">"Within-module degree"</span>, col<span class="op">=</span><span class="st">"Rootstocks"</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">theme_bw</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">scale_x_continuous</span><span class="op">(</span>limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1.0</span><span class="op">)</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu">theme</span><span class="op">(</span>axis.text<span class="op">=</span><span class="fu">element_text</span><span class="op">(</span>size<span class="op">=</span><span class="fl">16</span>,face<span class="op">=</span><span class="st">"bold"</span>,family<span class="op">=</span><span class="st">"Times New Roman"</span><span class="op">)</span>,axis.title<span class="op">=</span><span class="fu">element_text</span><span class="op">(</span>size<span class="op">=</span><span class="fl">16</span>,face<span class="op">=</span><span class="st">"bold"</span>,family<span class="op">=</span><span class="st">"Times New Roman"</span><span class="op">)</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu">labs</span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"Dose (mg)"</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">theme</span><span class="op">(</span>legend.title<span class="op">=</span><span class="fu">element_text</span><span class="op">(</span>size<span class="op">=</span><span class="fl">16</span>,face<span class="op">=</span><span class="st">"bold"</span>,family<span class="op">=</span><span class="st">"Times New Roman"</span><span class="op">)</span>,
+        legend.text<span class="op">=</span><span class="fu">element_text</span><span class="op">(</span>size<span class="op">=</span><span class="fl">16</span>,family<span class="op">=</span><span class="st">"Times New Roman"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">guides</span><span class="op">(</span>color <span class="op">=</span> <span class="fu">guide_legend</span><span class="op">(</span>override.aes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>size<span class="op">=</span><span class="fl">5</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 
-<span class="kw">fig3b_endo</span>
-</pre></div>
+<span class="va">fig3b_endo</span></code></pre></div>
 <p><img src="PhONA-manuscript_files/figure-html/unnamed-chunk-15-1.png" width="700"></p>
 <p>Rhizosphere</p>
-<div class="sourceCode" id="cb39"><pre class="downlit">
-<span class="co"># Endosphere </span>
+<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Endosphere </span>
 
-<span class="kw">role_df_Rhizosphere</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span>(<span class="kw">phona_ng_rhizo</span><span class="op">$</span><span class="kw">roles</span>,
-                             <span class="kw">phona_sg_rhizo</span><span class="op">$</span><span class="kw">roles</span>,
-                             <span class="kw">phona_rst_rhizo</span><span class="op">$</span><span class="kw">roles</span>,
-                             <span class="kw">phona_maxi_rhizo</span><span class="op">$</span><span class="kw">roles</span>)
-</pre></div>
-<div class="sourceCode" id="cb40"><pre class="downlit">
-<span class="kw">fig3b_rhizo</span> <span class="op">&lt;-</span><span class="fu">ggplot</span>(<span class="kw">role_df_Rhizosphere</span>, <span class="fu">aes</span>(<span class="kw">participation</span>,<span class="kw">connectivity</span>,label=<span class="kw">name</span>)) <span class="op">+</span> <span class="fu">geom_point</span>(<span class="fu">aes</span>(colour = <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span>(<span class="kw">Treatment</span>)))<span class="op">+</span>
-  <span class="fu">scale_size</span>(guide = <span class="st">'none'</span>)<span class="op">+</span>
-  <span class="fu">scale_color_manual</span>(breaks= <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Nongraft"</span>, <span class="st">"Selfgraft"</span>, <span class="st">"RST-04-106"</span>, <span class="st">"Maxifort"</span>),values = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"mediumaquamarine"</span>,<span class="st">"sienna4"</span>,<span class="st">"#ffae19"</span>,<span class="st">"blueviolet"</span>))<span class="op">+</span>
-  <span class="fu">geom_text</span>(<span class="fu">aes</span>(label=<span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span>(<span class="kw">role</span>!=<span class="st">"Peripheral"</span>,<span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span>(<span class="kw">Order</span>),<span class="st">''</span>)),hjust=<span class="fl">0.1</span>,vjust=<span class="fl">0.1</span>,size=<span class="fl">3</span>,color=<span class="st">"black"</span>,family=<span class="st">"Times New Roman"</span>)<span class="op">+</span>
-  <span class="fu">geom_hline</span>(yintercept=<span class="fl">2.5</span>, linetype=<span class="st">"dashed"</span>, color = <span class="st">"red"</span>)<span class="op">+</span>
-  <span class="fu">geom_vline</span>(xintercept = <span class="fl">0.62</span>, linetype=<span class="st">"dashed"</span>,color = <span class="st">"blue"</span>)<span class="op">+</span>
-  <span class="fu">annotate</span>(<span class="st">"text"</span>, x = <span class="fl">0.2</span>, y = <span class="fl">3</span>, label = <span class="st">"Module hubs"</span>,color=<span class="st">"gray20"</span>,size=<span class="fl">8</span>,family=<span class="st">"Times New Roman"</span>)<span class="op">+</span>
-  <span class="fu">annotate</span>(<span class="st">"text"</span>, x = <span class="fl">0.75</span>, y = <span class="fl">3</span>, label = <span class="st">" Network hubs"</span>,color=<span class="st">"gray20"</span>,size=<span class="fl">8</span>,family=<span class="st">"Times New Roman"</span>)<span class="op">+</span>
-  <span class="fu">annotate</span>(<span class="st">"text"</span>, x = <span class="fl">0.2</span>, y = <span class="op">-</span><span class="fl">2</span>, label = <span class="st">"Peripherals"</span>,color=<span class="st">"gray20"</span>,size=<span class="fl">8</span>,family=<span class="st">"Times New Roman"</span>)<span class="op">+</span>
-  <span class="fu">annotate</span>(<span class="st">"text"</span>, x = <span class="fl">0.75</span>, y = <span class="op">-</span><span class="fl">2</span>, label = <span class="st">"Connectors"</span>,color=<span class="st">"gray20"</span>,size=<span class="fl">8</span>,family=<span class="st">"Times New Roman"</span>)<span class="op">+</span>
-  <span class="fu">labs</span>(x = <span class="st">"Among-module connectivity"</span>, y = <span class="st">"Within-module degree"</span>, col=<span class="st">"Rootstocks"</span>) <span class="op">+</span>
-  <span class="fu">theme_bw</span>() <span class="op">+</span>
-  <span class="fu">scale_x_continuous</span>(limits = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0</span>, <span class="fl">1.0</span>))<span class="op">+</span>
-  <span class="fu">theme</span>(axis.text=<span class="fu">element_text</span>(size=<span class="fl">16</span>,face=<span class="st">"bold"</span>,family=<span class="st">"Times New Roman"</span>),axis.title=<span class="fu">element_text</span>(size=<span class="fl">16</span>,face=<span class="st">"bold"</span>,family=<span class="st">"Times New Roman"</span>))<span class="op">+</span>
-  <span class="fu">labs</span>(fill = <span class="st">"Dose (mg)"</span>) <span class="op">+</span>
-  <span class="fu">theme</span>(legend.title=<span class="fu">element_text</span>(size=<span class="fl">16</span>,face=<span class="st">"bold"</span>,family=<span class="st">"Times New Roman"</span>),
-        legend.text=<span class="fu">element_text</span>(size=<span class="fl">16</span>,family=<span class="st">"Times New Roman"</span>)) <span class="op">+</span>
-  <span class="fu">guides</span>(color = <span class="fu">guide_legend</span>(override.aes = <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(size=<span class="fl">5</span>)))
+<span class="va">role_df_Rhizosphere</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span><span class="va">phona_ng_rhizo</span><span class="op">$</span><span class="va">roles</span>,
+                             <span class="va">phona_sg_rhizo</span><span class="op">$</span><span class="va">roles</span>,
+                             <span class="va">phona_rst_rhizo</span><span class="op">$</span><span class="va">roles</span>,
+                             <span class="va">phona_maxi_rhizo</span><span class="op">$</span><span class="va">roles</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">fig3b_rhizo</span> <span class="op">&lt;-</span><span class="fu">ggplot</span><span class="op">(</span><span class="va">role_df_Rhizosphere</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">participation</span>,<span class="va">connectivity</span>,label<span class="op">=</span><span class="va">name</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu">geom_point</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>colour <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">Treatment</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu">scale_size</span><span class="op">(</span>guide <span class="op">=</span> <span class="st">'none'</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu">scale_color_manual</span><span class="op">(</span>breaks<span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Nongraft"</span>, <span class="st">"Selfgraft"</span>, <span class="st">"RST-04-106"</span>, <span class="st">"Maxifort"</span><span class="op">)</span>,values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"mediumaquamarine"</span>,<span class="st">"sienna4"</span>,<span class="st">"#ffae19"</span>,<span class="st">"blueviolet"</span><span class="op">)</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu">geom_text</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>label<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">role</span><span class="op">!=</span><span class="st">"Peripheral"</span>,<span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span><span class="op">(</span><span class="va">Order</span><span class="op">)</span>,<span class="st">''</span><span class="op">)</span><span class="op">)</span>,hjust<span class="op">=</span><span class="fl">0.1</span>,vjust<span class="op">=</span><span class="fl">0.1</span>,size<span class="op">=</span><span class="fl">3</span>,color<span class="op">=</span><span class="st">"black"</span>,family<span class="op">=</span><span class="st">"Times New Roman"</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu">geom_hline</span><span class="op">(</span>yintercept<span class="op">=</span><span class="fl">2.5</span>, linetype<span class="op">=</span><span class="st">"dashed"</span>, color <span class="op">=</span> <span class="st">"red"</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu">geom_vline</span><span class="op">(</span>xintercept <span class="op">=</span> <span class="fl">0.62</span>, linetype<span class="op">=</span><span class="st">"dashed"</span>,color <span class="op">=</span> <span class="st">"blue"</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu">annotate</span><span class="op">(</span><span class="st">"text"</span>, x <span class="op">=</span> <span class="fl">0.2</span>, y <span class="op">=</span> <span class="fl">3</span>, label <span class="op">=</span> <span class="st">"Module hubs"</span>,color<span class="op">=</span><span class="st">"gray20"</span>,size<span class="op">=</span><span class="fl">8</span>,family<span class="op">=</span><span class="st">"Times New Roman"</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu">annotate</span><span class="op">(</span><span class="st">"text"</span>, x <span class="op">=</span> <span class="fl">0.75</span>, y <span class="op">=</span> <span class="fl">3</span>, label <span class="op">=</span> <span class="st">" Network hubs"</span>,color<span class="op">=</span><span class="st">"gray20"</span>,size<span class="op">=</span><span class="fl">8</span>,family<span class="op">=</span><span class="st">"Times New Roman"</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu">annotate</span><span class="op">(</span><span class="st">"text"</span>, x <span class="op">=</span> <span class="fl">0.2</span>, y <span class="op">=</span> <span class="op">-</span><span class="fl">2</span>, label <span class="op">=</span> <span class="st">"Peripherals"</span>,color<span class="op">=</span><span class="st">"gray20"</span>,size<span class="op">=</span><span class="fl">8</span>,family<span class="op">=</span><span class="st">"Times New Roman"</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu">annotate</span><span class="op">(</span><span class="st">"text"</span>, x <span class="op">=</span> <span class="fl">0.75</span>, y <span class="op">=</span> <span class="op">-</span><span class="fl">2</span>, label <span class="op">=</span> <span class="st">"Connectors"</span>,color<span class="op">=</span><span class="st">"gray20"</span>,size<span class="op">=</span><span class="fl">8</span>,family<span class="op">=</span><span class="st">"Times New Roman"</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu">labs</span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Among-module connectivity"</span>, y <span class="op">=</span> <span class="st">"Within-module degree"</span>, col<span class="op">=</span><span class="st">"Rootstocks"</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">theme_bw</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">scale_x_continuous</span><span class="op">(</span>limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1.0</span><span class="op">)</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu">theme</span><span class="op">(</span>axis.text<span class="op">=</span><span class="fu">element_text</span><span class="op">(</span>size<span class="op">=</span><span class="fl">16</span>,face<span class="op">=</span><span class="st">"bold"</span>,family<span class="op">=</span><span class="st">"Times New Roman"</span><span class="op">)</span>,axis.title<span class="op">=</span><span class="fu">element_text</span><span class="op">(</span>size<span class="op">=</span><span class="fl">16</span>,face<span class="op">=</span><span class="st">"bold"</span>,family<span class="op">=</span><span class="st">"Times New Roman"</span><span class="op">)</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu">labs</span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"Dose (mg)"</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">theme</span><span class="op">(</span>legend.title<span class="op">=</span><span class="fu">element_text</span><span class="op">(</span>size<span class="op">=</span><span class="fl">16</span>,face<span class="op">=</span><span class="st">"bold"</span>,family<span class="op">=</span><span class="st">"Times New Roman"</span><span class="op">)</span>,
+        legend.text<span class="op">=</span><span class="fu">element_text</span><span class="op">(</span>size<span class="op">=</span><span class="fl">16</span>,family<span class="op">=</span><span class="st">"Times New Roman"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">guides</span><span class="op">(</span>color <span class="op">=</span> <span class="fu">guide_legend</span><span class="op">(</span>override.aes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>size<span class="op">=</span><span class="fl">5</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 
-<span class="kw">fig3b_rhizo</span>
-</pre></div>
+<span class="va">fig3b_rhizo</span></code></pre></div>
 <p><img src="PhONA-manuscript_files/figure-html/unnamed-chunk-17-1.png" width="700"></p>
 <p>Summary of all the graphs:</p>
 <p>Endosphere</p>
-<div class="sourceCode" id="cb41"><pre class="downlit">
-<span class="kw">summary_graph_endo_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span>(<span class="kw">phona_ng_endo</span><span class="op">$</span><span class="kw">graph_summary</span>,
-                          <span class="kw">phona_sg_endo</span><span class="op">$</span><span class="kw">graph_summary</span>,
-                          <span class="kw">phona_rst_endo</span><span class="op">$</span><span class="kw">graph_summary</span>,
-                          <span class="kw">phona_maxi_endo</span><span class="op">$</span><span class="kw">graph_summary</span>)
-<span class="fu">kable</span>(<span class="kw">summary_graph_endo_df</span>)
-</pre></div>
+<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">summary_graph_endo_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span><span class="va">phona_ng_endo</span><span class="op">$</span><span class="va">graph_summary</span>,
+                          <span class="va">phona_sg_endo</span><span class="op">$</span><span class="va">graph_summary</span>,
+                          <span class="va">phona_rst_endo</span><span class="op">$</span><span class="va">graph_summary</span>,
+                          <span class="va">phona_maxi_endo</span><span class="op">$</span><span class="va">graph_summary</span><span class="op">)</span>
+<span class="fu">kable</span><span class="op">(</span><span class="va">summary_graph_endo_df</span><span class="op">)</span></code></pre></div>
 <table class="table">
 <colgroup>
-<col width="3%">
-<col width="3%">
+<col width="4%">
+<col width="4%">
 <col width="8%">
 <col width="6%">
 <col width="4%">
@@ -440,7 +415,7 @@
 <col width="3%">
 <col width="9%">
 <col width="7%">
-<col width="11%">
+<col width="9%">
 <col width="8%">
 <col width="9%">
 <col width="8%">
@@ -463,79 +438,78 @@
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="right">77</td>
-<td align="right">120</td>
-<td align="right">1.558</td>
-<td align="right">5.774</td>
-<td align="right">0.559</td>
-<td align="right">0.751</td>
-<td align="right">0.020</td>
-<td align="right">13</td>
-<td align="right">9</td>
-<td align="left">54;5;64</td>
-<td align="left">1;0.978;0.915</td>
-<td align="right">111</td>
+<td align="right">15</td>
+<td align="right">15</td>
+<td align="right">1.000</td>
+<td align="right">2.079</td>
+<td align="right">0.636</td>
+<td align="right">0.584</td>
+<td align="right">0.067</td>
 <td align="right">5</td>
+<td align="right">3</td>
+<td align="left">11;14;12</td>
+<td align="left">1;1;0.932</td>
+<td align="right">13</td>
+<td align="right">1</td>
 <td align="left">Nongraft</td>
 </tr>
 <tr class="even">
-<td align="right">81</td>
-<td align="right">111</td>
-<td align="right">1.370</td>
-<td align="right">6.380</td>
-<td align="right">0.417</td>
-<td align="right">0.754</td>
-<td align="right">0.017</td>
 <td align="right">15</td>
-<td align="right">11</td>
-<td align="left">23;41;14</td>
-<td align="left">1;0.963;0.72</td>
-<td align="right">97</td>
-<td align="right">9</td>
+<td align="right">12</td>
+<td align="right">0.800</td>
+<td align="right">1.909</td>
+<td align="right">0.600</td>
+<td align="right">0.694</td>
+<td align="right">0.053</td>
+<td align="right">5</td>
+<td align="right">5</td>
+<td align="left">5;11;12</td>
+<td align="left">1;1;1</td>
+<td align="right">10</td>
+<td align="right">0</td>
 <td align="left">Selfgraft</td>
 </tr>
 <tr class="odd">
-<td align="right">71</td>
-<td align="right">109</td>
-<td align="right">1.535</td>
-<td align="right">4.635</td>
-<td align="right">0.542</td>
-<td align="right">0.756</td>
-<td align="right">0.022</td>
-<td align="right">13</td>
+<td align="right">15</td>
+<td align="right">12</td>
+<td align="right">0.800</td>
+<td align="right">1.294</td>
+<td align="right">0.815</td>
+<td align="right">0.653</td>
+<td align="right">0.053</td>
+<td align="right">6</td>
+<td align="right">4</td>
+<td align="left">12;8;10</td>
+<td align="left">1;0.64;0.64</td>
 <td align="right">11</td>
-<td align="left">20;49;55</td>
-<td align="left">1;0.904;0.904</td>
-<td align="right">96</td>
-<td align="right">9</td>
+<td align="right">0</td>
 <td align="left">RST-04-106</td>
 </tr>
 <tr class="even">
-<td align="right">92</td>
-<td align="right">184</td>
-<td align="right">2.000</td>
-<td align="right">3.716</td>
-<td align="right">0.596</td>
-<td align="right">0.615</td>
-<td align="right">0.022</td>
-<td align="right">14</td>
+<td align="right">28</td>
+<td align="right">38</td>
+<td align="right">1.357</td>
+<td align="right">2.436</td>
+<td align="right">0.701</td>
+<td align="right">0.674</td>
+<td align="right">0.048</td>
+<td align="right">8</td>
+<td align="right">6</td>
+<td align="left">7;15;8</td>
+<td align="left">1;1;0.931</td>
+<td align="right">26</td>
 <td align="right">10</td>
-<td align="left">36;2;11</td>
-<td align="left">1;0.925;0.885</td>
-<td align="right">148</td>
-<td align="right">32</td>
 <td align="left">Maxifort</td>
 </tr>
 </tbody>
 </table>
 <p>Rhizosphere</p>
-<div class="sourceCode" id="cb42"><pre class="downlit">
-<span class="kw">summary_graph_rhizo_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span>(<span class="kw">phona_ng_rhizo</span><span class="op">$</span><span class="kw">graph_summary</span>,
-                          <span class="kw">phona_sg_rhizo</span><span class="op">$</span><span class="kw">graph_summary</span>,
-                          <span class="kw">phona_rst_rhizo</span><span class="op">$</span><span class="kw">graph_summary</span>,
-                          <span class="kw">phona_maxi_rhizo</span><span class="op">$</span><span class="kw">graph_summary</span>)
-<span class="fu">kable</span>(<span class="kw">summary_graph_rhizo_df</span>)
-</pre></div>
+<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">summary_graph_rhizo_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span><span class="va">phona_ng_rhizo</span><span class="op">$</span><span class="va">graph_summary</span>,
+                          <span class="va">phona_sg_rhizo</span><span class="op">$</span><span class="va">graph_summary</span>,
+                          <span class="va">phona_rst_rhizo</span><span class="op">$</span><span class="va">graph_summary</span>,
+                          <span class="va">phona_maxi_rhizo</span><span class="op">$</span><span class="va">graph_summary</span><span class="op">)</span>
+<span class="fu">kable</span><span class="op">(</span><span class="va">summary_graph_rhizo_df</span><span class="op">)</span></code></pre></div>
 <table class="table">
 <colgroup>
 <col width="3%">
@@ -571,67 +545,67 @@
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="right">132</td>
-<td align="right">334</td>
-<td align="right">2.530</td>
-<td align="right">4.080</td>
-<td align="right">0.494</td>
-<td align="right">0.596</td>
-<td align="right">0.019</td>
-<td align="right">17</td>
-<td align="right">12</td>
-<td align="left">16;38;35</td>
-<td align="left">1;0.866;0.761</td>
-<td align="right">257</td>
-<td align="right">72</td>
+<td align="right">42</td>
+<td align="right">68</td>
+<td align="right">1.619</td>
+<td align="right">3.168</td>
+<td align="right">0.368</td>
+<td align="right">0.629</td>
+<td align="right">0.039</td>
+<td align="right">7</td>
+<td align="right">7</td>
+<td align="left">11;17;21</td>
+<td align="left">1;0.719;0.711</td>
+<td align="right">48</td>
+<td align="right">15</td>
 <td align="left">Nongraft</td>
 </tr>
 <tr class="even">
-<td align="right">112</td>
-<td align="right">269</td>
-<td align="right">2.402</td>
-<td align="right">3.887</td>
-<td align="right">0.465</td>
-<td align="right">0.589</td>
-<td align="right">0.021</td>
-<td align="right">16</td>
-<td align="right">9</td>
-<td align="left">21;11;12</td>
-<td align="left">1;0.962;0.769</td>
-<td align="right">200</td>
-<td align="right">62</td>
+<td align="right">29</td>
+<td align="right">39</td>
+<td align="right">1.345</td>
+<td align="right">5.865</td>
+<td align="right">0.374</td>
+<td align="right">0.627</td>
+<td align="right">0.046</td>
+<td align="right">5</td>
+<td align="right">5</td>
+<td align="left">10;6;5</td>
+<td align="left">1;0.819;0.815</td>
+<td align="right">30</td>
+<td align="right">6</td>
 <td align="left">Selfgraft</td>
 </tr>
 <tr class="odd">
-<td align="right">133</td>
-<td align="right">336</td>
-<td align="right">2.526</td>
-<td align="right">4.215</td>
-<td align="right">0.497</td>
-<td align="right">0.645</td>
-<td align="right">0.019</td>
-<td align="right">17</td>
-<td align="right">12</td>
-<td align="left">39;67;27</td>
-<td align="left">1;0.978;0.811</td>
-<td align="right">280</td>
-<td align="right">54</td>
+<td align="right">35</td>
+<td align="right">46</td>
+<td align="right">1.314</td>
+<td align="right">2.366</td>
+<td align="right">0.606</td>
+<td align="right">0.660</td>
+<td align="right">0.038</td>
+<td align="right">9</td>
+<td align="right">7</td>
+<td align="left">20;26;16</td>
+<td align="left">1;1;0.866</td>
+<td align="right">35</td>
+<td align="right">9</td>
 <td align="left">RST-04-106</td>
 </tr>
 <tr class="even">
-<td align="right">172</td>
-<td align="right">736</td>
-<td align="right">4.279</td>
-<td align="right">3.078</td>
-<td align="right">0.594</td>
-<td align="right">0.379</td>
-<td align="right">0.025</td>
-<td align="right">21</td>
-<td align="right">11</td>
-<td align="left">22;39;73</td>
-<td align="left">1;0.954;0.914</td>
-<td align="right">451</td>
-<td align="right">278</td>
+<td align="right">61</td>
+<td align="right">179</td>
+<td align="right">2.934</td>
+<td align="right">3.139</td>
+<td align="right">0.600</td>
+<td align="right">0.344</td>
+<td align="right">0.048</td>
+<td align="right">15</td>
+<td align="right">7</td>
+<td align="left">38;22;23</td>
+<td align="left">1;0.932;0.897</td>
+<td align="right">107</td>
+<td align="right">69</td>
 <td align="left">Maxifort</td>
 </tr>
 </tbody>
@@ -651,7 +625,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

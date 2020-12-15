@@ -84,3 +84,25 @@ summary_graph_endo_df <- rbind(phona_ng_endo$graph_summary,
 summary_graph_endo_df
 
 
+
+
+
+
+
+#
+
+library(devtools)
+document()
+build()
+pkgdown::build_site()
+
+
+
+
+
+
+
+
+
+
+
