@@ -8,10 +8,8 @@
 #' @export
 
 rolePlot <- function(...) {
-
   if (class(...) =="list" ){
     df_roles <- ...$role
-
     ggplot(df_roles, aes(participation,connectivity,label=name)) + geom_point(aes(colour = factor(Treatment)))+
       scale_size(guide = 'none')+
       geom_text(aes(label=ifelse(role!="Peripheral",as.character(Order),'')),hjust=0.1,vjust=0.1,size=3,color="black",family="Times New Roman")+
@@ -30,7 +28,7 @@ rolePlot <- function(...) {
             legend.text=element_text(size=16,family="Times New Roman")) +
       guides(color = guide_legend(override.aes = list(size=5)))
 
-  } else if (sum(stringr::str_detect(capture.output(str(df_roles)),"role"))> 0 ){
+  } else if (sum(stringr::str_detect(capture.output(str(...)),"role"))> 0 ){
 
     ggplot(..., aes(participation,connectivity,label=name)) + geom_point(aes(colour = factor(Treatment)))+
       scale_size(guide = 'none')+
