@@ -7,11 +7,11 @@ fig_caption: yes
 #output: pdf_document
 #output: beamer_presentation
 #output: tufte::tufte_html
-runtime: shiny
-output: html_document
-#output:
-#rmarkdown::html_document:
-#theme: lumen
+# runtime: shiny
+# output: html_document
+output:
+rmarkdown::html_document:
+theme: lumen
 vignette: >
   %\VignetteIndexEntry{PhONA}
   %\VignetteEngine{knitr::rmarkdown}
@@ -23,7 +23,7 @@ vignette: >
 
 PhONA provides a framework to select a testable and manageable number of OTUs to support microbiome-based agriculture.
 
-```{r}
+```{r, cache=TRUE}
 # installation 
 # library(devtools)
 # devtools::install_github("ravinpoudel/PhONA", build_vignettes = TRUE, force = TRUE, auth = "5c5decd148f0378dcb762e7b14c3d1508ef49ba2")
@@ -40,14 +40,14 @@ library(PhONA)
 ```
 
 
-```{r}
+```{r, cache=TRUE}
 ###### Load the data
 phyobj <- readRDS(system.file("extdata", "physeqobject.rds", package = "PhONA"))
 sparcc.cor <- read.delim(system.file("extdata", "cor_sparcc.out", package = "PhONA"), sep = "\t", header = T, row.names = 1)
 sparcc.pval <- read.delim(system.file("extdata", "pvals.txt", package = "PhONA"), sep = "\t", header = T, row.names = 1)
 ```
 
-```{r}
+```{r, cache=TRUE}
 
 ## Assign color to the taxa on the whole phyloseq object so that the same color is assigned for a taxon across treatments
 phyobj = taxacolor(phyobj = phyobj, coloredby = "Phylum")
@@ -82,7 +82,7 @@ example_lm <- PhONA(
 
 Summary of the graph
 
-```{r}
+```{r, cache=TRUE}
 
 kable(summarizePhONA(example_lm$phona_graph, example_lm$roles))
 
@@ -91,9 +91,9 @@ kable(summarizePhONA(example_lm$phona_graph, example_lm$roles))
 
 Role analyses using SA algorithm implemented in rnetcarto package. 
 
-```{r}
+```{r, cache=TRUE}
 
-rolePlot(example_lm)
+#rolePlot(example_lm)
 
 ```
 
@@ -122,16 +122,16 @@ example_lasso <- PhONA(
 
 Summary of the graph
 
-```{r}
+```{r, cache=TRUE}
 
 kable(summarizePhONA(example_lasso$phona_graph, example_lasso$roles))
 
 ```
 
 
-```{r}
+```{r, cache=TRUE}
 
-rolePlot(example_lasso)
+# rolePlot(example_lasso)
 
 ```
 

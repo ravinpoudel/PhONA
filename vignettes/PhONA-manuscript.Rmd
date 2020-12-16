@@ -1,7 +1,7 @@
 ---
 title: "PhONA-manuscript"
 author: "Ravin Poudel"
-date: "9/6/2020"
+date: "`r Sys.Date()`"
 output: html_document
 ---
 
