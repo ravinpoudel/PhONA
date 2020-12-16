@@ -12,8 +12,7 @@ library(phyloseq)
 
 ```
 
-```{r}
-# GLOBAL VARIABLE
+```{r, cache=TRUE}
 # GLOBAL VARIABLE
 ITERS=5
 OTU_OTU_PVALUE = 0.05
@@ -23,7 +22,7 @@ OTU_PHENOTYPE_PVALUE = 1
 
 ```
 
-```{r}
+```{r, cache=TRUE}
 
 ###### Load the data
 
@@ -92,7 +91,7 @@ physeq
 At this point we have a phyloseq object for all the treatments. Now, we will process the phyloseq object the split it by treatment combinations. 
 
 
-```{r}
+```{r, cache=TRUE}
 
 #### All the combinations of treatment factor
 
@@ -105,7 +104,7 @@ treatment
 
 
 Getting phyloseq object for endosphere
-```{r}
+```{r, cache=TRUE}
 
 # Endosphere 
 ng_endo <- subset_samples(physeq, c(Compartment =="Endosphere" & Rootstock=="Nongraft")) %>%
@@ -142,7 +141,7 @@ write.table(data.frame(OTU_id = rownames(maxi_endo_sparcc), maxi_endo_sparcc), f
 
 
 Getting phyloseq object for rhizosphere
-```{r}
+```{r, cache=TRUE}
 
 # Rhizosphere
 
@@ -185,7 +184,7 @@ Read in output from sparcc, then run SparCC.
 
 
 Nongraft and Endosphere
-```{r}
+```{r, cache=TRUE}
 
 ng_endo_sparcc.cor <- read.delim("data/sparcc_output/Endosphere_Nongraft_cor_sparcc.out", sep = "\t", header = T, row.names = 1)
 ng_endo_sparcc.pval <- read.delim("data/sparcc_output/Endosphere_Nongraft_pvals.two_sided.txt", sep = "\t", header = T, row.names = 1)
@@ -198,7 +197,7 @@ phona_ng_endo <- PhONA(physeqobj = ng_endo, cordata = ng_endo_sparcc.cor,
 ```
 
 Selfgraft and Endosphere
-```{r}
+```{r, cache=TRUE}
 
 sg_endo_sparcc.cor <- read.delim("data/sparcc_output/Endosphere_Selfgraft_cor_sparcc.out", sep = "\t", header = T, row.names = 1)
 sg_endo_sparcc.pval <- read.delim("data/sparcc_output/Endosphere_Selfgraft_pvals.two_sided.txt", sep = "\t", header = T, row.names = 1)
@@ -214,7 +213,7 @@ phona_sg_endo <-PhONA(physeqobj = sg_endo, cordata = sg_endo_sparcc.cor,
 
 
 RST-04-106 and Endosphere
-```{r}
+```{r, cache=TRUE}
 
 rst_endo_sparcc.cor <- read.delim("data/sparcc_output/Endosphere_RST-04-106_cor_sparcc.out", sep = "\t", header = T, row.names = 1)
 rst_endo_sparcc.pval <- read.delim("data/sparcc_output/Endosphere_RST-04-106_pvals.two_sided.txt", sep = "\t", header = T, row.names = 1)
@@ -226,7 +225,7 @@ phona_rst_endo <-PhONA(physeqobj = rst_endo, cordata = rst_endo_sparcc.cor,
 ```
 
 Maxifort and Endosphere
-```{r}
+```{r, cache=TRUE}
 
 maxi_endo_sparcc.cor <- read.delim("data/sparcc_output/Endosphere_Maxifort_cor_sparcc.out", sep = "\t", header = T, row.names = 1)
 maxi_endo_sparcc.pval <- read.delim("data/sparcc_output/Endosphere_Maxifort_pvals.two_sided.txt", sep = "\t", header = T, row.names = 1)
@@ -243,7 +242,7 @@ phona_maxi_endo <-PhONA(physeqobj = maxi_endo, cordata = maxi_endo_sparcc.cor,
 
 
 Nongraft and Rhizosphere
-```{r}
+```{r, cache=TRUE}
 
 ng_rhizo_sparcc.cor <- read.delim("data/sparcc_output/Rhizosphere_Nongraft_cor_sparcc.out", sep = "\t", header = T, row.names = 1)
 ng_rhizo_sparcc.pval <- read.delim("data/sparcc_output/Rhizosphere_Nongraft_pvals.two_sided.txt", sep = "\t", header = T, row.names = 1)
@@ -257,7 +256,7 @@ phona_ng_rhizo <- PhONA(physeqobj = ng_rhizo, cordata = ng_rhizo_sparcc.cor,
 
 
 Selfgraft and  Rhizosphere
-```{r}
+```{r, cache=TRUE}
 
 sg_rhizo_sparcc.cor <- read.delim("data/sparcc_output/Rhizosphere_Selfgraft_cor_sparcc.out", sep = "\t", header = T, row.names = 1)
 sg_rhizo_sparcc.pval <- read.delim("data/sparcc_output/Rhizosphere_Selfgraft_pvals.two_sided.txt", sep = "\t", header = T, row.names = 1)
@@ -271,7 +270,7 @@ phona_sg_rhizo <- PhONA(physeqobj = sg_rhizo, cordata = sg_rhizo_sparcc.cor,
 
 
 RST-04-106 and  Rhizosphere
-```{r}
+```{r, cache=TRUE}
 
 rst_rhizo_sparcc.cor <- read.delim("data/sparcc_output/Rhizosphere_RST-04-106_cor_sparcc.out", sep = "\t", header = T, row.names = 1)
 rst_rhizo_sparcc.pval <- read.delim("data/sparcc_output/Rhizosphere_RST-04-106_pvals.two_sided.txt", sep = "\t", header = T, row.names = 1)
@@ -284,7 +283,7 @@ phona_rst_rhizo <- PhONA(physeqobj = rst_rhizo, cordata = rst_rhizo_sparcc.cor,
 
 Maxifort and  Rhizosphere
 
-```{r}
+```{r, cache=TRUE}
 
 maxi_rhizo_sparcc.cor <- read.delim("data/sparcc_output/Rhizosphere_Maxifort_cor_sparcc.out", sep = "\t", header = T, row.names = 1)
 maxi_rhizo_sparcc.pval <- read.delim("data/sparcc_output/Rhizosphere_Maxifort_pvals.two_sided.txt", sep = "\t", header = T, row.names = 1)
@@ -301,7 +300,7 @@ Role analyses using SA algorithm as implemented in rnetcarto package.
 
 Endosphere
 
-```{r}
+```{r, cache=TRUE}
 
 # Endosphere 
 
@@ -309,11 +308,10 @@ role_df_Endosphere <- rbind(phona_ng_endo$roles,
                             phona_sg_endo$roles,
                             phona_rst_endo$roles,
                             phona_maxi_endo$roles)
-head(role_df_Endosphere)
 ```
 
 
-```{r}
+```{r, cache=TRUE}
 
 rolePlot(role_df_Endosphere)
 
@@ -321,7 +319,7 @@ rolePlot(role_df_Endosphere)
 
 If you are not happy with the plot, you can pass any ggplot paramters to rolePlot function. 
 
-```{r}
+```{r, cache=TRUE}
 
 rolePlot(role_df_Endosphere) + 
   scale_color_manual(breaks= c("Nongraft", "Selfgraft", "RST-04-106", "Maxifort"),values = c("mediumaquamarine","sienna4","#ffae19","blueviolet"))
@@ -332,7 +330,7 @@ rolePlot(role_df_Endosphere) +
 
 
 Rhizosphere 
-```{r}
+```{r, cache=TRUE}
 
 # Endosphere 
 
@@ -344,15 +342,8 @@ role_df_Rhizosphere <- rbind(phona_ng_rhizo$roles,
 
 ```
 
-```{r}
 
-rolePlot(role_df_Rhizosphere)
-
-```
-
-If you are not happy with the plot, you can pass any ggplot paramter to the rolePlot funciton. 
-
-```{r}
+```{r, cache=TRUE}
 
 rolePlot(role_df_Rhizosphere) + 
   scale_color_manual(breaks= c("Nongraft", "Selfgraft", "RST-04-106", "Maxifort"),values = c("mediumaquamarine","sienna4","#ffae19","blueviolet"))
@@ -365,7 +356,7 @@ Summary of all the graphs:
 
 Endosphere
 
-```{r}
+```{r, cache=TRUE}
 summary_graph_endo_df <- rbind(phona_ng_endo$graph_summary,
                           phona_sg_endo$graph_summary,
                           phona_rst_endo$graph_summary,
@@ -376,7 +367,7 @@ kable(summary_graph_endo_df)
 
 Rhizosphere
 
-```{r}
+```{r, cache=TRUE}
 summary_graph_rhizo_df <- rbind(phona_ng_rhizo$graph_summary,
                           phona_sg_rhizo$graph_summary,
                           phona_rst_rhizo$graph_summary,
