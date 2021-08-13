@@ -141,20 +141,28 @@ and create a combined OTU-OTU and OTU-Phenotype network. User can select model t
 define OTU-Phontype assocaition.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>model.lasso</span><span class='op'>(</span><span class='va'>n</span>, <span class='va'>x</span>, <span class='va'>odata</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>model.lasso</span><span class='op'>(</span><span class='va'>n</span>, <span class='va'>phenotype</span>, <span class='va'>odata</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>x</th>
-      <td><p>A phyloseq object which combined OTU count, taxonomy and metadata</p></td>
+      <th>n</th>
+      <td><p>Number of iterations to run</p></td>
+    </tr>
+    <tr>
+      <th>phenotype</th>
+      <td><p>A variable representing phenotype- which is used a reponse variable for lasso regression</p></td>
+    </tr>
+    <tr>
+      <th>odata</th>
+      <td><p>Count data with rows as samples, and columns as features/OTUs/ASVs</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A matrix of the infile</p>
+    <p>Features from lasso regression</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

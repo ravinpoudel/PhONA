@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Run Lasso Models — read.mothur.taxonomy • PhONA</title>
+<title>Reads taxonomy file from mothur — read.mothur.taxonomy • PhONA</title>
 
 
 <!-- jquery -->
@@ -39,10 +39,8 @@
 
 
 
-<meta property="og:title" content="Run Lasso Models — read.mothur.taxonomy" />
-<meta property="og:description" content="This function takes in phyloseq object, association matix, p value matrix
-and create a combined OTU-OTU and OTU-Phenotype network. User can select model to
-define OTU-Phontype assocaition." />
+<meta property="og:title" content="Reads taxonomy file from mothur — read.mothur.taxonomy" />
+<meta property="og:description" content="Reads taxonomy file from mothur and remove all the symbols such as quotation, comma, semicolon etc" />
 
 
 
@@ -130,15 +128,13 @@ define OTU-Phontype assocaition." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Run Lasso Models</h1>
+    <h1>Reads taxonomy file from mothur</h1>
     
     <div class="hidden name"><code>read.mothur.taxonomy.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This function takes in phyloseq object, association matix, p value matrix
-and create a combined OTU-OTU and OTU-Phenotype network. User can select model to
-define OTU-Phontype assocaition.</p>
+    <p>Reads taxonomy file from mothur and remove all the symbols such as quotation, comma, semicolon etc</p>
     </div>
 
     <pre class="usage"><span class='fu'>read.mothur.taxonomy</span><span class='op'>(</span><span class='va'>tax.file</span><span class='op'>)</span></pre>
@@ -147,14 +143,14 @@ define OTU-Phontype assocaition.</p>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>x</th>
-      <td><p>A phyloseq object which combined OTU count, taxonomy and metadata</p></td>
+      <th>tax.file</th>
+      <td><p>A taxonomy file obtained from mothur</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A matrix of the infile</p>
+    <p>A table of formatted taxonomy file</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

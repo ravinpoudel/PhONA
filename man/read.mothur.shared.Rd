@@ -2,18 +2,16 @@
 % Please edit documentation in R/read.mothur.shared.R
 \name{read.mothur.shared}
 \alias{read.mothur.shared}
-\title{Run Lasso Models}
+\title{Reads .shared file from mothur}
 \usage{
 read.mothur.shared(shared.file)
 }
 \arguments{
-\item{x}{A phyloseq object which combined OTU count, taxonomy and metadata}
+\item{shared.file}{A .shared file}
 }
 \value{
-A matrix of the infile
+A table with rows as features(OTUs) and columns as samples
 }
 \description{
-This function takes in phyloseq object, association matix, p value matrix
-and create a combined OTU-OTU and OTU-Phenotype network. User can select model to
-define OTU-Phontype assocaition.
+Reads in .shared file, a count matrix from mothur.
 }

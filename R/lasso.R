@@ -1,17 +1,15 @@
 #' Run Lasso Models
 #'
-#' This function takes in phyloseq object, association matix, p value matrix
-#' and create a combined OTU-OTU and OTU-Phenotype network. User can select model to
-#' define OTU-Phontype assocaition.
-#' @param x A phyloseq object which combined OTU count, taxonomy and metadata
-#' @return A matrix of the infile
+#' This function takes in phenotype information and count data to run lasso regression. For hyper paramter optimization, 5 fold cv method is applied.
+#' @param Phenotype A phenotype variable to use for lasso regression
+#' @return odata A count data for feature, with rows as sample, and columns as features/ASVs/OTUs
 #' @export
 
-lasso <- function(x1, odata1) {
+lasso <- function(Phenotype, odata) {
 
-  odata_with_pheno <- as.data.frame(odata1)
+  odata_with_pheno <- as.data.frame(odata)
 
-  odata_with_pheno["Phenotype"] <- x1
+  odata_with_pheno["Phenotype"] <- Phenotype
 
   myGrid <- expand.grid(
     alpha = 1, ## lasso

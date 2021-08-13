@@ -1,10 +1,8 @@
-#' Run Node Roles usign rnetcarto
+#' Run Node Roles using rnetcarto
 #'
-#' This function takes in phyloseq object, association matix, p value matrix
-#' and create a combined OTU-OTU and OTU-Phenotype network. User can select model to
-#' define OTU-Phontype assocaition.
-#' @param x A phyloseq object which combined OTU count, taxonomy and metadata
-#' @return A matrix of the infile
+#' This function takes in graph_object from igraph, and run rnetcarto function to assign roles based SA algorithm.
+#' @param graph_object A graph object from igraph.
+#' @return A plot with nodes classified into four groups based on within-module degree and among-module connectivity
 #' @export
 
 

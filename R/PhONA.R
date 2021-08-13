@@ -137,7 +137,7 @@ tic()
 
 ##########
 
-  x = mdata %>% pull(definePhenotype)  ## generalize to metadata
+  phenotype = mdata %>% pull(definePhenotype)  ## generalize to metadata
 
 # message("Creating assocication model")
 message("Total number of iterations used: ", iters)
@@ -145,7 +145,7 @@ message("Total number of iterations used: ", iters)
 
   if (model == "lm"){
    #source("R/model.linear.R")
-   bb = model.linear(n=iters, x, odata)
+   bb = model.linear(n=iters, phenotype, odata)
    bb["Treatment"] <- defineTreatment
    # message("OTUs selected from linear regression")
   }
@@ -154,7 +154,7 @@ message("Total number of iterations used: ", iters)
 
 
 if (model == "lasso"){
-  bb = model.lasso(n = iters, x, odata)
+  bb = model.lasso(n = iters, phenotype, odata)
   bb["Treatment"] <- defineTreatment
   bb = bb = bb[bb$pvalue < OTU_Phenotype_pvalue, ]
   # message("Unique OTUs selected from lasso regression")

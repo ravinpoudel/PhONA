@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Run Node Roles usign rnetcarto — node.role • PhONA</title>
+<title>Run Node Roles using rnetcarto — node.role • PhONA</title>
 
 
 <!-- jquery -->
@@ -39,10 +39,8 @@
 
 
 
-<meta property="og:title" content="Run Node Roles usign rnetcarto — node.role" />
-<meta property="og:description" content="This function takes in phyloseq object, association matix, p value matrix
-and create a combined OTU-OTU and OTU-Phenotype network. User can select model to
-define OTU-Phontype assocaition." />
+<meta property="og:title" content="Run Node Roles using rnetcarto — node.role" />
+<meta property="og:description" content="This function takes in graph_object from igraph, and run rnetcarto function to assign roles based SA algorithm." />
 
 
 
@@ -130,15 +128,13 @@ define OTU-Phontype assocaition." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Run Node Roles usign rnetcarto</h1>
+    <h1>Run Node Roles using rnetcarto</h1>
     
     <div class="hidden name"><code>node.role.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This function takes in phyloseq object, association matix, p value matrix
-and create a combined OTU-OTU and OTU-Phenotype network. User can select model to
-define OTU-Phontype assocaition.</p>
+    <p>This function takes in graph_object from igraph, and run rnetcarto function to assign roles based SA algorithm.</p>
     </div>
 
     <pre class="usage"><span class='fu'>node.role</span><span class='op'>(</span><span class='va'>graph_object</span><span class='op'>)</span></pre>
@@ -147,14 +143,14 @@ define OTU-Phontype assocaition.</p>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>x</th>
-      <td><p>A phyloseq object which combined OTU count, taxonomy and metadata</p></td>
+      <th>graph_object</th>
+      <td><p>A graph object from igraph.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A matrix of the infile</p>
+    <p>A plot with nodes classified into four groups based on within-module degree and among-module connectivity</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

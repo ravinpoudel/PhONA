@@ -2,18 +2,16 @@
 % Please edit documentation in R/read.mothur.taxonomy.R
 \name{read.mothur.taxonomy}
 \alias{read.mothur.taxonomy}
-\title{Run Lasso Models}
+\title{Reads taxonomy file from mothur}
 \usage{
 read.mothur.taxonomy(tax.file)
 }
 \arguments{
-\item{x}{A phyloseq object which combined OTU count, taxonomy and metadata}
+\item{tax.file}{A taxonomy file obtained from mothur}
 }
 \value{
-A matrix of the infile
+A table of formatted taxonomy file
 }
 \description{
-This function takes in phyloseq object, association matix, p value matrix
-and create a combined OTU-OTU and OTU-Phenotype network. User can select model to
-define OTU-Phontype assocaition.
+Reads taxonomy file from mothur and remove all the symbols such as quotation, comma, semicolon etc
 }

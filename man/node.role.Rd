@@ -2,18 +2,16 @@
 % Please edit documentation in R/noderoles.R
 \name{node.role}
 \alias{node.role}
-\title{Run Node Roles usign rnetcarto}
+\title{Run Node Roles using rnetcarto}
 \usage{
 node.role(graph_object)
 }
 \arguments{
-\item{x}{A phyloseq object which combined OTU count, taxonomy and metadata}
+\item{graph_object}{A graph object from igraph.}
 }
 \value{
-A matrix of the infile
+A plot with nodes classified into four groups based on within-module degree and among-module connectivity
 }
 \description{
-This function takes in phyloseq object, association matix, p value matrix
-and create a combined OTU-OTU and OTU-Phenotype network. User can select model to
-define OTU-Phontype assocaition.
+This function takes in graph_object from igraph, and run rnetcarto function to assign roles based SA algorithm.
 }

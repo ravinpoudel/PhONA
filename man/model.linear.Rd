@@ -4,13 +4,17 @@
 \alias{model.linear}
 \title{Run Linear Models}
 \usage{
-model.linear(n, x, odata)
+model.linear(n, phenotype, odata)
 }
 \arguments{
-\item{x}{A phyloseq object which combined OTU count, taxonomy and metadata}
+\item{n}{Number of iterations to run}
+
+\item{phenotype}{A variable representing phenotype- which is used a reponse variable for linear regression}
+
+\item{odata}{Count data with rows as samples, and columns as features/OTUs/ASVs}
 }
 \value{
-A matrix of the infile
+Features from linear regression
 }
 \description{
 This function takes in phyloseq object, association matix, p value matrix

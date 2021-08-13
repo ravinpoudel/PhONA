@@ -1,10 +1,8 @@
-#' Run Lasso Models
+#' Reads .shared file from mothur
 #'
-#' This function takes in phyloseq object, association matix, p value matrix
-#' and create a combined OTU-OTU and OTU-Phenotype network. User can select model to
-#' define OTU-Phontype assocaition.
-#' @param x A phyloseq object which combined OTU count, taxonomy and metadata
-#' @return A matrix of the infile
+#' Reads in .shared file, a count matrix from mothur.
+#' @param shared.file A .shared file
+#' @return A table with rows as features(OTUs) and columns as samples
 #' @export
 read.mothur.shared <- function(shared.file){
   otu_data <-read.table(shared.file, header=T, row.names = 2, stringsAsFactors = FALSE) %>%

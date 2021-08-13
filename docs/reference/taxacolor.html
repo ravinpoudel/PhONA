@@ -147,14 +147,18 @@ define OTU-Phontype assocaition.</p>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>x</th>
+      <th>phyobj</th>
       <td><p>A phyloseq object which combined OTU count, taxonomy and metadata</p></td>
+    </tr>
+    <tr>
+      <th>coloredby</th>
+      <td><p>Select a taxonomic rank for coloring nodes in the network diagram. Possible option: "Kingdom","Phylum","Class","Order","Family","Genus","Species"</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A matrix of the infile</p>
+    <p>phyobj2 An updated phyloseq object with color information</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

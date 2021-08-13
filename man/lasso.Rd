@@ -4,16 +4,14 @@
 \alias{lasso}
 \title{Run Lasso Models}
 \usage{
-lasso(x1, odata1)
+lasso(Phenotype, odata)
 }
 \arguments{
-\item{x}{A phyloseq object which combined OTU count, taxonomy and metadata}
+\item{Phenotype}{A phenotype variable to use for lasso regression}
 }
 \value{
-A matrix of the infile
+odata A count data for feature, with rows as sample, and columns as features/ASVs/OTUs
 }
 \description{
-This function takes in phyloseq object, association matix, p value matrix
-and create a combined OTU-OTU and OTU-Phenotype network. User can select model to
-define OTU-Phontype assocaition.
+This function takes in phenotype information and count data to run lasso regression. For hyper paramter optimization, 5 fold cv method is applied.
 }
