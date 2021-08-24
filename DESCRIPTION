@@ -1,15 +1,14 @@
 Package: PhONA
-Title: PhONA provides a framework to select a testable and manageable number of OTUs to support microbiome-based agriculture
-Version: 0.0.0.9000
+Title: PhONA provides a framework to select a testable and manageable number of OTUs/ASVs to support microbiome-based agriculture
+Version: 0.2
 Authors@R: 
     person(given = "Ravin",
            family = "Poudel",
            role = c("aut", "cre"),
            email = "raveenpoudel@gmail.com",
            comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
-License: `use_mit_license()`, `use_gpl3_license()` or friends to
-    pick a license
+Description: PhONA is an R package to construct a phenotype-OTU network analysis (PhONA) using lasso ML models (such as regression, GLM, lasso) and network models of sequence-based Operational Taxonomic Units (OTUs) and associated phenotype. PhONA takes as input an association matrix defining OTU-OTU relations. This can be defined using correlation or using statistical approaches developed for compositional data (such as SparCC , SPIEC-EASI).Machine learning (ML) is used to define Phenotype-OTU associations. Examples of models available n PhONA are: Regularization models (e.g. lasso), Linear models, etc. Resulting OTU-OTU associations, and Phenotype-OTU associations are combined to create a PhONA plotted using the igraph package. Graphical output can be used to generate hypotheses based on the observed network structures or using prior knowledge about the systems/ OTUs. Additionally, PhONA can also be used for Amplicon sequence variants(ASVs) or in general any count matrix in the format- where rows represent samples and columns represent features ( OTUs, ASVs, Genes, Birds…etc).. 
+License: GPL (>=3)
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
