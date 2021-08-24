@@ -9,3 +9,5 @@ include:
 
 #theme: jekyll-theme-hacker
 remote_theme: rundocs/jekyll-rtd-theme
+
+theme: jekyll-theme-cayman
