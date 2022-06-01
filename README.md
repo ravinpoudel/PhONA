@@ -1,4 +1,5 @@
 #### Introduction
+[![DOI](https://zenodo.org/badge/284593130.svg)](https://zenodo.org/badge/latestdoi/284593130)
 
 PhONA provides a framework to select a testable and manageable number of
 OTUs/ASV to support microbiome-based agriculture.
