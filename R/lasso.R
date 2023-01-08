@@ -48,7 +48,8 @@ lasso <- function(Phenotype, odata) {
   coff_df["otus"] <- rownames(coff_df)
   coff_df["relation"] <- coff_df$Estimate
   coff_df["pvalue"] <- coff_df$Pr...t..
-  coff_df <- na.omit(coff_df) # remove rows with NA
+  #coff_df <- na.omit(coff_df) # remove rows with NA- here we can improve with more data. Now we considere all the OTUs selected by varImp. GLM 
+  # run assign the sign (+ or -) for the selected OTUs by varImp.
 
   if (dim(coff_df)[1] > 0){
     coff_df
